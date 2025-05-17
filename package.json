@@ -1,0 +1,20 @@
+{
+"name": "packages",
+"version": "1.0.0",
+"main": "index.js",
+"scripts": {
+    "dev:back": "npm run dev --workspace backend",
+    "dev:front": "npm run dev --workspace frontend",
+    "start:back": "npm run start --workspace backend",
+    "build:front": "npm run build --workspace frontend",
+    "format": "biome format --write ./"
+},
+"keywords": [],
+"author": "",
+"license": "ISC",
+"description": "",
+"devDependencies": {
+    "@biomejs/biome": "^1.9.4"
+},
+"workspaces": ["packages/*"]
+}
