@@ -6,14 +6,14 @@ export default function Header() {
     return (
         <header>
             <div className="navbar w-full bg-base-100 shadow-sm">
-                {/* burger menu */}
+                {/* logo */}
                 <div className="navbar-start">
                     <a href="/" className="logo">
                         <img src={logo} alt="Logo BookLover" />
                     </a>
                 </div>
 
-                {/* logo */}
+                {/* burger menu */}
                 <div className="navbar-end">
                     <div className="dropdown dropdown-end">
                         <button type="button" className="btn btn-ghost btn-circle">
