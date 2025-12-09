@@ -35,7 +35,7 @@ export default function Header() {
                         </button>
                         <ul className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow text-right">
                             <li className="text-right">
-                                <NavLink to="lists" className="nav-links block truncate">
+                                <NavLink to="/" className="nav-links block truncate">
                                     Mes listes
                                 </NavLink>
                             </li>
