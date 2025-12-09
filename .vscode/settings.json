@@ -17,6 +17,23 @@
         "net"
     ],
     "[typescript]": {
-        "editor.defaultFormatter": "denoland.vscode-deno"
-    }
+        "editor.defaultFormatter": "oxc.oxc-vscode"
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "oxc.oxc-vscode"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "oxc.oxc-vscode"
+    },
+    "[javascriptreact]": {
+        "editor.defaultFormatter": "oxc.oxc-vscode"
+    },
+
+    // --- General formatter ---
+    "editor.formatOnSave": true,
+    "oxc.fmt.experimental": true,
+
+    // --- Linter Oxc ---
+    "oxc.enable": true,
+    "oxc.lint.run": "onSave",
 }
