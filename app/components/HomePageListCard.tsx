@@ -37,7 +37,7 @@ export default function HomePageListCard({ list }: HomePageListCardProps) {
                 */}
 
                 <ul>
-                    {list.books.map((book: HomePageBook) => (
+                    {list.books?.map((book: HomePageBook) => (
                         <li key={book.id}>
                             <span className="font-semibold">{book.title} - </span>
                             {book.genre && <span>{book.genre.name} - </span>}
