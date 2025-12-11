@@ -3,6 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import type { HomePageBook, HomePageList } from "~/types";
 
+import Genre from "./Genre";
+
 type HomePageListCardProps = {
     list: HomePageList;
 };
@@ -39,9 +41,14 @@ export default function HomePageListCard({ list }: HomePageListCardProps) {
                 <ul>
                     {list.books?.map((book: HomePageBook) => (
                         <li key={book.id}>
-                            <span className="font-semibold">{book.title} - </span>
-                            {book.genre && <span>{book.genre.name} - </span>}
-                            {book.author && <span> {book.author}</span>}
+                            <span className="font-semibold">{book.title}</span>
+                            {book.genre && (
+                                <span>
+                                    <span> - </span>
+                                    <Genre book={book} />
+                                </span>
+                            )}
+                            {book.author && <span> - {book.author}</span>}
                         </li>
                     ))}
                 </ul>
