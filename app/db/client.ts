@@ -1,13 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
-import "dotenv/config.js";
+import "dotenv/config";
 
-function requiredEnv(name: string): string {
-    const value = process.env[name];
-    if (!value) {
-        throw new Error(`Missing environment variable: ${name}`);
-    }
-    return value;
-}
+const supabaseUrl = process.env.SUPABASE_URL!;
+const supabaseKey = process.env.SUPABASE_KEY!;
 
-// Create a single supabase client for interacting with your database
-export const supabase = createClient(requiredEnv("SUPABASE_URL"), requiredEnv("SUPABASE_KEY"));
+export const supabase = createClient(supabaseUrl, supabaseKey);
