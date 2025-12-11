@@ -1,6 +1,7 @@
 import { NavLink } from "react-router";
 
-import logo from "~/assets/icons/logo.svg";
+import logoLight from "~/assets/icons/logo-light.svg";
+import logoDark from "~/assets/icons/logo-dark.svg";
 
 export default function Header() {
     return (
@@ -9,7 +10,8 @@ export default function Header() {
                 {/* logo */}
                 <div className="navbar-start">
                     <a href="/" className="logo">
-                        <img src={logo} alt="Logo BookLover" />
+                        <img src={logoLight} alt="Logo BookLover" className="block w-full dark:hidden" />
+                        <img src={logoDark} alt="Logo Booklover" className="hidden w-full dark:block" />
                     </a>
                 </div>
 
