@@ -2,12 +2,12 @@
 export type HomePageBook = {
     id: string;
     title: string;
-    author?: string;
+    author?: string | null;
     genre?: {
         id: string;
         name: string;
         color: string;
-    };
+    } | null;
 };
 
 // List used in home page
@@ -29,15 +29,16 @@ export type Genre = {
 };
 
 export type Book = {
+    id: string;
     title: string;
-    author?: string;
-    editor?: string;
-    library_code?: string;
-    comment?: string;
-    ISBN?: string;
-    genre?: {
+    author: string | null;
+    editor: string | null;
+    library_code: string | null;
+    comment: string | null;
+    ISBN: string | null;
+    genre: {
         id: string;
         name: string;
         color: string;
-    };
+    } | null;
 };
