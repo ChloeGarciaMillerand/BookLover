@@ -1,5 +1,7 @@
 import { Form, useActionData } from "react-router";
 
+import { Button } from "./Button";
+
 export default function AddListForm() {
     const actionData = useActionData();
 
@@ -15,7 +17,7 @@ export default function AddListForm() {
             <div>
                 <fieldset className="fieldset">
                     <label htmlFor="name">Titre*</label>
-                    <legend className="fieldset-legend">Titre</legend>
+                    {/*<legend className="fieldset-legend">Titre</legend>*/}
                     <input
                         id="name"
                         name="name"
@@ -31,9 +33,11 @@ export default function AddListForm() {
                     ) : null}
                 </fieldset>
                 {/* submit button */}
-                <button type="submit" className="button-submission">
-                    Créer une liste
-                </button>
+                <div className="mt-5 flex justify-end md:justify-start">
+                    <Button type="submit" className="btn-primary">
+                        Créer une liste
+                    </Button>
+                </div>
             </div>
         </Form>
     );
