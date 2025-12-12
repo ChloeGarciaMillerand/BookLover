@@ -67,7 +67,6 @@ export async function loader(_props: Route.LoaderArgs) {
 
 export default function HomePage(props: Route.ComponentProps) {
     const { lists } = props.loaderData;
-    console.log(lists);
     return (
         <div className="m-auto w-4/5 mt-4">
             <h1 className="h1">Mes listes</h1>
