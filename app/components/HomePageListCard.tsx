@@ -19,12 +19,12 @@ export default function HomePageListCard({ list }: HomePageListCardProps) {
             <div className="card-body">
                 <div className="flex flex-row justify-between">
                     <Link to={`list/${list.id}`}>
-                        <h2 className="card-title">{list.name}</h2>
+                        <h2 className="card-title hover:text-info">{list.name}</h2>
                     </Link>
 
                     <div className="flex gap-2">
                         {/* EDIT LIST */}
-                        <Link to={`edit-list/${list.id}`} aria-label="Modifier la liste">
+                        <Link to={`edit-list/${list.id}`} aria-label="Modifier la liste" className="hover:text-info">
                             <FontAwesomeIcon icon={faPen} />
                         </Link>
 
