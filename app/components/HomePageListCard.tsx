@@ -29,7 +29,15 @@ export default function HomePageListCard({ list }: HomePageListCardProps) {
                         </Link>
 
                         {/* DELETE LIST */}
-                        <fetcher.Form method="post" action={`/delete-list/${list.id}`}>
+                        <fetcher.Form
+                            method="post"
+                            action={`/delete-list/${list.id}`}
+                            onSubmit={(e) => {
+                                if (!confirm(`Supprimer la liste "${list.name}" ?`)) {
+                                    e.preventDefault();
+                                }
+                            }}
+                        >
                             <button
                                 type="submit"
                                 className="cursor-pointer hover:text-error"
