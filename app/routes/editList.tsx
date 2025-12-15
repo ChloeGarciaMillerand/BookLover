@@ -4,7 +4,6 @@ import { supabase } from "~/db/client";
 import type { Route } from "./+types/editList";
 
 import EditListForm from "~/components/editListForm";
-import type { List } from "~/types";
 
 export function meta(_args: Route.MetaArgs) {
     return [{ title: "BookLover" }, { name: "description", content: "Modifier la liste de livres" }];

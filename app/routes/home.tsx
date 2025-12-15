@@ -74,9 +74,9 @@ export default function HomePage(props: Route.ComponentProps) {
             <ul>
                 {lists.map((list) => (
                     <li key={list.id}>
-                        <Link to={`list/${list.id}`} className="block">
-                            <HomePageListCard list={list} />
-                        </Link>
+                        {/*<Link to={`list/${list.id}`} className="block">*/}
+                        <HomePageListCard list={list} />
+                        {/*</Link>*/}
                     </li>
                 ))}
             </ul>

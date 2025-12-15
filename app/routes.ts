@@ -5,4 +5,5 @@ export default [
     route("list/:id", "routes/list.tsx"),
     route("add-list", "routes/addList.tsx"),
     route("edit-list/:id", "routes/editList.tsx"),
+    route("delete-list/:id", "routes/deleteList.tsx"),
 ] satisfies RouteConfig;

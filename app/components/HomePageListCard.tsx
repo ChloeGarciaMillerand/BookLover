@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useFetcher } from "react-router";
 
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -12,20 +12,40 @@ type HomePageListCardProps = {
 };
 
 export default function HomePageListCard({ list }: HomePageListCardProps) {
+    let fetcher = useFetcher();
+
     return (
         <div className="card bg-base-300 text-base-content w-x1 mx-auto my-5">
             <div className="card-body">
                 <div className="flex flex-row justify-between">
-                    <h2 className="card-title">{list.name}</h2>
+                    <Link to={`list/${list.id}`}>
+                        <h2 className="card-title hover:text-info">{list.name}</h2>
+                    </Link>
 
                     <div className="flex gap-2">
-                        <Link to={`edit-list/${list.id}`}>
+                        {/* EDIT LIST */}
+                        <Link to={`edit-list/${list.id}`} aria-label="Modifier la liste" className="hover:text-info">
                             <FontAwesomeIcon icon={faPen} />
                         </Link>
 
-                        <Link to={`delete-list/${list.id}`}>
-                            <FontAwesomeIcon icon={faTrash} />
-                        </Link>
+                        {/* DELETE LIST */}
+                        <fetcher.Form
+                            method="post"
+                            action={`/delete-list/${list.id}`}
+                            onSubmit={(e) => {
+                                if (!confirm(`Supprimer la liste "${list.name}" ?`)) {
+                                    e.preventDefault();
+                                }
+                            }}
+                        >
+                            <button
+                                type="submit"
+                                className="cursor-pointer hover:text-error"
+                                aria-label="supprimer la liste"
+                            >
+                                <FontAwesomeIcon icon={faTrash} />
+                            </button>
+                        </fetcher.Form>
                     </div>
                 </div>
 
@@ -42,6 +62,7 @@ export default function HomePageListCard({ list }: HomePageListCardProps) {
                 */}
 
                 <ul>
+                    {/* BOOK INFO */}
                     {list.books?.map((book: HomePageBook) => (
                         <li key={book.id}>
                             <span className="font-semibold">{book.title}</span>
