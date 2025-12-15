@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -17,12 +19,13 @@ export default function HomePageListCard({ list }: HomePageListCardProps) {
                     <h2 className="card-title">{list.name}</h2>
 
                     <div className="flex gap-2">
-                        <button type="button">
+                        <Link to={`edit-list/${list.id}`}>
                             <FontAwesomeIcon icon={faPen} />
-                        </button>
-                        <button type="button">
+                        </Link>
+
+                        <Link to={`delete-list/${list.id}`}>
                             <FontAwesomeIcon icon={faTrash} />
-                        </button>
+                        </Link>
                     </div>
                 </div>
 

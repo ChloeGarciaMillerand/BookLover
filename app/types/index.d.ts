@@ -42,3 +42,9 @@ export type Book = {
         color: string;
     } | null;
 };
+
+export type List = {
+    id: string;
+    name: string;
+    organization_id?: string;
+};
