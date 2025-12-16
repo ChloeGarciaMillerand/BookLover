@@ -56,7 +56,7 @@ export default function ListPage(props: Route.ComponentProps) {
             </ul>
 
             <div className="flex justify-end">
-                <Link to="/addList">
+                <Link to={`/list/${list.id}/add-book`}>
                     <Button className="btn-primary">+</Button>
                 </Link>
             </div>
