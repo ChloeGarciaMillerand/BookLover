@@ -1,8 +1,14 @@
 import { Form, useActionData } from "react-router";
 
+import type { Genre } from "~/types";
+
 import { Button } from "./Button";
 
-export default function AddBookForm() {
+type GenreProps = {
+    genres: Genre[];
+};
+
+export default function AddBookForm({ genres }: GenreProps) {
     const actionData = useActionData();
 
     return (
@@ -35,7 +41,20 @@ export default function AddBookForm() {
                     ) : null}
                 </fieldset>
 
-                {/* TODO: select genre */}
+                {/* Select genre */}
+                <fieldset className="fieldset">
+                    <label htmlFor="genre">Genre</label>
+                    <select id="genre" name="genre" defaultValue="Choisir un genre" className="select">
+                        <option disabled={true}>Choisir un genre</option>
+                        {genres.map((genre) =>
+                            genre ? (
+                                <option key={genre.id} value={genre.id}>
+                                    {genre.name}
+                                </option>
+                            ) : null,
+                        )}
+                    </select>
+                </fieldset>
 
                 {/* Author */}
                 <fieldset className="fieldset">
@@ -81,7 +100,7 @@ export default function AddBookForm() {
                         name="library_code"
                         type="text"
                         className="input"
-                        placeholder="Ajouter la cote de la bibliothèque"
+                        placeholder="Exemple: J BOS 38"
                         aria-describedby={actionData?.errors?.library_code ? "library_code-error" : undefined}
                     />
                     {actionData?.errors?.library_code ? (
@@ -93,6 +112,7 @@ export default function AddBookForm() {
 
                 {/* Comment */}
                 <fieldset className="fieldset">
+                    <label htmlFor="comment">Commentaire</label>
                     <textarea id="comment" name="comment" className="input" placeholder="Ajouter un commentaire" />
                 </fieldset>
 

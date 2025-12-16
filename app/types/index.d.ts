@@ -25,7 +25,7 @@ export type Genre = {
     id: string;
     name: string;
     color: string;
-    CreatedAt: string;
+    created_at: string;
 };
 
 export type Book = {

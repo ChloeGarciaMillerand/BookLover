@@ -14,6 +14,18 @@ type Errors = {
     form?: string;
 };
 
+// load genres
+export async function loader(_args: Route.LoaderArgs) {
+    const { data, error } = await supabase.from("genre").select();
+
+    if (error) {
+        throw new Response(error.message, { status: 500 });
+    }
+
+    return { genres: data };
+}
+
+// add new book in database
 export async function action({ params, request }: Route.ActionArgs) {
     const listId = params.id;
     if (!listId) {
@@ -23,7 +35,7 @@ export async function action({ params, request }: Route.ActionArgs) {
     const formData = await request.formData();
 
     const title = String(formData.get("title"));
-    //TODO: add genre
+    const genre_id = String(formData.get("genre"));
     const author = String(formData.get("author"));
     const editor = String(formData.get("editor"));
     const library_code = String(formData.get("library_code"));
@@ -44,7 +56,7 @@ export async function action({ params, request }: Route.ActionArgs) {
     // book registration in database
     const { data: book, error: bookError } = await supabase
         .from("book")
-        .insert([{ title, author, editor, library_code, comment, ISBN }])
+        .insert([{ title, genre_id, author, editor, library_code, comment, ISBN }])
         .select()
         .single();
 
@@ -74,11 +86,12 @@ export async function action({ params, request }: Route.ActionArgs) {
     return redirect(`/list/${listId}`);
 }
 
-export default function addList() {
+export default function addList(props: Route.ComponentProps) {
+    const { genres } = props.loaderData;
     return (
         <div className="m-auto w-4/5 md:w-2/5 mt-4">
             <h1 className="h1">Ajouter un livre</h1>
-            <AddBookForm />
+            <AddBookForm genres={genres} />
         </div>
     );
 }
