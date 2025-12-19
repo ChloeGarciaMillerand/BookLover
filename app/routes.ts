@@ -9,6 +9,7 @@ export default [
     route("delete-list/:id", "routes/deleteList.tsx"),
     // BOOK
     route("list/:id/add-book", "routes/addBook.tsx"),
+    route("list/:listId/edit-book/:bookId", "routes/editBook.tsx"),
     // GENRE
     route("add-genre", "routes/addGenre.tsx"),
 ] satisfies RouteConfig;

@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -17,9 +18,12 @@ export default function BookCard({ book }: BookProps) {
                     <h2 className="card-title">{book.title}</h2>
 
                     <div className="flex gap-2">
-                        <button type="button">
+                        {/* EDIT BOOK */}
+                        <Link to={`edit-book/${book.id}`} aria-label="Modifier le livre" className="hover:text-info">
                             <FontAwesomeIcon icon={faPen} />
-                        </button>
+                        </Link>
+
+                        {/* DELETE BOOK */}
                         <button type="button">
                             <FontAwesomeIcon icon={faTrash} />
                         </button>
