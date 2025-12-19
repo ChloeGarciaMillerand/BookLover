@@ -49,7 +49,7 @@ export default function ListPage(props: Route.ComponentProps) {
                 {list.booklist.map(({ book }) =>
                     book ? (
                         <li key={book.id}>
-                            <BookCard book={book} />
+                            <BookCard book={book} list={list} />
                         </li>
                     ) : null,
                 )}

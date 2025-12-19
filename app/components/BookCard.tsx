@@ -1,16 +1,19 @@
-import { Link } from "react-router";
+import { Link, useFetcher } from "react-router";
 import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import type { Book } from "~/types";
+import type { Book, List } from "~/types";
 
 import Genre from "./Genre";
 
 type BookProps = {
     book: Book;
+    list: List;
 };
 
-export default function BookCard({ book }: BookProps) {
+export default function BookCard({ book, list }: BookProps) {
+    let fetcher = useFetcher();
+
     return (
         <div className="card bg-base-300 text-base-content w-x1 mx-auto my-5">
             <div className="card-body">
@@ -24,9 +27,23 @@ export default function BookCard({ book }: BookProps) {
                         </Link>
 
                         {/* DELETE BOOK */}
-                        <button type="button">
-                            <FontAwesomeIcon icon={faTrash} />
-                        </button>
+                        <fetcher.Form
+                            method="post"
+                            action={`/list/${list.id}/delete-book/${book.id}`}
+                            onSubmit={(e) => {
+                                if (!confirm(`Supprimer le livre "${book.title}" ?`)) {
+                                    e.preventDefault();
+                                }
+                            }}
+                        >
+                            <button
+                                type="submit"
+                                className="cursor-pointer hover:text-error"
+                                aria-label="supprimer le livre"
+                            >
+                                <FontAwesomeIcon icon={faTrash} />
+                            </button>
+                        </fetcher.Form>
                     </div>
                 </div>
 
