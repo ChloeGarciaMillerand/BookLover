@@ -10,6 +10,7 @@ export default [
     // BOOK
     route("list/:id/add-book", "routes/addBook.tsx"),
     route("list/:listId/edit-book/:bookId", "routes/editBook.tsx"),
+    route("list/:id/delete-book/:bookId", "routes/deleteBook.tsx"),
     // GENRE
     route("add-genre", "routes/addGenre.tsx"),
 ] satisfies RouteConfig;

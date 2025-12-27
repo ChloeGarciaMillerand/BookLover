@@ -46,5 +46,5 @@ export type Book = {
 export type List = {
     id: string;
     name: string;
-    organization_id?: string;
+    organization_id?: string | null;
 };
