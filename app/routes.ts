@@ -13,4 +13,8 @@ export default [
     route("list/:id/delete-book/:bookId", "routes/deleteBook.tsx"),
     // GENRE
     route("add-genre", "routes/addGenre.tsx"),
+    // AUTH
+    route("signup", "routes/signup.tsx"),
+    route("signin", "routes/signin.tsx"),
+    route("signout", "routes/signout.tsx"),
 ] satisfies RouteConfig;
