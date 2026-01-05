@@ -9,7 +9,7 @@ import Footer from "./components/footer";
 import Header from "./components/header";
 
 export async function loader({ request }: Route.LoaderArgs) {
-    const { supabase, headers } = getSupabase(request);
+    const { supabase } = getSupabase(request);
 
     const {
         data: { session },
