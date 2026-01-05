@@ -4,7 +4,7 @@ import { getSupabase } from "~/db/client";
 import type { Route } from "./+types/signout";
 import { signout } from "~/db/auth";
 
-export default async function action({ request }: Route.ActionArgs) {
+export async function action({ request }: Route.ActionArgs) {
     // signout
     const { supabase, headers } = getSupabase(request);
     try {

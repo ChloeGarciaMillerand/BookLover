@@ -1,9 +1,16 @@
-import { NavLink } from "react-router";
+import { NavLink, Form } from "react-router";
+
+import type { User } from "@supabase/supabase-js";
 
 import logoLight from "~/assets/icons/logo-light.svg";
 import logoDark from "~/assets/icons/logo-dark.svg";
+import { Button } from "./Button";
 
-export default function Header() {
+type HeaderProps = {
+    user: User | null;
+};
+
+export default function Header({ user }: HeaderProps) {
     return (
         <header>
             <div className="navbar w-full bg-base-100 shadow-sm">
@@ -51,6 +58,18 @@ export default function Header() {
                                     Mon compte
                                 </NavLink>
                             </li>
+                            {user && (
+                                <>
+                                    <li>
+                                        <p>{user.email}</p>
+                                    </li>
+                                    <li>
+                                        <Form method="post" action="/signout">
+                                            <Button type="submit">Se déconnecter</Button>
+                                        </Form>
+                                    </li>
+                                </>
+                            )}
                         </ul>
                     </div>
                 </div>

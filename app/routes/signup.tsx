@@ -47,7 +47,6 @@ export async function action({ request }: Route.ActionArgs) {
     return redirect("/", { headers });
 }
 
-//TODO: page + component
 export default function SignupPage() {
     return (
         <div className="m-auto w-4/5 md:w-2/5 mt-4">
