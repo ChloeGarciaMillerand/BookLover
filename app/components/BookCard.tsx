@@ -1,6 +1,5 @@
 import { Link, useFetcher } from "react-router";
-import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Pen, Trash } from "lucide-react";
 
 import type { Book, List } from "~/types";
 
@@ -23,7 +22,7 @@ export default function BookCard({ book, list }: BookProps) {
                     <div className="flex gap-2">
                         {/* EDIT BOOK */}
                         <Link to={`edit-book/${book.id}`} aria-label="Modifier le livre" className="hover:text-info">
-                            <FontAwesomeIcon icon={faPen} />
+                            <Pen size={18} aria-hidden="true" />
                         </Link>
 
                         {/* DELETE BOOK */}
@@ -41,7 +40,7 @@ export default function BookCard({ book, list }: BookProps) {
                                 className="cursor-pointer hover:text-error"
                                 aria-label="supprimer le livre"
                             >
-                                <FontAwesomeIcon icon={faTrash} />
+                                <Trash size={18} aria-hidden="true" />
                             </button>
                         </fetcher.Form>
                     </div>

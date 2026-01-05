@@ -1,7 +1,6 @@
 import { Link, useFetcher } from "react-router";
 
-import { faPen, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Pen, Trash } from "lucide-react";
 
 import type { HomePageBook, HomePageList } from "~/types";
 
@@ -25,7 +24,7 @@ export default function HomePageListCard({ list }: HomePageListCardProps) {
                     <div className="flex gap-2">
                         {/* EDIT LIST */}
                         <Link to={`edit-list/${list.id}`} aria-label="Modifier la liste" className="hover:text-info">
-                            <FontAwesomeIcon icon={faPen} />
+                            <Pen size={18} aria-hidden="true" />
                         </Link>
 
                         {/* DELETE LIST */}
@@ -43,7 +42,7 @@ export default function HomePageListCard({ list }: HomePageListCardProps) {
                                 className="cursor-pointer hover:text-error"
                                 aria-label="supprimer la liste"
                             >
-                                <FontAwesomeIcon icon={faTrash} />
+                                <Trash size={18} aria-hidden="true" />
                             </button>
                         </fetcher.Form>
                     </div>
