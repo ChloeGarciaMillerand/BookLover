@@ -1,6 +1,7 @@
+import { redirect } from "react-router";
+
 import { getSupabase } from "~/db/client";
 import type { Route } from "./+types/signout";
-import { redirect } from "react-router";
 import { signout } from "~/db/auth";
 
 export default async function action({ request }: Route.ActionArgs) {
@@ -9,7 +10,10 @@ export default async function action({ request }: Route.ActionArgs) {
     try {
         await signout({ supabase });
     } catch {
-        // TODO
+        return new Response(JSON.stringify({ errors: { form: "Erreur lors de la déconnexion" } }), {
+            status: 500,
+            headers: { "Content-Type": "application/json" },
+        });
     }
 
     // Redirect after success

@@ -1,7 +1,10 @@
 import { data, redirect } from "react-router";
+
 import type { Route } from "./+types/signup";
 import { getSupabase } from "~/db/client";
 import { signup } from "~/db/auth";
+
+import SignupForm from "~/components/SignupForm";
 
 type Errors = {
     email?: string;
@@ -34,7 +37,10 @@ export async function action({ request }: Route.ActionArgs) {
     try {
         await signup({ supabase, credentials: { email, password } });
     } catch {
-        // TODO
+        return new Response(JSON.stringify({ errors: { form: "Erreur lors de la création du compte" } }), {
+            status: 500,
+            headers: { "Content-Type": "application/json" },
+        });
     }
 
     // Redirect after success
@@ -42,4 +48,11 @@ export async function action({ request }: Route.ActionArgs) {
 }
 
 //TODO: page + component
-export default function SignupPage() {}
+export default function SignupPage() {
+    return (
+        <div className="m-auto w-4/5 md:w-2/5 mt-4">
+            <h1 className="h1">Inscription</h1>
+            <SignupForm />
+        </div>
+    );
+}
