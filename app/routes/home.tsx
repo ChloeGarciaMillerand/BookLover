@@ -1,4 +1,4 @@
-import { Link, Navigate, useNavigate, useOutletContext } from "react-router";
+import { Link, Navigate, useOutletContext } from "react-router";
 
 import { supabase } from "~/db/client";
 import type { Route } from "./+types/home";
@@ -7,7 +7,6 @@ import HomePageListCard from "../components/HomePageListCard";
 import { Button } from "~/components/Button";
 import type { HomePageList } from "~/types";
 import type { User } from "@supabase/supabase-js";
-import { useEffect } from "react";
 
 export function meta(_args: Route.MetaArgs) {
     return [
