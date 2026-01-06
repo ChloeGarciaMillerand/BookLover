@@ -1,4 +1,4 @@
-import { Link, redirect, useNavigate, useOutletContext } from "react-router";
+import { Link, Navigate, useNavigate, useOutletContext } from "react-router";
 
 import { supabase } from "~/db/client";
 import type { Route } from "./+types/home";
@@ -74,24 +74,12 @@ export async function loader(_props: Route.LoaderArgs) {
 
 export default function HomePage(props: Route.ComponentProps) {
     const { user } = useOutletContext<ContextType>();
-    const navigate = useNavigate();
     const { lists } = props.loaderData;
 
     //redirect if no user logged in
-    useEffect(() => {
-        if (!user) {
-            navigate("/landing", { replace: true });
-        }
-    }, [user]);
-
-    if (!user) return null;
-
-    /*
     if (!user) {
-        navigate("/landing", { replace: true });
-        return null;
+        return <Navigate to="/landing" replace />;
     }
-    */
 
     return (
         <div className="m-auto w-4/5 mt-4">
