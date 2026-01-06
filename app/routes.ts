@@ -1,6 +1,13 @@
 import { type RouteConfig, index, route } from "@react-router/dev/routes";
 
 export default [
+    // LANDING
+    route("landing", "routes/landing.tsx"),
+    // AUTH
+    route("signup", "routes/signup.tsx"),
+    route("signin", "routes/signin.tsx"),
+    route("signout", "routes/signout.tsx"),
+    // HOME
     index("routes/home.tsx"),
     // LIST
     route("list/:id", "routes/list.tsx"),
@@ -13,8 +20,4 @@ export default [
     route("list/:id/delete-book/:bookId", "routes/deleteBook.tsx"),
     // GENRE
     route("add-genre", "routes/addGenre.tsx"),
-    // AUTH
-    route("signup", "routes/signup.tsx"),
-    route("signin", "routes/signin.tsx"),
-    route("signout", "routes/signout.tsx"),
 ] satisfies RouteConfig;

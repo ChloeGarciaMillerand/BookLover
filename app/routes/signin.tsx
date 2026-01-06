@@ -1,10 +1,17 @@
-import { data, redirect } from "react-router";
+import { data, Link, redirect } from "react-router";
 
 import { getSupabase } from "~/db/client";
 import type { Route } from "./+types/signin";
 import { signin } from "~/db/auth";
 
 import SigninForm from "~/components/SigninForm";
+
+export function meta(_args: Route.MetaArgs) {
+    return [
+        { title: "BookLover" },
+        { name: "description", content: "Créez un compte pour gérer vos livres facilement!" },
+    ];
+}
 
 type Errors = {
     email?: string;
@@ -56,6 +63,12 @@ export default function SigninPage() {
         <div className="m-auto w-4/5 md:w-2/5 mt-4">
             <h1 className="h1">Connexion</h1>
             <SigninForm />
+            <div className="mt-10">
+                <p className="mb-3">Pas encore de compte?</p>
+                <Link to="/signup" className="btn btn-primary">
+                    S'inscrire
+                </Link>
+            </div>
         </div>
     );
 }

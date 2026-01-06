@@ -1,4 +1,4 @@
-import { data, redirect } from "react-router";
+import { data, Link, redirect } from "react-router";
 
 import type { Route } from "./+types/signup";
 import { getSupabase } from "~/db/client";
@@ -52,6 +52,12 @@ export default function SignupPage() {
         <div className="m-auto w-4/5 md:w-2/5 mt-4">
             <h1 className="h1">Inscription</h1>
             <SignupForm />
+            <div className="mt-10">
+                <p className="mb-3">Déjà un compte?</p>
+                <Link to="/signin" className="btn btn-primary">
+                    Se connecter
+                </Link>
+            </div>
         </div>
     );
 }

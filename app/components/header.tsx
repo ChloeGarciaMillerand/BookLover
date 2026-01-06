@@ -4,7 +4,6 @@ import type { User } from "@supabase/supabase-js";
 
 import logoLight from "~/assets/icons/logo-light.svg";
 import logoDark from "~/assets/icons/logo-dark.svg";
-import { Button } from "./Button";
 
 type HeaderProps = {
     user: User | null;
@@ -59,16 +58,16 @@ export default function Header({ user }: HeaderProps) {
                                 </NavLink>
                             </li>
                             {user && (
-                                <>
-                                    <li>
-                                        <p>{user.email}</p>
-                                    </li>
-                                    <li>
-                                        <Form method="post" action="/signout">
-                                            <Button type="submit">Se déconnecter</Button>
-                                        </Form>
-                                    </li>
-                                </>
+                                <li>
+                                    <Form method="post" action="/signout">
+                                        <button
+                                            type="submit"
+                                            className="nav-links block truncate w-full text-right cursor-pointer"
+                                        >
+                                            Se déconnecter
+                                        </button>
+                                    </Form>
+                                </li>
                             )}
                         </ul>
                     </div>

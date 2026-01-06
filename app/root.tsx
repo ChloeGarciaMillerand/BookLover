@@ -55,8 +55,8 @@ export default function App(props: Route.ComponentProps) {
     return (
         <>
             <Header user={user} />
-            <main className="flex-1">
-                <Outlet />
+            <main className="flex-1 h-full">
+                <Outlet context={{ user }} />
             </main>
             <Footer />
         </>

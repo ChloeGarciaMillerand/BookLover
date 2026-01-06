@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, redirect, useNavigate, useOutletContext } from "react-router";
 
 import { supabase } from "~/db/client";
 import type { Route } from "./+types/home";
@@ -6,6 +6,8 @@ import type { Route } from "./+types/home";
 import HomePageListCard from "../components/HomePageListCard";
 import { Button } from "~/components/Button";
 import type { HomePageList } from "~/types";
+import type { User } from "@supabase/supabase-js";
+import { useEffect } from "react";
 
 export function meta(_args: Route.MetaArgs) {
     return [
@@ -14,7 +16,12 @@ export function meta(_args: Route.MetaArgs) {
     ];
 }
 
+type ContextType = {
+    user: User | null;
+};
+
 export async function loader(_props: Route.LoaderArgs) {
+    // get lists
     const { data, error } = await supabase.from("list").select(`
             id,
             name,
@@ -66,7 +73,26 @@ export async function loader(_props: Route.LoaderArgs) {
 }
 
 export default function HomePage(props: Route.ComponentProps) {
+    const { user } = useOutletContext<ContextType>();
+    const navigate = useNavigate();
     const { lists } = props.loaderData;
+
+    //redirect if no user logged in
+    useEffect(() => {
+        if (!user) {
+            navigate("/landing", { replace: true });
+        }
+    }, [user]);
+
+    if (!user) return null;
+
+    /*
+    if (!user) {
+        navigate("/landing", { replace: true });
+        return null;
+    }
+    */
+
     return (
         <div className="m-auto w-4/5 mt-4">
             <h1 className="h1">Mes listes</h1>
@@ -74,9 +100,7 @@ export default function HomePage(props: Route.ComponentProps) {
             <ul>
                 {lists.map((list) => (
                     <li key={list.id}>
-                        {/*<Link to={`list/${list.id}`} className="block">*/}
                         <HomePageListCard list={list} />
-                        {/*</Link>*/}
                     </li>
                 ))}
             </ul>
