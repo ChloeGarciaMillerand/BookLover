@@ -1,9 +1,8 @@
 import { NavLink, Form } from "react-router";
 
-import type { User } from "@supabase/supabase-js";
-
 import logoLight from "~/assets/icons/logo-light.svg";
 import logoDark from "~/assets/icons/logo-dark.svg";
+import type { User } from "~/types";
 
 type HeaderProps = {
     user: User | null;

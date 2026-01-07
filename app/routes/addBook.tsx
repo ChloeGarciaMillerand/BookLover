@@ -1,6 +1,6 @@
 import { data, redirect } from "react-router";
 
-import { supabase } from "~/db/client";
+import { getSupabase } from "~/db/client";
 import type { Route } from "./+types/addBook";
 
 import AddBookForm from "~/components/addBookForm";
@@ -15,7 +15,8 @@ type Errors = {
 };
 
 // load genres
-export async function loader(_args: Route.LoaderArgs) {
+export async function loader({ request }: Route.LoaderArgs) {
+    const { supabase } = getSupabase(request);
     const { data, error } = await supabase.from("genre").select();
 
     if (error) {
@@ -27,6 +28,8 @@ export async function loader(_args: Route.LoaderArgs) {
 
 // add new book in database
 export async function action({ params, request }: Route.ActionArgs) {
+    const { supabase } = getSupabase(request);
+
     const listId = params.id;
     if (!listId) {
         return data({ errors: { form: "Liste invalide" } }, { status: 400 });

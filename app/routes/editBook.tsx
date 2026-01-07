@@ -1,6 +1,6 @@
 import { data, redirect, useLoaderData } from "react-router";
 
-import { supabase } from "~/db/client";
+import { getSupabase } from "~/db/client";
 import type { Route } from "./+types/editBook";
 
 import EditBookForm from "~/components/editBookForm";
@@ -14,7 +14,9 @@ type Errors = {
     form?: string;
 };
 
-export async function loader({ params }: Route.LoaderArgs) {
+export async function loader({ params, request }: Route.LoaderArgs) {
+    const { supabase } = getSupabase(request);
+
     const { bookId } = params;
 
     if (!bookId) {
@@ -62,6 +64,8 @@ export async function loader({ params }: Route.LoaderArgs) {
 
 // update book
 export async function action({ request, params }: Route.ActionArgs) {
+    const { supabase } = getSupabase(request);
+
     const { bookId } = params;
 
     if (!bookId) {

@@ -1,9 +1,11 @@
 import { redirect } from "react-router";
 
-import { supabase } from "~/db/client";
+import { getSupabase } from "~/db/client";
 import type { Route } from "./+types/deleteList";
 
-export async function action({ params }: Route.ActionArgs) {
+export async function action({ params, request }: Route.ActionArgs) {
+    const { supabase } = getSupabase(request);
+
     const id = params.id;
 
     const { error } = await supabase.from("list").delete().eq("id", id);

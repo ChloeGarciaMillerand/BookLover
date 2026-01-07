@@ -1,12 +1,13 @@
 import { Link, Navigate, useOutletContext } from "react-router";
 
-import { supabase } from "~/db/client";
+import { getSupabase } from "~/db/client";
 import type { Route } from "./+types/home";
 
 import HomePageListCard from "../components/HomePageListCard";
 import { Button } from "~/components/Button";
 import type { HomePageList } from "~/types";
 import type { User } from "@supabase/supabase-js";
+import { authMiddleware, getCurrentUser } from "~/middlewares/authMiddleware";
 
 export function meta(_args: Route.MetaArgs) {
     return [
@@ -19,9 +20,16 @@ type ContextType = {
     user: User | null;
 };
 
-export async function loader(_props: Route.LoaderArgs) {
+export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
+
+export async function loader(params: Route.LoaderArgs) {
+    const user = getCurrentUser(params.context);
+    const { supabase } = getSupabase(params.request);
+
     // get lists
-    const { data, error } = await supabase.from("list").select(`
+    const { data, error } = await supabase
+        .from("list")
+        .select(`
             id,
             name,
             organization (
@@ -40,7 +48,8 @@ export async function loader(_props: Route.LoaderArgs) {
                     )
                 )
             )
-        `);
+        `)
+        .eq("user_id", user.id);
 
     if (error) {
         throw new Error(error.message);

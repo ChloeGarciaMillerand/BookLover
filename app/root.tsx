@@ -12,10 +12,14 @@ export async function loader({ request }: Route.LoaderArgs) {
     const { supabase } = getSupabase(request);
 
     const {
-        data: { session },
-    } = await supabase.auth.getSession();
+        data: { user },
+    } = await supabase.auth.getUser();
 
-    return { user: session?.user ?? null };
+    if (user == null) {
+        return { user: null };
+    }
+
+    return { user: { id: user.id, email: user.email } };
 }
 
 export const links: Route.LinksFunction = () => [
