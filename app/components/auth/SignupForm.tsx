@@ -1,8 +1,8 @@
 import { Form, useActionData } from "react-router";
 
-import { Button } from "./Button";
+import { Button } from "../shared/Button";
 
-export default function SigninForm() {
+export default function SignupForm() {
     const actionData = useActionData();
 
     return (
@@ -54,10 +54,29 @@ export default function SigninForm() {
                         ) : null}
                     </fieldset>
 
+                    {/* Confirm password */}
+                    <fieldset className="fieldset">
+                        <label htmlFor="confirmPassword">Confirmer le mot de passe*</label>
+                        <input
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            type="password"
+                            required
+                            className="input"
+                            placeholder="Votre mot de passe"
+                            aria-describedby={actionData?.errors?.confirmPassword ? "confirmPassword-error" : undefined}
+                        />
+                        {actionData?.errors?.confirmPassword ? (
+                            <p className="register-error-text" id="confirmPassword-error">
+                                {actionData?.errors?.confirmPassword}
+                            </p>
+                        ) : null}
+                    </fieldset>
+
                     {/* submit button */}
                     <div className="mt-5 flex justify-end md:justify-start">
                         <Button type="submit" className="btn-primary">
-                            OK
+                            Créer un compte
                         </Button>
                     </div>
                 </div>

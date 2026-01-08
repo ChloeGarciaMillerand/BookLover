@@ -3,8 +3,9 @@ import { Link, Navigate, useOutletContext } from "react-router";
 import { getSupabase } from "~/db/client";
 import type { Route } from "./+types/home";
 
-import HomePageListCard from "../components/HomePageListCard";
-import { Button } from "~/components/Button";
+import HomePageListCard from "../components/home/HomePageListCard";
+import { Button } from "~/components/shared/Button";
+
 import type { HomePageList } from "~/types";
 import type { User } from "@supabase/supabase-js";
 import { authMiddleware, getCurrentUser } from "~/middlewares/authMiddleware";

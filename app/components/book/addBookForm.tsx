@@ -1,18 +1,15 @@
-import { useEffect, useState } from "react";
 import { Form, useActionData, useFetcher } from "react-router";
+import { useEffect, useState } from "react";
 
-import type { Book, Genre, List } from "~/types";
+import type { Genre } from "~/types";
 
-import { Button } from "./Button";
+import { Button } from "../shared/Button";
 
-type BookProps = {
-    book: Book;
+type GenreProps = {
     genres: Genre[];
-    lists: List[];
-    currentListId: string | null;
 };
 
-export default function EditBookForm({ book, genres, lists, currentListId }: BookProps) {
+export default function AddBookForm({ genres }: GenreProps) {
     const actionData = useActionData();
 
     // used to create new genres
@@ -46,7 +43,7 @@ export default function EditBookForm({ book, genres, lists, currentListId }: Boo
                             type="text"
                             required
                             className="input"
-                            defaultValue={book.title}
+                            placeholder="Titre du livre"
                             aria-describedby={actionData?.errors?.title ? "title-error" : undefined}
                         />
                         {actionData?.errors?.title ? (
@@ -56,23 +53,10 @@ export default function EditBookForm({ book, genres, lists, currentListId }: Boo
                         ) : null}
                     </fieldset>
 
-                    {/* Select list */}
-                    <fieldset className="fieldset">
-                        <label htmlFor="list_id">Liste</label>
-                        <select id="list_id" name="list_id" defaultValue={currentListId ?? ""} className="select">
-                            <option disabled={true}>Choisir une liste</option>
-                            {lists.map((list: List) => (
-                                <option key={list.id} value={list.id}>
-                                    {list.name}
-                                </option>
-                            ))}
-                        </select>
-                    </fieldset>
-
                     {/* Select genre */}
                     <fieldset className="fieldset">
                         <label htmlFor="genre">Genre</label>
-                        <select id="genre" name="genre" defaultValue={book.genre?.id ?? ""} className="select">
+                        <select id="genre" name="genre" defaultValue="Choisir un genre" className="select">
                             <option disabled={true}>Choisir un genre</option>
                             {genres.map((genre) =>
                                 genre ? (
@@ -99,7 +83,6 @@ export default function EditBookForm({ book, genres, lists, currentListId }: Boo
                             name="author"
                             type="text"
                             className="input"
-                            defaultValue={book.author || ""}
                             placeholder="Nom de l'auteur"
                             aria-describedby={actionData?.errors?.author ? "author-error" : undefined}
                         />
@@ -118,7 +101,6 @@ export default function EditBookForm({ book, genres, lists, currentListId }: Boo
                             name="editor"
                             type="text"
                             className="input"
-                            defaultValue={book.editor || ""}
                             placeholder="Nom de l'éditeur"
                             aria-describedby={actionData?.errors?.editor ? "editor-error" : undefined}
                         />
@@ -137,7 +119,6 @@ export default function EditBookForm({ book, genres, lists, currentListId }: Boo
                             name="library_code"
                             type="text"
                             className="input"
-                            defaultValue={book.library_code || ""}
                             placeholder="Exemple: J BOS 38"
                             aria-describedby={actionData?.errors?.library_code ? "library_code-error" : undefined}
                         />
@@ -151,13 +132,7 @@ export default function EditBookForm({ book, genres, lists, currentListId }: Boo
                     {/* Comment */}
                     <fieldset className="fieldset">
                         <label htmlFor="comment">Commentaire</label>
-                        <textarea
-                            id="comment"
-                            name="comment"
-                            className="input"
-                            defaultValue={book.comment || ""}
-                            placeholder="Ajouter un commentaire"
-                        />
+                        <textarea id="comment" name="comment" className="input" placeholder="Ajouter un commentaire" />
                     </fieldset>
 
                     {/* ISBN */}
@@ -168,7 +143,6 @@ export default function EditBookForm({ book, genres, lists, currentListId }: Boo
                             name="ISBN"
                             type="text"
                             className="input"
-                            defaultValue={book.ISBN || ""}
                             placeholder="Exemple: 978-2-07-061275-8"
                             aria-describedby={actionData?.errors?.ISBN ? "ISBN-error" : undefined}
                         />
@@ -182,7 +156,7 @@ export default function EditBookForm({ book, genres, lists, currentListId }: Boo
                     {/* submit button */}
                     <div className="mt-5 flex justify-end md:justify-start">
                         <Button type="submit" className="btn-primary">
-                            Modifier le livre
+                            Ajouter un livre
                         </Button>
                     </div>
                 </div>

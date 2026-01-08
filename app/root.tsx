@@ -5,8 +5,8 @@ import { getSupabase } from "~/db/client";
 import type { Route } from "./+types/root";
 import "./app.css";
 
-import Footer from "./components/footer";
-import Header from "./components/header";
+import Footer from "./components/shared/footer";
+import Header from "./components/shared/header";
 
 export async function loader({ request }: Route.LoaderArgs) {
     const { supabase } = getSupabase(request);

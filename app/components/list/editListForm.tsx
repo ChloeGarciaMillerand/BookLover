@@ -1,8 +1,14 @@
 import { Form, useActionData } from "react-router";
 
-import { Button } from "./Button";
+import type { List } from "~/types";
 
-export default function AddListForm() {
+import { Button } from "../shared/Button";
+
+type ListProps = {
+    list: List;
+};
+
+export default function EditListForm({ list }: ListProps) {
     const actionData = useActionData();
 
     return (
@@ -23,7 +29,7 @@ export default function AddListForm() {
                         name="name"
                         type="text"
                         className="input"
-                        placeholder="Nom de la liste"
+                        defaultValue={list.name}
                         aria-describedby={actionData?.errors?.name ? "name-error" : undefined}
                     />
                     {actionData?.errors?.name ? (
@@ -35,7 +41,7 @@ export default function AddListForm() {
                 {/* submit button */}
                 <div className="mt-5 flex justify-end md:justify-start">
                     <Button type="submit" className="btn-primary">
-                        Créer une liste
+                        Modifier la liste
                     </Button>
                 </div>
             </div>

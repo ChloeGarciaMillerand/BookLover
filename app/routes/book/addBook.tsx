@@ -2,8 +2,7 @@ import { data, redirect } from "react-router";
 
 import { getSupabase } from "~/db/client";
 import type { Route } from "./+types/addBook";
-
-import AddBookForm from "~/components/addBookForm";
+import AddBookForm from "~/components/book/addBookForm";
 
 export function meta(_args: Route.MetaArgs) {
     return [{ title: "BookLover" }, { name: "description", content: "Ajouter un nouveau livre à votre liste" }];
