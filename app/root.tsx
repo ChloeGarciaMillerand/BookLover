@@ -1,10 +1,26 @@
 import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 
+import { getSupabase } from "~/db/client";
+
 import type { Route } from "./+types/root";
 import "./app.css";
 
 import Footer from "./components/footer";
 import Header from "./components/header";
+
+export async function loader({ request }: Route.LoaderArgs) {
+    const { supabase } = getSupabase(request);
+
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
+
+    if (user == null) {
+        return { user: null };
+    }
+
+    return { user: { id: user.id, email: user.email } };
+}
 
 export const links: Route.LinksFunction = () => [
     { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -30,9 +46,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <Links />
             </head>
             <body className="min-h-screen flex flex-col">
-                <Header />
-                <main className="flex-1">{children}</main>
-                <Footer />
+                {children}
                 <ScrollRestoration />
                 <Scripts />
             </body>
@@ -40,8 +54,17 @@ export function Layout({ children }: { children: React.ReactNode }) {
     );
 }
 
-export default function App() {
-    return <Outlet />;
+export default function App(props: Route.ComponentProps) {
+    const { user } = props.loaderData;
+    return (
+        <>
+            <Header user={user} />
+            <main className="flex-1 h-full">
+                <Outlet context={{ user }} />
+            </main>
+            <Footer />
+        </>
+    );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {

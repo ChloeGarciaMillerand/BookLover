@@ -1,9 +1,14 @@
-import { NavLink } from "react-router";
+import { NavLink, Form } from "react-router";
 
 import logoLight from "~/assets/icons/logo-light.svg";
 import logoDark from "~/assets/icons/logo-dark.svg";
+import type { User } from "~/types";
 
-export default function Header() {
+type HeaderProps = {
+    user: User | null;
+};
+
+export default function Header({ user }: HeaderProps) {
     return (
         <header>
             <div className="navbar w-full bg-base-100 shadow-sm">
@@ -51,6 +56,18 @@ export default function Header() {
                                     Mon compte
                                 </NavLink>
                             </li>
+                            {user && (
+                                <li>
+                                    <Form method="post" action="/signout">
+                                        <button
+                                            type="submit"
+                                            className="nav-links block truncate w-full text-right cursor-pointer"
+                                        >
+                                            Se déconnecter
+                                        </button>
+                                    </Form>
+                                </li>
+                            )}
                         </ul>
                     </div>
                 </div>

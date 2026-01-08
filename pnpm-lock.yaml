@@ -8,21 +8,15 @@ importers:
 
   .:
     dependencies:
-      '@fortawesome/fontawesome-svg-core':
-        specifier: ^7.1.0
-        version: 7.1.0
-      '@fortawesome/free-solid-svg-icons':
-        specifier: ^7.1.0
-        version: 7.1.0
-      '@fortawesome/react-fontawesome':
-        specifier: ^3.1.1
-        version: 3.1.1(@fortawesome/fontawesome-svg-core@7.1.0)(react@19.2.1)
       '@react-router/node':
         specifier: 7.10.1
         version: 7.10.1(react-router@7.10.1(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(typescript@5.9.3)
       '@react-router/serve':
         specifier: 7.10.1
         version: 7.10.1(react-router@7.10.1(react-dom@19.2.1(react@19.2.1))(react@19.2.1))(typescript@5.9.3)
+      '@supabase/ssr':
+        specifier: ^0.8.0
+        version: 0.8.0(@supabase/supabase-js@2.87.0)
       '@supabase/supabase-js':
         specifier: ^2.87.0
         version: 2.87.0
@@ -32,6 +26,9 @@ importers:
       isbot:
         specifier: ^5.1.31
         version: 5.1.32
+      lucide-react:
+        specifier: ^0.562.0
+        version: 0.562.0(react@19.2.1)
       react:
         specifier: ^19.2.1
         version: 19.2.1
@@ -382,25 +379,6 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@fortawesome/fontawesome-common-types@7.1.0':
-    resolution: {integrity: sha512-l/BQM7fYntsCI//du+6sEnHOP6a74UixFyOYUyz2DLMXKx+6DEhfR3F2NYGE45XH1JJuIamacb4IZs9S0ZOWLA==}
-    engines: {node: '>=6'}
-
-  '@fortawesome/fontawesome-svg-core@7.1.0':
-    resolution: {integrity: sha512-fNxRUk1KhjSbnbuBxlWSnBLKLBNun52ZBTcs22H/xEEzM6Ap81ZFTQ4bZBxVQGQgVY0xugKGoRcCbaKjLQ3XZA==}
-    engines: {node: '>=6'}
-
-  '@fortawesome/free-solid-svg-icons@7.1.0':
-    resolution: {integrity: sha512-Udu3K7SzAo9N013qt7qmm22/wo2hADdheXtBfxFTecp+ogsc0caQNRKEb7pkvvagUGOpG9wJC1ViH6WXs8oXIA==}
-    engines: {node: '>=6'}
-
-  '@fortawesome/react-fontawesome@3.1.1':
-    resolution: {integrity: sha512-EDllr9hpodc21odmUywHS1alXNiCd4E8sp5GJ5s7wYINz8vSmMiNWpALTiuYODb865YyQ/NlyiN4mbXp7HCNqg==}
-    engines: {node: '>=20'}
-    peerDependencies:
-      '@fortawesome/fontawesome-svg-core': ~6 || ~7
-      react: ^18.0.0 || ^19.0.0
-
   '@isaacs/fs-minipass@4.0.1':
     resolution: {integrity: sha512-wgm9Ehl2jpeqP3zw/7mo3kRHFp5MEDhqAdwy1fTGkHAwnkGOVsgpvQhL8B5n1qlb01jV3n/bI0ZfZp5lWA1k4w==}
     engines: {node: '>=18.0.0'}
@@ -684,6 +662,11 @@ packages:
   '@supabase/realtime-js@2.87.0':
     resolution: {integrity: sha512-38l2jg9yb9cMos3cVWuX9X+nMFZFzW8sD/MJiVvbpRes9gPZ210AMGExYU8/kix5uq/ymSoSsKLnV8DhXYWqOg==}
     engines: {node: '>=20.0.0'}
+
+  '@supabase/ssr@0.8.0':
+    resolution: {integrity: sha512-/PKk8kNFSs8QvvJ2vOww1mF5/c5W8y42duYtXvkOSe+yZKRgTTZywYG2l41pjhNomqESZCpZtXuWmYjFRMV+dw==}
+    peerDependencies:
+      '@supabase/supabase-js': ^2.76.1
 
   '@supabase/storage-js@2.87.0':
     resolution: {integrity: sha512-luTghajY3IrrKglP5bjf2/51ASg5xaZUALsZuzR23RmuMg4lc4pzq4TxEgnkLoUGDT7Ppr9+uSgvIhf1snXbAw==}
@@ -1327,6 +1310,11 @@ packages:
 
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
+
+  lucide-react@0.562.0:
+    resolution: {integrity: sha512-82hOAu7y0dbVuFfmO4bYF1XEwYk/mEbM5E+b1jgci/udUBEE/R7LF5Ip0CCEmXe8AybRM8L+04eP+LGZeDvkiw==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
   magic-string@0.30.21:
     resolution: {integrity: sha512-vd2F4YUyEXKGcLHoq+TEyCjxueSeHnFxyyjNp80yg0XV4vUhnDer/lvvlqM/arB5bXQN5K2/3oinyCRyx8T2CQ==}
@@ -2125,21 +2113,6 @@ snapshots:
   '@esbuild/win32-x64@0.25.12':
     optional: true
 
-  '@fortawesome/fontawesome-common-types@7.1.0': {}
-
-  '@fortawesome/fontawesome-svg-core@7.1.0':
-    dependencies:
-      '@fortawesome/fontawesome-common-types': 7.1.0
-
-  '@fortawesome/free-solid-svg-icons@7.1.0':
-    dependencies:
-      '@fortawesome/fontawesome-common-types': 7.1.0
-
-  '@fortawesome/react-fontawesome@3.1.1(@fortawesome/fontawesome-svg-core@7.1.0)(react@19.2.1)':
-    dependencies:
-      '@fortawesome/fontawesome-svg-core': 7.1.0
-      react: 19.2.1
-
   '@isaacs/fs-minipass@4.0.1':
     dependencies:
       minipass: 7.1.2
@@ -2387,6 +2360,11 @@ snapshots:
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
+
+  '@supabase/ssr@0.8.0(@supabase/supabase-js@2.87.0)':
+    dependencies:
+      '@supabase/supabase-js': 2.87.0
+      cookie: 1.1.1
 
   '@supabase/storage-js@2.87.0':
     dependencies:
@@ -2996,6 +2974,10 @@ snapshots:
   lru-cache@5.1.1:
     dependencies:
       yallist: 3.1.1
+
+  lucide-react@0.562.0(react@19.2.1):
+    dependencies:
+      react: 19.2.1
 
   magic-string@0.30.21:
     dependencies:

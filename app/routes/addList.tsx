@@ -1,7 +1,7 @@
 import { data, redirect } from "react-router";
 
 import type { Route } from "./+types/addList";
-import { supabase } from "~/db/client";
+import { getSupabase } from "~/db/client";
 
 import AddListForm from "~/components/addListForm";
 
@@ -15,6 +15,7 @@ type Errors = {
 };
 
 export async function action({ request }: Route.ActionArgs) {
+    const { supabase } = getSupabase(request);
     const formData = await request.formData();
     const name = String(formData.get("name"));
 
@@ -33,6 +34,7 @@ export async function action({ request }: Route.ActionArgs) {
     const { error } = await supabase.from("list").insert([{ name }]);
 
     if (error) {
+        console.error(error);
         return new Response(JSON.stringify({ errors: { form: "Erreur lors de la création de la liste" } }), {
             status: 500,
             headers: { "Content-Type": "application/json" },

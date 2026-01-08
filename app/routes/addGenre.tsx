@@ -1,6 +1,6 @@
 import { data } from "react-router";
 
-import { supabase } from "~/db/client";
+import { getSupabase } from "~/db/client";
 import type { Route } from "./+types/addGenre";
 
 type Errors = {
@@ -10,6 +10,8 @@ type Errors = {
 };
 
 export async function action({ request }: Route.ActionArgs) {
+    const { supabase } = getSupabase(request);
+
     const formData = await request.formData();
     const name = String(formData.get("name"));
     const color = String(formData.get("color"));

@@ -1,6 +1,6 @@
 import { Link } from "react-router";
 
-import { supabase } from "~/db/client";
+import { getSupabase } from "~/db/client";
 import type { Route } from "./+types/list";
 
 import BookCard from "~/components/BookCard";
@@ -10,8 +10,10 @@ export function meta(_args: Route.MetaArgs) {
     return [{ title: "BookLover" }, { name: "description", content: "Voir le détail de ma liste de livres" }];
 }
 
-export async function loader(args: Route.LoaderArgs) {
-    const listId = args.params.id;
+export async function loader({ params, request }: Route.LoaderArgs) {
+    const { supabase } = getSupabase(request);
+
+    const listId = params.id;
 
     if (!listId) {
         throw new Response("Missing list id", { status: 400 });

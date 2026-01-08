@@ -47,4 +47,10 @@ export type List = {
     id: string;
     name: string;
     organization_id?: string | null;
+    user_id: string;
+};
+
+export type User = {
+    id: string;
+    email: string | undefined | null;
 };

@@ -1,6 +1,6 @@
 import { data, redirect, useLoaderData } from "react-router";
 
-import { supabase } from "~/db/client";
+import { getSupabase } from "~/db/client";
 import type { Route } from "./+types/editList";
 
 import EditListForm from "~/components/editListForm";
@@ -15,8 +15,9 @@ type Errors = {
 };
 
 // load list data
-export async function loader(args: Route.LoaderArgs) {
-    const listId = args.params.id;
+export async function loader({ params, request }: Route.LoaderArgs) {
+    const { supabase } = getSupabase(request);
+    const listId = params.id;
 
     if (!listId) {
         throw new Response("Missing list id", { status: 400 });
@@ -33,6 +34,8 @@ export async function loader(args: Route.LoaderArgs) {
 
 // update list
 export async function action({ request, params }: Route.ActionArgs) {
+    const { supabase } = getSupabase(request);
+
     const formData = await request.formData();
     const name = String(formData.get("name"));
     const id = params.id;

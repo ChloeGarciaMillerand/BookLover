@@ -1,10 +1,12 @@
 import { redirect } from "react-router";
 
-import { supabase } from "~/db/client";
+import { getSupabase } from "~/db/client";
 
 import type { Route } from "./+types/deleteBook";
 
-export async function action({ params }: Route.ActionArgs) {
+export async function action({ params, request }: Route.ActionArgs) {
+    const { supabase } = getSupabase(request);
+
     const { id: listId, bookId } = params;
 
     if (!bookId || !listId) {

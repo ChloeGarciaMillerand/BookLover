@@ -1,11 +1,13 @@
-import { Link } from "react-router";
+import { Link, Navigate, useOutletContext } from "react-router";
 
-import { supabase } from "~/db/client";
+import { getSupabase } from "~/db/client";
 import type { Route } from "./+types/home";
 
 import HomePageListCard from "../components/HomePageListCard";
 import { Button } from "~/components/Button";
 import type { HomePageList } from "~/types";
+import type { User } from "@supabase/supabase-js";
+import { authMiddleware, getCurrentUser } from "~/middlewares/authMiddleware";
 
 export function meta(_args: Route.MetaArgs) {
     return [
@@ -14,8 +16,20 @@ export function meta(_args: Route.MetaArgs) {
     ];
 }
 
-export async function loader(_props: Route.LoaderArgs) {
-    const { data, error } = await supabase.from("list").select(`
+type ContextType = {
+    user: User | null;
+};
+
+export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
+
+export async function loader(params: Route.LoaderArgs) {
+    const user = getCurrentUser(params.context);
+    const { supabase } = getSupabase(params.request);
+
+    // get lists
+    const { data, error } = await supabase
+        .from("list")
+        .select(`
             id,
             name,
             organization (
@@ -34,7 +48,8 @@ export async function loader(_props: Route.LoaderArgs) {
                     )
                 )
             )
-        `);
+        `)
+        .eq("user_id", user.id);
 
     if (error) {
         throw new Error(error.message);
@@ -66,7 +81,14 @@ export async function loader(_props: Route.LoaderArgs) {
 }
 
 export default function HomePage(props: Route.ComponentProps) {
+    const { user } = useOutletContext<ContextType>();
     const { lists } = props.loaderData;
+
+    //redirect if no user logged in
+    if (!user) {
+        return <Navigate to="/landing" replace />;
+    }
+
     return (
         <div className="m-auto w-4/5 mt-4">
             <h1 className="h1">Mes listes</h1>
@@ -74,9 +96,7 @@ export default function HomePage(props: Route.ComponentProps) {
             <ul>
                 {lists.map((list) => (
                     <li key={list.id}>
-                        {/*<Link to={`list/${list.id}`} className="block">*/}
                         <HomePageListCard list={list} />
-                        {/*</Link>*/}
                     </li>
                 ))}
             </ul>
