@@ -1,4 +1,5 @@
 import { createServerClient, parseCookieHeader, serializeCookieHeader } from "@supabase/ssr";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import "dotenv/config";
 import type { Database } from "~/types/database.types";
 
@@ -28,3 +29,5 @@ export const getSupabase = (request: Request) => {
 
     return { supabase, headers };
 };
+
+export type MySupabaseClient = SupabaseClient<Database>;

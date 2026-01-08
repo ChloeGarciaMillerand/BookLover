@@ -1,7 +1,6 @@
-import type { SupabaseClient } from "@supabase/supabase-js";
-import type { Database } from "~/types/database.types";
+import type { MySupabaseClient } from "./client";
 
-export async function getUserLists(supabase: SupabaseClient<Database>, { userId }: { userId: string }) {
+export async function getUserLists(supabase: MySupabaseClient, { userId }: { userId: string }) {
     const { data, error } = await supabase
         .from("list")
         .select(`
@@ -37,23 +36,25 @@ export async function getUserLists(supabase: SupabaseClient<Database>, { userId 
         name: list.name,
         organization: list.organization ?? undefined,
         books: list.booklist
-            .flatMap((entry) => entry.book ?? [])
-            .map((book) => {
-                const genre = book.genre ?? undefined;
-                return {
-                    id: book.id,
-                    title: book.title,
-                    author: book.author ?? undefined,
-                    genre: genre
-                        ? {
-                              id: genre.id,
-                              name: genre.name,
-                              color: genre.color,
-                          }
-                        : undefined,
-                };
-            }),
+            .filter((entry) => entry.book !== null)
+            .map((entry) => ({
+                id: entry.book!.id,
+                title: entry.book!.title,
+                author: entry.book!.author ?? undefined,
+                genre: entry.book!.genre
+                    ? {
+                          id: entry.book!.genre.id,
+                          name: entry.book!.genre.name,
+                          color: entry.book!.genre.color,
+                      }
+                    : undefined,
+            })),
     }));
 
     return lists;
 }
+
+// Infer the return type of the function
+// Awaited = Give me the result of the promise (as the function is async)
+// ReturnType = Give me the type of the function result (here a promise)
+// export type HomePageList = Awaited<ReturnType<typeof getUserLists>>;
