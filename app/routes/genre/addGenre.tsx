@@ -1,7 +1,10 @@
-import { data } from "react-router";
+import { data, useFetcher } from "react-router";
+import { useEffect } from "react";
 
-import { getSupabase } from "~/db/client";
 import type { Route } from "./+types/addGenre";
+import { getSupabase } from "~/db/client";
+
+import { Button } from "~/components/shared/Button";
 
 type Errors = {
     name?: string;
@@ -41,4 +44,46 @@ export async function action({ request }: Route.ActionArgs) {
     }
 
     return data({ genre });
+}
+
+// modal to add a new genre
+export function AddGenreModal({ onClose }: { onClose: () => void }) {
+    // used to create new genres
+    const fetcher = useFetcher();
+
+    // close the modal after creating a new genre
+    useEffect(() => {
+        if (fetcher.state === "idle" && fetcher.data?.genre) {
+            onClose();
+        }
+    }, [fetcher.state, fetcher.data]);
+
+    return (
+        <dialog open className="modal modal-bottom sm:modal-middle">
+            <div className="modal-box">
+                <h3 className="font-bold text-lg">Ajouter un genre</h3>
+
+                <fetcher.Form method="POST" action="/add-genre">
+                    <fieldset className="fieldset">
+                        <label htmlFor="name">Nom</label>
+                        <input id="name" name="name" className="input" />
+                    </fieldset>
+
+                    <fieldset className="fieldset">
+                        <label htmlFor="color">Couleur</label>
+                        <input id="color" name="color" type="color" />
+                    </fieldset>
+
+                    <div className="flex justify-end gap-2 mt-4">
+                        <Button type="button" onClick={onClose}>
+                            Annuler
+                        </Button>
+                        <Button type="submit" className="btn-primary">
+                            Créer
+                        </Button>
+                    </div>
+                </fetcher.Form>
+            </div>
+        </dialog>
+    );
 }
