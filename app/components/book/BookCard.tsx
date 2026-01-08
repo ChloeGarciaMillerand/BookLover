@@ -3,7 +3,7 @@ import { Pen, Trash } from "lucide-react";
 
 import type { Book, List } from "~/types";
 
-import Genre from "./Genre";
+import Genre from "../genre/Genre";
 
 type BookProps = {
     book: Book;

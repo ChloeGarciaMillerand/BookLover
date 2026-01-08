@@ -3,8 +3,8 @@ import { Link } from "react-router";
 import { getSupabase } from "~/db/client";
 import type { Route } from "./+types/list";
 
-import BookCard from "~/components/BookCard";
-import { Button } from "~/components/Button";
+import BookCard from "~/components/book/BookCard";
+import { Button } from "~/components/shared/Button";
 
 export function meta(_args: Route.MetaArgs) {
     return [{ title: "BookLover" }, { name: "description", content: "Voir le détail de ma liste de livres" }];

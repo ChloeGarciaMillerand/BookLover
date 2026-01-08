@@ -3,7 +3,7 @@ import { data, redirect } from "react-router";
 import type { Route } from "./+types/addList";
 import { getSupabase } from "~/db/client";
 
-import AddListForm from "~/components/addListForm";
+import AddListForm from "~/components/list/addListForm";
 
 export function meta(_args: Route.MetaArgs) {
     return [{ title: "BookLover" }, { name: "description", content: "Ajouter une nouvelle liste de livres" }];

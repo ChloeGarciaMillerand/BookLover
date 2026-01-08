@@ -4,7 +4,7 @@ import type { Route } from "./+types/signup";
 import { getSupabase } from "~/db/client";
 import { signup } from "~/db/auth";
 
-import SignupForm from "~/components/SignupForm";
+import SignupForm from "~/components/auth/SignupForm";
 
 type Errors = {
     email?: string;

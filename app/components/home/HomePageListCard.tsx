@@ -4,7 +4,7 @@ import { Pen, Trash } from "lucide-react";
 
 import type { HomePageBook, HomePageList } from "~/types";
 
-import Genre from "./Genre";
+import Genre from "../genre/Genre";
 
 type HomePageListCardProps = {
     list: HomePageList;

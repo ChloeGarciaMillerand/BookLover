@@ -4,7 +4,7 @@ import { getSupabase } from "~/db/client";
 import type { Route } from "./+types/signin";
 import { signin } from "~/db/auth";
 
-import SigninForm from "~/components/SigninForm";
+import SigninForm from "~/components/auth/SigninForm";
 
 export function meta(_args: Route.MetaArgs) {
     return [

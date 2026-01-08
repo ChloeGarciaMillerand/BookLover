@@ -3,7 +3,7 @@ import { data, redirect, useLoaderData } from "react-router";
 import { getSupabase } from "~/db/client";
 import type { Route } from "./+types/editBook";
 
-import EditBookForm from "~/components/editBookForm";
+import EditBookForm from "~/components/book/editBookForm";
 
 export function meta(_args: Route.MetaArgs) {
     return [{ title: "BookLover" }, { name: "description", content: "Modifier un livre" }];
