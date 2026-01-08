@@ -2,7 +2,6 @@ import { data, redirect } from "react-router";
 
 import { getSupabase } from "~/db/client";
 import type { Route } from "./+types/addBook";
-
 import AddBookForm from "~/components/addBookForm";
 
 export function meta(_args: Route.MetaArgs) {
