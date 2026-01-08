@@ -6,9 +6,10 @@ import type { Route } from "./+types/home";
 import HomePageListCard from "../components/home/HomePageListCard";
 import { Button } from "~/components/shared/Button";
 
-import type { HomePageList } from "~/types";
 import type { User } from "@supabase/supabase-js";
 import { authMiddleware, getCurrentUser } from "~/middlewares/authMiddleware";
+
+import { getUserLists } from "~/db/list";
 
 export function meta(_args: Route.MetaArgs) {
     return [
@@ -27,6 +28,11 @@ export async function loader(params: Route.LoaderArgs) {
     const user = getCurrentUser(params.context);
     const { supabase } = getSupabase(params.request);
 
+    const lists = await getUserLists(supabase, { userId: user.id });
+
+    return { lists };
+
+    /*
     // get lists
     const { data, error } = await supabase
         .from("list")
@@ -79,6 +85,7 @@ export async function loader(params: Route.LoaderArgs) {
     }));
 
     return { lists };
+    */
 }
 
 export default function HomePage(props: Route.ComponentProps) {
