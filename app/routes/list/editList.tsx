@@ -1,13 +1,22 @@
-import { data, redirect, useLoaderData } from "react-router";
+import { data, Navigate, redirect, useLoaderData, useOutletContext } from "react-router";
 
 import { getSupabase } from "~/db/client";
 import type { Route } from "./+types/editList";
 
 import EditListForm from "~/components/list/editListForm";
+import { getOneList, updateList } from "~/db/list";
+import { authMiddleware } from "~/middlewares/authMiddleware";
+import type { User } from "@supabase/supabase-js";
 
 export function meta(_args: Route.MetaArgs) {
     return [{ title: "BookLover" }, { name: "description", content: "Modifier la liste de livres" }];
 }
+
+type ContextType = {
+    user: User | null;
+};
+
+export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
 
 type Errors = {
     name?: string;
@@ -23,13 +32,16 @@ export async function loader({ params, request }: Route.LoaderArgs) {
         throw new Response("Missing list id", { status: 400 });
     }
 
+    /*
     const { data, error } = await supabase.from("list").select().eq("id", listId).single();
 
     if (error) {
         throw new Response(error.message, { status: 500 });
     }
+    */
+    const list = await getOneList(supabase, { listId });
 
-    return { list: data };
+    return { list };
 }
 
 // update list
@@ -38,7 +50,7 @@ export async function action({ request, params }: Route.ActionArgs) {
 
     const formData = await request.formData();
     const name = String(formData.get("name"));
-    const id = params.id;
+    const listId = params.id;
 
     // error handling
     const errors: Errors = {};
@@ -52,6 +64,7 @@ export async function action({ request, params }: Route.ActionArgs) {
     }
 
     // updating list in database
+    /*
     const { error } = await supabase.from("list").update({ name }).eq("id", id);
 
     if (error) {
@@ -60,12 +73,25 @@ export async function action({ request, params }: Route.ActionArgs) {
             headers: { "Content-Type": "application/json" },
         });
     }
+    */
+    try {
+        await updateList(supabase, { listId, name });
+    } catch (error) {
+        console.error(error);
+        return data({ errors: { form: "Erreur lors de la modification de la liste" } }, { status: 500 });
+    }
 
     // Redirect after success
     return redirect("/");
 }
 
 export default function editList() {
+    const { user } = useOutletContext<ContextType>();
+    //redirect if no user logged in
+    if (!user) {
+        return <Navigate to="/landing" replace />;
+    }
+
     const { list } = useLoaderData();
     return (
         <div className="m-auto w-4/5 md:w-2/5 mt-4">

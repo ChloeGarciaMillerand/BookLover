@@ -59,6 +59,16 @@ export async function getUserLists(supabase: MySupabaseClient, { userId }: { use
 // ReturnType = Give me the type of the function result (here a promise)
 // export type HomePageList = Awaited<ReturnType<typeof getUserLists>>;
 
+export async function getOneList(supabase: MySupabaseClient, { listId }: { listId: string }) {
+    const { data, error } = await supabase.from("list").select().eq("id", listId).single();
+
+    if (error) {
+        throw new Response(error.message, { status: 500 });
+    }
+
+    return { list: data };
+}
+
 export async function createList(supabase: MySupabaseClient, { userId, name }: { userId: string; name: string }) {
     const { data, error } = await supabase.from("list").insert([{ name, user_id: userId }]);
 
@@ -67,4 +77,22 @@ export async function createList(supabase: MySupabaseClient, { userId, name }: {
     }
 
     return data;
+}
+
+export async function updateList(supabase: MySupabaseClient, { listId, name }: { listId: string; name: string }) {
+    const { data, error } = await supabase.from("list").update({ name }).eq("id", listId);
+
+    if (error) {
+        throw new Error(error.message);
+    }
+
+    return data;
+}
+
+export async function removeList(supabase: MySupabaseClient, { listId }: { listId: string }) {
+    const { error } = await supabase.from("list").delete().eq("id", listId);
+
+    if (error) {
+        throw new Error(error.message);
+    }
 }
