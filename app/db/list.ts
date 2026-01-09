@@ -58,3 +58,13 @@ export async function getUserLists(supabase: MySupabaseClient, { userId }: { use
 // Awaited = Give me the result of the promise (as the function is async)
 // ReturnType = Give me the type of the function result (here a promise)
 // export type HomePageList = Awaited<ReturnType<typeof getUserLists>>;
+
+export async function createList(supabase: MySupabaseClient, { userId, name }: { userId: string; name: string }) {
+    const { data, error } = await supabase.from("list").insert([{ name, user_id: userId }]);
+
+    if (error) {
+        throw new Error(error.message);
+    }
+
+    return data;
+}
