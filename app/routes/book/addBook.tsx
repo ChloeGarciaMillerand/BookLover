@@ -1,11 +1,10 @@
-import { data, Navigate, redirect, useOutletContext } from "react-router";
+import { data, redirect } from "react-router";
 
 import type { Route } from "./+types/addBook";
 import { getSupabase } from "~/db/client";
 
 import AddBookForm from "~/components/book/addBookForm";
 
-import type { User } from "@supabase/supabase-js";
 import { getAllGenres } from "~/db/genre";
 import { addBookToList, createBook } from "~/db/book";
 import { authMiddleware, getCurrentUser } from "~/middlewares/authMiddleware";
@@ -13,10 +12,6 @@ import { authMiddleware, getCurrentUser } from "~/middlewares/authMiddleware";
 export function meta(_args: Route.MetaArgs) {
     return [{ title: "BookLover" }, { name: "description", content: "Ajouter un nouveau livre à votre liste" }];
 }
-
-type ContextType = {
-    user: User | null;
-};
 
 type Errors = {
     title?: string;
@@ -121,13 +116,8 @@ export async function action({ params, request }: Route.ActionArgs) {
 }
 
 export default function addList(props: Route.ComponentProps) {
-    const { user } = useOutletContext<ContextType>();
     const { genres } = props.loaderData;
 
-    //redirect if no user logged in
-    if (!user) {
-        return <Navigate to="/landing" replace />;
-    }
     return (
         <div className="m-auto w-4/5 md:w-2/5 mt-4">
             <h1 className="h1">Ajouter un livre</h1>

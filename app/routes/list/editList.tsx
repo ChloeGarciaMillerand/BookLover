@@ -1,4 +1,4 @@
-import { data, Navigate, redirect, useLoaderData, useOutletContext } from "react-router";
+import { data, redirect, useLoaderData } from "react-router";
 
 import { getSupabase } from "~/db/client";
 import type { Route } from "./+types/editList";
@@ -6,15 +6,10 @@ import type { Route } from "./+types/editList";
 import EditListForm from "~/components/list/editListForm";
 import { getOneList, updateList } from "~/db/list";
 import { authMiddleware } from "~/middlewares/authMiddleware";
-import type { User } from "@supabase/supabase-js";
 
 export function meta(_args: Route.MetaArgs) {
     return [{ title: "BookLover" }, { name: "description", content: "Modifier la liste de livres" }];
 }
-
-type ContextType = {
-    user: User | null;
-};
 
 export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
 
@@ -86,12 +81,6 @@ export async function action({ request, params }: Route.ActionArgs) {
 }
 
 export default function editList() {
-    const { user } = useOutletContext<ContextType>();
-    //redirect if no user logged in
-    if (!user) {
-        return <Navigate to="/landing" replace />;
-    }
-
     const { list } = useLoaderData();
     return (
         <div className="m-auto w-4/5 md:w-2/5 mt-4">

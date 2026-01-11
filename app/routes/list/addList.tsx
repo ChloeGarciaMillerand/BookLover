@@ -1,4 +1,4 @@
-import { data, Navigate, redirect, useOutletContext } from "react-router";
+import { data, redirect } from "react-router";
 
 import type { Route } from "./+types/addList";
 import { getSupabase } from "~/db/client";
@@ -6,17 +6,12 @@ import { getSupabase } from "~/db/client";
 import AddListForm from "~/components/list/addListForm";
 
 import { authMiddleware, getCurrentUser } from "~/middlewares/authMiddleware";
-import type { User } from "@supabase/supabase-js";
 
 import { createList } from "~/db/list";
 
 export function meta(_args: Route.MetaArgs) {
     return [{ title: "BookLover" }, { name: "description", content: "Ajouter une nouvelle liste de livres" }];
 }
-
-type ContextType = {
-    user: User | null;
-};
 
 export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
 
@@ -71,11 +66,6 @@ export async function action(params: Route.ActionArgs) {
 }
 
 export default function addList() {
-    const { user } = useOutletContext<ContextType>();
-    //redirect if no user logged in
-    if (!user) {
-        return <Navigate to="/landing" replace />;
-    }
     return (
         <div className="m-auto w-4/5 md:w-2/5 mt-4">
             <h1 className="h1">Créer une liste</h1>
