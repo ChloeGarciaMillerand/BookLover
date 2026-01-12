@@ -4,18 +4,26 @@ import { getSupabase } from "~/db/client";
 import type { Route } from "./+types/editBook";
 
 import EditBookForm from "~/components/book/editBookForm";
+import { getOneBookWithGenre, updateBook } from "~/db/book";
+import { authMiddleware, getCurrentUser } from "~/middlewares/authMiddleware";
+import { getUserLists } from "~/db/list";
+import { getCurrentListId, updateBookList } from "~/db/booklist";
+import { getAllGenres } from "~/db/genre";
 
 export function meta(_args: Route.MetaArgs) {
     return [{ title: "BookLover" }, { name: "description", content: "Modifier un livre" }];
 }
+
+export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
 
 type Errors = {
     name?: string;
     form?: string;
 };
 
-export async function loader({ params, request }: Route.LoaderArgs) {
+export async function loader({ params, request, context }: Route.LoaderArgs) {
     const { supabase } = getSupabase(request);
+    const user = getCurrentUser(context);
 
     const { bookId } = params;
 
@@ -24,42 +32,15 @@ export async function loader({ params, request }: Route.LoaderArgs) {
     }
 
     // load book data + genre
-    const { data: book, error: bookError } = await supabase
-        .from("book")
-        .select(`*, genre(*)`)
-        .eq("id", bookId)
-        .single();
-
-    if (bookError) {
-        throw new Response(bookError.message, { status: 500 });
-    }
-
+    const book = await getOneBookWithGenre(supabase, bookId);
     // load lists
-    const { data: lists, error: listsError } = await supabase.from("list").select();
-
-    if (listsError) {
-        throw new Response(listsError.message, { status: 500 });
-    }
-
+    const lists = await getUserLists(supabase, { userId: user.id });
     // load current list
-    const { data: bookList, error: bookListError } = await supabase
-        .from("booklist")
-        .select("list_id")
-        .eq("book_id", bookId)
-        .single();
-
-    if (bookListError) {
-        throw new Response(bookListError.message, { status: 500 });
-    }
-
+    const currentListId = await getCurrentListId(supabase, { bookId });
     // load genres
-    const { data: genres, error: genresError } = await supabase.from("genre").select();
+    const genres = await getAllGenres(supabase, { userId: user.id });
 
-    if (genresError) {
-        throw new Response(genresError.message, { status: 500 });
-    }
-
-    return { book, lists, genres, currentListId: bookList.list_id };
+    return { book, lists, genres, currentListId };
 }
 
 // update book
@@ -95,23 +76,30 @@ export async function action({ request, params }: Route.ActionArgs) {
     }
 
     // updating book in database
-    const { error } = await supabase
-        .from("book")
-        .update({ title, genre_id, author, editor, library_code, comment, ISBN })
-        .eq("id", bookId);
-
-    if (error) {
-        return new Response(JSON.stringify({ errors: { form: "Erreur lors de la modification du livre" } }), {
-            status: 500,
-            headers: { "Content-Type": "application/json" },
+    try {
+        // update book in database
+        await updateBook(supabase, {
+            bookId,
+            title,
+            genre_id,
+            author,
+            editor,
+            library_code,
+            comment,
+            ISBN,
         });
+
+        // update list relation
+        await updateBookList(supabase, {
+            bookId,
+            listId: list_id,
+        });
+
+        // Redirect after success
+        return redirect(`/list/${list_id}`);
+    } catch {
+        return data({ errors: { form: "Erreur lors de la modification du livre" } }, { status: 500 });
     }
-
-    // update list relation
-    await supabase.from("booklist").update({ list_id }).eq("book_id", bookId);
-
-    // Redirect after success
-    return redirect(`/list/${list_id}`);
 }
 
 export default function Book() {
