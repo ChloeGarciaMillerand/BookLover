@@ -90,3 +90,11 @@ export async function updateBook(
         throw new Error(error.message);
     }
 }
+
+export async function removeBook(supabase: MySupabaseClient, { bookId }: { bookId: string }) {
+    const { error } = await supabase.from("book").delete().eq("id", bookId);
+
+    if (error) {
+        throw new Error(error.message);
+    }
+}

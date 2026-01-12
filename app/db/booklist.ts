@@ -26,3 +26,20 @@ export async function updateBookList(
         throw new Error(error.message);
     }
 }
+
+export async function deleteLinkBookList(
+    supabase: MySupabaseClient,
+    {
+        bookId,
+        listId,
+    }: {
+        bookId: string;
+        listId: string;
+    },
+) {
+    const { error } = await supabase.from("booklist").delete().eq("book_id", bookId).eq("list_id", listId);
+
+    if (error) {
+        throw new Error(error.message);
+    }
+}

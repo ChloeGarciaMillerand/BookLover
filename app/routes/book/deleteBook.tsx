@@ -1,8 +1,10 @@
-import { redirect } from "react-router";
+import { redirect, data } from "react-router";
 
 import { getSupabase } from "~/db/client";
 
 import type { Route } from "./+types/deleteBook";
+import { deleteLinkBookList } from "~/db/booklist";
+import { removeBook } from "~/db/book";
 
 export async function action({ params, request }: Route.ActionArgs) {
     const { supabase } = getSupabase(request);
@@ -14,26 +16,19 @@ export async function action({ params, request }: Route.ActionArgs) {
     }
 
     //delete link between book and list
-    const { error: linkError } = await supabase.from("booklist").delete().eq("book_id", bookId).eq("list_id", listId);
-
-    if (linkError) {
-        return new Response(
-            JSON.stringify({ errors: { form: "Erreur lors de la suppression du lien livre / liste" } }),
-            {
-                status: 500,
-                headers: { "Content-Type": "application/json" },
-            },
-        );
+    try {
+        await deleteLinkBookList(supabase, { bookId, listId });
+    } catch (error) {
+        console.error(error);
+        return data({ errors: { form: "Erreur lors de la suppression de la liste" } }, { status: 500 });
     }
 
     //delete book
-    const { error: bookError } = await supabase.from("book").delete().eq("id", bookId);
-
-    if (bookError) {
-        return new Response(JSON.stringify({ errors: { form: "Erreur lors de la suppression du livre" } }), {
-            status: 500,
-            headers: { "Content-Type": "application/json" },
-        });
+    try {
+        await removeBook(supabase, { bookId });
+    } catch (error) {
+        console.error(error);
+        return data({ errors: { form: "Erreur lors de la suppression du livre" } }, { status: 500 });
     }
 
     return redirect(`/list/${listId}`);
