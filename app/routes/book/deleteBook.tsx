@@ -5,6 +5,9 @@ import { getSupabase } from "~/db/client";
 import type { Route } from "./+types/deleteBook";
 import { deleteLinkBookList } from "~/db/booklist";
 import { removeBook } from "~/db/book";
+import { authMiddleware } from "~/middlewares/authMiddleware";
+
+export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
 
 export async function action({ params, request }: Route.ActionArgs) {
     const { supabase } = getSupabase(request);

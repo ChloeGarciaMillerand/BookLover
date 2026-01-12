@@ -3,6 +3,9 @@ import { redirect, data } from "react-router";
 import { getSupabase } from "~/db/client";
 import type { Route } from "./+types/deleteList";
 import { removeList } from "~/db/list";
+import { authMiddleware } from "~/middlewares/authMiddleware";
+
+export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
 
 export async function action({ params, request }: Route.ActionArgs) {
     const { supabase } = getSupabase(request);
@@ -11,17 +14,6 @@ export async function action({ params, request }: Route.ActionArgs) {
     if (!listId) {
         return data({ errors: { form: "Identifiant de liste invalide" } }, { status: 400 });
     }
-
-    /*
-    const { error } = await supabase.from("list").delete().eq("id", id);
-
-    if (error) {
-        return new Response(JSON.stringify({ errors: { form: "Erreur lors de la suppression de la liste" } }), {
-            status: 500,
-            headers: { "Content-Type": "application/json" },
-        });
-    }
-    */
 
     try {
         await removeList(supabase, { listId });
