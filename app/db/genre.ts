@@ -20,3 +20,16 @@ export async function getAllGenres(supabase: MySupabaseClient, { userId }: { use
 
     return data;
 }
+
+export async function createGenre(
+    supabase: MySupabaseClient,
+    { userId, name, color }: { userId: string; name: string; color: string },
+) {
+    const { data, error } = await supabase.from("genre").insert({ name, color, user_id: userId }).select().single();
+
+    if (error) {
+        throw new Error(error.message);
+    }
+
+    return data;
+}

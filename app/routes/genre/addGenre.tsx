@@ -1,8 +1,10 @@
-import { data, useFetcher } from "react-router";
+import { data, redirect, useFetcher } from "react-router";
 import { useEffect } from "react";
 
 import type { Route } from "./+types/addGenre";
 import { getSupabase } from "~/db/client";
+import { createGenre } from "~/db/genre";
+import { authMiddleware, getCurrentUser } from "~/middlewares/authMiddleware";
 
 import { Button } from "~/components/shared/Button";
 
@@ -12,8 +14,14 @@ type Errors = {
     form?: string;
 };
 
-export async function action({ request }: Route.ActionArgs) {
+export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
+
+export async function action({ request, context }: Route.ActionArgs) {
     const { supabase } = getSupabase(request);
+    const user = getCurrentUser(context);
+    if (!user) {
+        return redirect("/landing");
+    }
 
     const formData = await request.formData();
     const name = String(formData.get("name"));
@@ -34,16 +42,13 @@ export async function action({ request }: Route.ActionArgs) {
         return data({ errors }, { status: 400 });
     }
 
-    const { data: genre, error } = await supabase.from("genre").insert({ name, color }).select().single();
-
-    if (error) {
-        return new Response(JSON.stringify({ errors: { form: "Erreur lors de la création du genre" } }), {
-            status: 500,
-            headers: { "Content-Type": "application/json" },
-        });
+    try {
+        const genre = await createGenre(supabase, { userId: user.id, name, color });
+        return data({ genre }, { status: 201 });
+    } catch (error) {
+        console.error(error);
+        return data({ errors: { form: "Erreur lors de la création du genre" } }, { status: 500 });
     }
-
-    return data({ genre });
 }
 
 // modal to add a new genre
