@@ -33,22 +33,6 @@ export async function createBook(
     return data;
 }
 
-export async function addBookToList(
-    supabase: MySupabaseClient,
-    { bookId, listId }: { bookId: string; listId: string },
-) {
-    const { error } = await supabase.from("booklist").insert([
-        {
-            book_id: bookId,
-            list_id: listId,
-        },
-    ]);
-
-    if (error) {
-        throw new Error(error.message);
-    }
-}
-
 export async function getOneBookWithGenre(supabase: MySupabaseClient, bookId: string) {
     const { data, error } = await supabase.from("book").select(`*, genre(*)`).eq("id", bookId).single();
 

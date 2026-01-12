@@ -10,6 +10,22 @@ export async function getCurrentListId(supabase: MySupabaseClient, { bookId }: {
     return data.list_id;
 }
 
+export async function addBookToList(
+    supabase: MySupabaseClient,
+    { bookId, listId }: { bookId: string; listId: string },
+) {
+    const { error } = await supabase.from("booklist").insert([
+        {
+            book_id: bookId,
+            list_id: listId,
+        },
+    ]);
+
+    if (error) {
+        throw new Error(error.message);
+    }
+}
+
 export async function updateBookList(
     supabase: MySupabaseClient,
     {

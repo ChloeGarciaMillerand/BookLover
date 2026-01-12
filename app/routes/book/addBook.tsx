@@ -6,7 +6,8 @@ import { getSupabase } from "~/db/client";
 import AddBookForm from "~/components/book/addBookForm";
 
 import { getAllGenres } from "~/db/genre";
-import { addBookToList, createBook } from "~/db/book";
+import { createBook } from "~/db/book";
+import { addBookToList } from "~/db/booklist";
 import { authMiddleware, getCurrentUser } from "~/middlewares/authMiddleware";
 
 export function meta(_args: Route.MetaArgs) {
