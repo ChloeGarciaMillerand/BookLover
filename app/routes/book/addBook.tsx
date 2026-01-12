@@ -47,7 +47,7 @@ export async function action({ params, request }: Route.ActionArgs) {
     const formData = await request.formData();
 
     const title = String(formData.get("title"));
-    const genre_id = String(formData.get("genre"));
+    const genre_id = formData.get("genre") ? String(formData.get("genre")) : undefined;
     const author = String(formData.get("author"));
     const editor = String(formData.get("editor"));
     const library_code = String(formData.get("library_code"));
