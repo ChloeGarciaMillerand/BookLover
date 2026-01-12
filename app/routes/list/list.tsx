@@ -5,10 +5,14 @@ import type { Route } from "./+types/list";
 
 import BookCard from "~/components/book/BookCard";
 import { Button } from "~/components/shared/Button";
+import { getOneListWithGenres } from "~/db/list";
+import { authMiddleware } from "~/middlewares/authMiddleware";
 
 export function meta(_args: Route.MetaArgs) {
     return [{ title: "BookLover" }, { name: "description", content: "Voir le détail de ma liste de livres" }];
 }
+
+export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
 
 export async function loader({ params, request }: Route.LoaderArgs) {
     const { supabase } = getSupabase(request);
@@ -19,25 +23,9 @@ export async function loader({ params, request }: Route.LoaderArgs) {
         throw new Response("Missing list id", { status: 400 });
     }
 
-    const { data, error } = await supabase
-        .from("list")
-        .select(`
-                *,
-                booklist (
-                    book (
-                        *,
-                        genre(*)
-                    )
-                )
-            `)
-        .eq("id", listId)
-        .single();
+    const list = await getOneListWithGenres(supabase, { listId });
 
-    if (error) {
-        throw new Response(error.message, { status: 500 });
-    }
-
-    return { list: data };
+    return list;
 }
 
 export default function ListPage(props: Route.ComponentProps) {

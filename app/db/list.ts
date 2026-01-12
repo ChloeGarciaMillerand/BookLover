@@ -59,8 +59,30 @@ export async function getUserLists(supabase: MySupabaseClient, { userId }: { use
 // ReturnType = Give me the type of the function result (here a promise)
 // export type HomePageList = Awaited<ReturnType<typeof getUserLists>>;
 
-export async function getOneList(supabase: MySupabaseClient, { listId }: { listId: string }) {
+export async function getOneList(supabase: MySupabaseClient, listId: string) {
     const { data, error } = await supabase.from("list").select().eq("id", listId).single();
+
+    if (error) {
+        throw new Response(error.message, { status: 500 });
+    }
+
+    return { list: data };
+}
+
+export async function getOneListWithGenres(supabase: MySupabaseClient, { listId }: { listId: string }) {
+    const { data, error } = await supabase
+        .from("list")
+        .select(`
+                *,
+                booklist (
+                    book (
+                        *,
+                        genre(*)
+                    )
+                )
+            `)
+        .eq("id", listId)
+        .single();
 
     if (error) {
         throw new Response(error.message, { status: 500 });
