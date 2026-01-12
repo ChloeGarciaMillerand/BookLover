@@ -27,14 +27,7 @@ export async function loader({ params, request }: Route.LoaderArgs) {
         throw new Response("Missing list id", { status: 400 });
     }
 
-    /*
-    const { data, error } = await supabase.from("list").select().eq("id", listId).single();
-
-    if (error) {
-        throw new Response(error.message, { status: 500 });
-    }
-    */
-    const list = await getOneList(supabase, { listId });
+    const list = await getOneList(supabase, listId);
 
     return { list };
 }
@@ -59,16 +52,6 @@ export async function action({ request, params }: Route.ActionArgs) {
     }
 
     // updating list in database
-    /*
-    const { error } = await supabase.from("list").update({ name }).eq("id", id);
-
-    if (error) {
-        return new Response(JSON.stringify({ errors: { form: "Erreur lors de la modification de la liste" } }), {
-            status: 500,
-            headers: { "Content-Type": "application/json" },
-        });
-    }
-    */
     try {
         await updateList(supabase, { listId, name });
     } catch (error) {

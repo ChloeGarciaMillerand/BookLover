@@ -65,20 +65,6 @@ export async function action({ params, request }: Route.ActionArgs) {
     }
 
     // book registration in database
-    /*
-    const { data: book, error: bookError } = await supabase
-        .from("book")
-        .insert([{ title, genre_id, author, editor, library_code, comment, ISBN }])
-        .select()
-        .single();
-
-    if (bookError || !book) {
-        return new Response(JSON.stringify({ errors: { form: "Erreur lors de l'ajout du livre'" } }), {
-            status: 500,
-            headers: { "Content-Type": "application/json" },
-        });
-    }
-    */
     let book;
 
     try {
@@ -89,21 +75,6 @@ export async function action({ params, request }: Route.ActionArgs) {
     }
 
     // link between the book and the list
-    /*
-    const { error: booklistError } = await supabase.from("booklist").insert([
-        {
-            book_id: book.id,
-            list_id: listId,
-        },
-    ]);
-
-    if (booklistError) {
-        return new Response(JSON.stringify({ errors: { form: "Erreur lors de l'ajout du livre'" } }), {
-            status: 500,
-            headers: { "Content-Type": "application/json" },
-        });
-    }
-    */
     try {
         await addBookToList(supabase, { bookId: book.id, listId });
     } catch (error) {

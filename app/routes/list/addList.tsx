@@ -42,18 +42,6 @@ export async function action(params: Route.ActionArgs) {
     }
 
     // list registration in database
-    /*
-    const { error } = await supabase.from("list").insert([{ name }]);
-
-    if (error) {
-        console.error(error);
-        return new Response(JSON.stringify({ errors: { form: "Erreur lors de la création de la liste" } }), {
-            status: 500,
-            headers: { "Content-Type": "application/json" },
-        });
-    }
-    */
-
     try {
         await createList(supabase, { userId: user.id, name });
     } catch (error) {
