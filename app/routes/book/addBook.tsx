@@ -37,10 +37,6 @@ export async function loader(params: Route.LoaderArgs) {
 export async function action({ params, request }: Route.ActionArgs) {
     const { supabase } = getSupabase(request);
 
-    const { data: userData } = await supabase.auth.getUser();
-
-    console.log("RPC USER:", userData);
-
     const listId = params.id;
     if (!listId) {
         return data({ errors: { form: "Liste invalide" } }, { status: 400 });
