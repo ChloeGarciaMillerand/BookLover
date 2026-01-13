@@ -187,7 +187,84 @@ export type Database = {
             [_ in never]: never;
         };
         Functions: {
-            [_ in never]: never;
+            create_book: {
+                Args: {
+                    author_input?: string;
+                    comment_input?: string;
+                    editor_input?: string;
+                    genre_id_input?: string;
+                    isbn_input?: string;
+                    library_code_input?: string;
+                    list_id_input: string;
+                    title_input: string;
+                };
+                Returns: {
+                    author: string | null;
+                    comment: string | null;
+                    created_at: string;
+                    editor: string | null;
+                    genre_id: string | null;
+                    id: string;
+                    ISBN: string | null;
+                    library_code: string | null;
+                    title: string;
+                }[];
+                SetofOptions: {
+                    from: "*";
+                    to: "book";
+                    isOneToOne: false;
+                    isSetofReturn: true;
+                };
+            };
+            get_books: {
+                Args: never;
+                Returns: {
+                    author: string | null;
+                    comment: string | null;
+                    created_at: string;
+                    editor: string | null;
+                    genre_id: string | null;
+                    id: string;
+                    ISBN: string | null;
+                    library_code: string | null;
+                    title: string;
+                }[];
+                SetofOptions: {
+                    from: "*";
+                    to: "book";
+                    isOneToOne: false;
+                    isSetofReturn: true;
+                };
+            };
+            get_organizations: {
+                Args: never;
+                Returns: {
+                    created_at: string;
+                    id: string;
+                    name: string;
+                }[];
+                SetofOptions: {
+                    from: "*";
+                    to: "organization";
+                    isOneToOne: false;
+                    isSetofReturn: true;
+                };
+            };
+            get_users: {
+                Args: never;
+                Returns: {
+                    created_at: string;
+                    id: string;
+                    name: string;
+                }[];
+                SetofOptions: {
+                    from: "*";
+                    to: "organization";
+                    isOneToOne: false;
+                    isSetofReturn: true;
+                };
+            };
+            hello: { Args: never; Returns: string };
         };
         Enums: {
             [_ in never]: never;
