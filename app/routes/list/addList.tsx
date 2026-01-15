@@ -9,10 +9,6 @@ import { authMiddleware, getCurrentUser } from "~/middlewares/authMiddleware";
 
 import { createList } from "~/db/list";
 
-export function meta(_args: Route.MetaArgs) {
-    return [{ title: "BookLover" }, { name: "description", content: "Ajouter une nouvelle liste de livres" }];
-}
-
 export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
 
 type Errors = {
@@ -56,6 +52,13 @@ export async function action(params: Route.ActionArgs) {
 export default function addList() {
     return (
         <div className="m-auto w-4/5 md:w-2/5 mt-4">
+            {/* Meta*/}
+            <title>BookLover - Créer une liste</title>
+            <meta name="description" content="Créer une nouvelle liste de lecture BookLover" />
+            <meta property="og:title" content="BookLover - Créer une liste" />
+            <meta property="og:description" content="L'application qui facilite vos lectures." />
+
+            {/* Content */}
             <h1 className="h1">Créer une liste</h1>
             <AddListForm />
         </div>

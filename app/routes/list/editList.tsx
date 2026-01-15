@@ -7,10 +7,6 @@ import EditListForm from "~/components/list/editListForm";
 import { getOneList, updateList } from "~/db/list";
 import { authMiddleware } from "~/middlewares/authMiddleware";
 
-export function meta(_args: Route.MetaArgs) {
-    return [{ title: "BookLover" }, { name: "description", content: "Modifier la liste de livres" }];
-}
-
 export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
 
 type Errors = {
@@ -67,6 +63,13 @@ export default function editList() {
     const { list } = useLoaderData();
     return (
         <div className="m-auto w-4/5 md:w-2/5 mt-4">
+            {/* Meta*/}
+            <title>BookLover - Modifier une liste</title>
+            <meta name="description" content="Modifer une liste de lecture BookLover" />
+            <meta property="og:title" content="BookLover - Modifier une liste" />
+            <meta property="og:description" content="L'application qui facilite vos lectures." />
+
+            {/* Content */}
             <h1 className="h1">Modifier la liste {list.name}</h1>
             <EditListForm list={list} />
         </div>

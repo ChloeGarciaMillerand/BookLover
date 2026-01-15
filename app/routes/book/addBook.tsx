@@ -8,10 +8,6 @@ import AddBookForm from "~/components/book/addBookForm";
 import { getAllGenres } from "~/db/genre";
 import { authMiddleware, getCurrentUser } from "~/middlewares/authMiddleware";
 
-export function meta(_args: Route.MetaArgs) {
-    return [{ title: "BookLover" }, { name: "description", content: "Ajouter un nouveau livre à votre liste" }];
-}
-
 type Errors = {
     title?: string;
     form?: string;
@@ -107,6 +103,13 @@ export default function addBook(props: Route.ComponentProps) {
 
     return (
         <div className="m-auto w-4/5 md:w-2/5 mt-4">
+            {/* Meta*/}
+            <title>BookLover - Ajouter un livre</title>
+            <meta name="description" content="Ajouter un nouveau livre à votre liste de lecture BookLover" />
+            <meta property="og:title" content="BookLover - Ajouter un livre" />
+            <meta property="og:description" content="L'application qui facilite vos lectures" />
+
+            {/* Content */}
             <h1 className="h1">Ajouter un livre</h1>
             <AddBookForm genres={genres} />
         </div>
