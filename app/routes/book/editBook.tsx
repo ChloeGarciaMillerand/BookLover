@@ -10,10 +10,6 @@ import { getUserLists } from "~/db/list";
 import { getCurrentListId, updateBookList } from "~/db/booklist";
 import { getAllGenres } from "~/db/genre";
 
-export function meta(_args: Route.MetaArgs) {
-    return [{ title: "BookLover" }, { name: "description", content: "Modifier un livre" }];
-}
-
 export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
 
 type Errors = {
@@ -102,10 +98,17 @@ export async function action({ request, params }: Route.ActionArgs) {
     }
 }
 
-export default function Book() {
+export default function editBook() {
     const { book, genres, lists, currentListId } = useLoaderData();
     return (
         <div className="m-auto w-4/5 md:w-2/5 mt-4">
+            {/* Meta*/}
+            <title>BookLover - Modifier un livre</title>
+            <meta name="description" content="Modifier un livre de votre liste de lecture BookLover" />
+            <meta property="og:title" content="BookLover - Modifier un livre" />
+            <meta property="og:description" content="L'application qui facilite vos lectures" />
+
+            {/* Content */}
             <h1 className="h1">Modifier le livre {book.title}</h1>
             <EditBookForm genres={genres} book={book} lists={lists} currentListId={currentListId} />
         </div>
