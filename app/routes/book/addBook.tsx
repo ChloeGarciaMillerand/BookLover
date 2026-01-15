@@ -1,8 +1,12 @@
 import { data, redirect } from "react-router";
 
-import { getSupabase } from "~/db/client";
 import type { Route } from "./+types/addBook";
+import { getSupabase } from "~/db/client";
+
 import AddBookForm from "~/components/book/addBookForm";
+
+import { getAllGenres } from "~/db/genre";
+import { authMiddleware, getCurrentUser } from "~/middlewares/authMiddleware";
 
 export function meta(_args: Route.MetaArgs) {
     return [{ title: "BookLover" }, { name: "description", content: "Ajouter un nouveau livre à votre liste" }];
@@ -13,16 +17,20 @@ type Errors = {
     form?: string;
 };
 
-// load genres
-export async function loader({ request }: Route.LoaderArgs) {
-    const { supabase } = getSupabase(request);
-    const { data, error } = await supabase.from("genre").select();
+export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
 
-    if (error) {
-        throw new Response(error.message, { status: 500 });
+// load genres
+export async function loader(params: Route.LoaderArgs) {
+    const user = getCurrentUser(params.context);
+    const { supabase } = getSupabase(params.request);
+
+    if (!user) {
+        throw new Response("Unauthorized", { status: 401 });
     }
 
-    return { genres: data };
+    const genres = await getAllGenres(supabase, { userId: user.id });
+
+    return { genres };
 }
 
 // add new book in database
@@ -37,12 +45,12 @@ export async function action({ params, request }: Route.ActionArgs) {
     const formData = await request.formData();
 
     const title = String(formData.get("title"));
-    const genre_id = String(formData.get("genre"));
-    const author = String(formData.get("author"));
-    const editor = String(formData.get("editor"));
-    const library_code = String(formData.get("library_code"));
-    const comment = String(formData.get("comment"));
-    const ISBN = String(formData.get("ISBN"));
+    const genre_id = formData.get("genre") ? String(formData.get("genre")) : undefined;
+    const author = formData.get("author") ? String(formData.get("author")) : undefined;
+    const editor = formData.get("editor") ? String(formData.get("editor")) : undefined;
+    const library_code = formData.get("library_code") ? String(formData.get("library_code")) : undefined;
+    const comment = formData.get("comment") ? String(formData.get("comment")) : undefined;
+    const ISBN = formData.get("ISBN") ? String(formData.get("ISBN")) : undefined;
 
     // error handling
     const errors: Errors = {};
@@ -56,40 +64,47 @@ export async function action({ params, request }: Route.ActionArgs) {
     }
 
     // book registration in database
-    const { data: book, error: bookError } = await supabase
-        .from("book")
-        .insert([{ title, genre_id, author, editor, library_code, comment, ISBN }])
-        .select()
-        .single();
+    /*
+    let book;
 
-    if (bookError || !book) {
-        return new Response(JSON.stringify({ errors: { form: "Erreur lors de l'ajout du livre'" } }), {
-            status: 500,
-            headers: { "Content-Type": "application/json" },
-        });
+    try {
+        book = await createBook(supabase, { title, genre_id, author, editor, library_code, comment, ISBN });
+    } catch (error) {
+        console.error(error);
+        return data({ errors: { form: "Erreur lors de la création de l'ajout du livre" } }, { status: 500 });
     }
 
     // link between the book and the list
-    const { error: booklistError } = await supabase.from("booklist").insert([
-        {
-            book_id: book.id,
-            list_id: listId,
-        },
-    ]);
+    try {
+        await addBookToList(supabase, { bookId: book.id, listId });
+    } catch (error) {
+        console.error(error);
+        return data({ errors: { form: "Erreur lors de l'ajout du livre'" } }, { status: 500 });
+    }
+    */
+    const { data: _bookCreated, error } = await supabase.rpc("create_book", {
+        title_input: title,
+        list_id_input: listId,
+        genre_id_input: genre_id,
+        author_input: author,
+        editor_input: editor,
+        library_code_input: library_code,
+        comment_input: comment,
+        isbn_input: ISBN,
+    });
 
-    if (booklistError) {
-        return new Response(JSON.stringify({ errors: { form: "Erreur lors de l'ajout du livre'" } }), {
-            status: 500,
-            headers: { "Content-Type": "application/json" },
-        });
+    if (error) {
+        console.error("Erreur RPC create_book:", error);
+        return data({ errors: { form: "Erreur lors de la création du livre" } }, { status: 500 });
     }
 
     // Redirect after success
     return redirect(`/list/${listId}`);
 }
 
-export default function addList(props: Route.ComponentProps) {
+export default function addBook(props: Route.ComponentProps) {
     const { genres } = props.loaderData;
+
     return (
         <div className="m-auto w-4/5 md:w-2/5 mt-4">
             <h1 className="h1">Ajouter un livre</h1>

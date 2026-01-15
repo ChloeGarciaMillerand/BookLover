@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
-import { Form, useActionData, useFetcher } from "react-router";
+import { useState } from "react";
+import { Form, useActionData } from "react-router";
 
 import type { Book, Genre, List } from "~/types";
 
 import { Button } from "../shared/Button";
+import { AddGenreModal } from "~/routes/genre/addGenre";
 
 type BookProps = {
     book: Book;
@@ -16,15 +17,7 @@ export default function EditBookForm({ book, genres, lists, currentListId }: Boo
     const actionData = useActionData();
 
     // used to create new genres
-    const fetcher = useFetcher();
     const [showModal, setShowModal] = useState(false);
-
-    // close the modal after creating a new genre
-    useEffect(() => {
-        if (fetcher.state === "idle" && fetcher.data?.genre) {
-            setShowModal(false);
-        }
-    }, [fetcher.state, fetcher.data]);
 
     return (
         <>
@@ -187,45 +180,7 @@ export default function EditBookForm({ book, genres, lists, currentListId }: Boo
                     </div>
                 </div>
             </Form>
-            {showModal && <AddGenreModal fetcher={fetcher} onClose={() => setShowModal(false)} />}
+            {showModal && <AddGenreModal onClose={() => setShowModal(false)} />}
         </>
-    );
-}
-
-// modal to add a new genre
-function AddGenreModal({
-    fetcher,
-    onClose,
-}: {
-    fetcher: ReturnType<typeof import("react-router").useFetcher>;
-    onClose: () => void;
-}) {
-    return (
-        <dialog open className="modal modal-bottom sm:modal-middle">
-            <div className="modal-box">
-                <h3 className="font-bold text-lg">Ajouter un genre</h3>
-
-                <fetcher.Form method="POST" action="/add-genre">
-                    <fieldset className="fieldset">
-                        <label htmlFor="name">Nom</label>
-                        <input id="name" name="name" className="input" />
-                    </fieldset>
-
-                    <fieldset className="fieldset">
-                        <label htmlFor="color">Couleur</label>
-                        <input id="color" name="color" type="color" />
-                    </fieldset>
-
-                    <div className="flex justify-end gap-2 mt-4">
-                        <Button type="button" onClick={onClose}>
-                            Annuler
-                        </Button>
-                        <Button type="submit" className="btn-primary">
-                            Créer
-                        </Button>
-                    </div>
-                </fetcher.Form>
-            </div>
-        </dialog>
     );
 }

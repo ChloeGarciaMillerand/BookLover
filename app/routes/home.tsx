@@ -6,9 +6,10 @@ import type { Route } from "./+types/home";
 import HomePageListCard from "../components/home/HomePageListCard";
 import { Button } from "~/components/shared/Button";
 
-import type { HomePageList } from "~/types";
 import type { User } from "@supabase/supabase-js";
 import { authMiddleware, getCurrentUser } from "~/middlewares/authMiddleware";
+
+import { getUserLists } from "~/db/list";
 
 export function meta(_args: Route.MetaArgs) {
     return [
@@ -27,56 +28,7 @@ export async function loader(params: Route.LoaderArgs) {
     const user = getCurrentUser(params.context);
     const { supabase } = getSupabase(params.request);
 
-    // get lists
-    const { data, error } = await supabase
-        .from("list")
-        .select(`
-            id,
-            name,
-            organization (
-                id,
-                name
-            ),
-            booklist (
-                book (
-                    id,
-                    title,
-                    author,
-                    genre (
-                        id,
-                        name,
-                        color
-                    )
-                )
-            )
-        `)
-        .eq("user_id", user.id);
-
-    if (error) {
-        throw new Error(error.message);
-    }
-
-    const supabaseLists = data;
-
-    const lists: HomePageList[] = supabaseLists.map((list) => ({
-        id: list.id,
-        name: list.name,
-        organization: list.organization ?? undefined,
-        books: list.booklist
-            .filter((entry) => entry.book !== null)
-            .map((entry) => ({
-                id: entry.book!.id,
-                title: entry.book!.title,
-                author: entry.book!.author ?? undefined,
-                genre: entry.book!.genre
-                    ? {
-                          id: entry.book!.genre.id,
-                          name: entry.book!.genre.name,
-                          color: entry.book!.genre.color,
-                      }
-                    : undefined,
-            })),
-    }));
+    const lists = await getUserLists(supabase, { userId: user.id });
 
     return { lists };
 }

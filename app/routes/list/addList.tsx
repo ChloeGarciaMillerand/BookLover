@@ -5,18 +5,29 @@ import { getSupabase } from "~/db/client";
 
 import AddListForm from "~/components/list/addListForm";
 
+import { authMiddleware, getCurrentUser } from "~/middlewares/authMiddleware";
+
+import { createList } from "~/db/list";
+
 export function meta(_args: Route.MetaArgs) {
     return [{ title: "BookLover" }, { name: "description", content: "Ajouter une nouvelle liste de livres" }];
 }
+
+export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
 
 type Errors = {
     name?: string;
     form?: string;
 };
 
-export async function action({ request }: Route.ActionArgs) {
-    const { supabase } = getSupabase(request);
-    const formData = await request.formData();
+export async function action(params: Route.ActionArgs) {
+    const { supabase } = getSupabase(params.request);
+    const user = getCurrentUser(params.context);
+    if (!user) {
+        return redirect("/landing");
+    }
+
+    const formData = await params.request.formData();
     const name = String(formData.get("name"));
 
     // error handling
@@ -31,14 +42,11 @@ export async function action({ request }: Route.ActionArgs) {
     }
 
     // list registration in database
-    const { error } = await supabase.from("list").insert([{ name }]);
-
-    if (error) {
+    try {
+        await createList(supabase, { userId: user.id, name });
+    } catch (error) {
         console.error(error);
-        return new Response(JSON.stringify({ errors: { form: "Erreur lors de la création de la liste" } }), {
-            status: 500,
-            headers: { "Content-Type": "application/json" },
-        });
+        return data({ errors: { form: "Erreur lors de la création de la liste" } }, { status: 500 });
     }
 
     // Redirect after success
