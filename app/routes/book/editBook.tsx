@@ -110,7 +110,7 @@ export default function editBook() {
 
             {/* Content */}
             <h1 className="h1">Modifier le livre {book.title}</h1>
-            <EditBookForm genres={genres} book={book} lists={lists} currentListId={currentListId} />
+            <EditBookForm genres={genres} book={book.book} lists={lists} currentListId={currentListId} />
         </div>
     );
 }

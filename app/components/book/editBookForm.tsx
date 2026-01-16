@@ -14,6 +14,7 @@ type BookProps = {
 };
 
 export default function EditBookForm({ book, genres, lists, currentListId }: BookProps) {
+    console.log("EditBookForm book:", book);
     const actionData = useActionData();
 
     // used to create new genres

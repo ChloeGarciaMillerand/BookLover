@@ -1,21 +1,20 @@
 import { data, redirect, useLoaderData } from "react-router";
+import { parseWithZod } from "@conform-to/zod/v4";
 
 import { getSupabase } from "~/db/client";
 import type { Route } from "./+types/editList";
 
+import { authMiddleware } from "~/middlewares/authMiddleware";
+
 import EditListForm from "~/components/list/editListForm";
 import { getOneList, updateList } from "~/db/list";
-import { authMiddleware } from "~/middlewares/authMiddleware";
+import { schema } from "~/components/list/editListForm";
 
 export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
 
-type Errors = {
-    name?: string;
-    form?: string;
-};
-
 // load list data
 export async function loader({ params, request }: Route.LoaderArgs) {
+    console.log("Loader called with params:", params);
     const { supabase } = getSupabase(request);
     const listId = params.id;
 
@@ -25,7 +24,9 @@ export async function loader({ params, request }: Route.LoaderArgs) {
 
     const list = await getOneList(supabase, listId);
 
-    return { list };
+    console.log("Loader fetched list:", list);
+
+    return list;
 }
 
 // update list
@@ -37,14 +38,11 @@ export async function action({ request, params }: Route.ActionArgs) {
     const listId = params.id;
 
     // error handling
-    const errors: Errors = {};
+    const submission = parseWithZod(formData, { schema });
 
-    if (!name) {
-        errors.name = "Nom de la liste obligatoire";
-    }
-
-    if (Object.keys(errors).length > 0) {
-        return data({ errors }, { status: 400 });
+    // Report the submission to client if it is not successful
+    if (submission.status !== "success") {
+        return submission.reply();
     }
 
     // updating list in database
@@ -61,6 +59,7 @@ export async function action({ request, params }: Route.ActionArgs) {
 
 export default function editList() {
     const { list } = useLoaderData();
+    console.log("list loader data:", list);
     return (
         <div className="m-auto w-4/5 md:w-2/5 mt-4">
             {/* Meta*/}
