@@ -150,7 +150,9 @@ export default function AddBookForm({ genres }: GenreProps) {
 
                     {/* ISBN */}
                     <div className="fieldset">
-                        <label htmlFor="ISBN">ISBN</label>
+                        <label className="fieldset" htmlFor={fields.ISBN.id}>
+                            ISBN
+                        </label>
                         <input
                             {...getInputProps(fields.ISBN, { type: "text" })}
                             className="input"
