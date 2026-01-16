@@ -10,8 +10,10 @@ export const schema = z.object({
 });
 
 export default function AddListForm() {
-    //const actionData = useActionData();
+    // validation data from last submit (server or client side)
     const lastResult = useActionData();
+
+    // build HTML constraints from Zod schema
     const [form, fields] = useForm({
         lastResult,
         constraint: getZodConstraint(schema),
@@ -19,7 +21,7 @@ export default function AddListForm() {
         shouldValidate: "onBlur",
         // Then, revalidate field as user types again
         shouldRevalidate: "onInput",
-        // Run the same validation logic on client
+        // Run the same validation logic on client with Zod
         onValidate({ formData }) {
             return parseWithZod(formData, { schema });
         },
