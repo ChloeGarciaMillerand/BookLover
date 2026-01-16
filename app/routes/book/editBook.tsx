@@ -1,4 +1,5 @@
 import { data, redirect, useLoaderData } from "react-router";
+import { parseWithZod } from "@conform-to/zod/v4";
 
 import { getSupabase } from "~/db/client";
 import type { Route } from "./+types/editBook";
@@ -9,13 +10,9 @@ import { authMiddleware, getCurrentUser } from "~/middlewares/authMiddleware";
 import { getUserLists } from "~/db/list";
 import { getCurrentListId, updateBookList } from "~/db/booklist";
 import { getAllGenres } from "~/db/genre";
+import { schema } from "~/components/book/editBookForm";
 
 export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
-
-type Errors = {
-    name?: string;
-    form?: string;
-};
 
 export async function loader({ params, request, context }: Route.LoaderArgs) {
     const { supabase } = getSupabase(request);
@@ -51,27 +48,17 @@ export async function action({ request, params }: Route.ActionArgs) {
 
     const formData = await request.formData();
 
-    const title = String(formData.get("title"));
-    const genre_id = String(formData.get("genre"));
-    const list_id = String(formData.get("list_id"));
-    const author = String(formData.get("author"));
-    const editor = String(formData.get("editor"));
-    const library_code = String(formData.get("library_code"));
-    const comment = String(formData.get("comment"));
-    const ISBN = String(formData.get("ISBN"));
+    // Parse object
+    const submission = parseWithZod(formData, { schema });
 
-    // error handling
-    const errors: Errors = {};
-
-    if (!title) {
-        errors.name = "Le titre du livre est requis";
-    }
-
-    if (Object.keys(errors).length > 0) {
-        return data({ errors }, { status: 400 });
+    // Report the submission to client if it is not successful
+    if (submission.status !== "success") {
+        return submission.reply();
     }
 
     // updating book in database
+    const { title, genre_id, list_id, author, editor, library_code, comment, ISBN } = submission.value;
+
     try {
         // update book in database
         await updateBook(supabase, {
