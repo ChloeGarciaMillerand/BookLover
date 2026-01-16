@@ -14,7 +14,6 @@ export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
 
 // load list data
 export async function loader({ params, request }: Route.LoaderArgs) {
-    console.log("Loader called with params:", params);
     const { supabase } = getSupabase(request);
     const listId = params.id;
 
@@ -23,8 +22,6 @@ export async function loader({ params, request }: Route.LoaderArgs) {
     }
 
     const list = await getOneList(supabase, listId);
-
-    console.log("Loader fetched list:", list);
 
     return list;
 }
@@ -58,7 +55,6 @@ export async function action({ request, params }: Route.ActionArgs) {
 
 export default function editList() {
     const { list } = useLoaderData();
-    console.log("list loader data:", list);
     return (
         <div className="m-auto w-4/5 md:w-2/5 mt-4">
             {/* Meta*/}
