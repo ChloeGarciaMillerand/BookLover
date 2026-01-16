@@ -1,4 +1,5 @@
 import { data, redirect } from "react-router";
+import { parseWithZod } from "@conform-to/zod/v4";
 
 import type { Route } from "./+types/addBook";
 import { getSupabase } from "~/db/client";
@@ -6,12 +7,9 @@ import { getSupabase } from "~/db/client";
 import AddBookForm from "~/components/book/addBookForm";
 
 import { getAllGenres } from "~/db/genre";
-import { authMiddleware, getCurrentUser } from "~/middlewares/authMiddleware";
+import { schema } from "~/components/book/addBookForm";
 
-type Errors = {
-    title?: string;
-    form?: string;
-};
+import { authMiddleware, getCurrentUser } from "~/middlewares/authMiddleware";
 
 export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
 
@@ -40,53 +38,23 @@ export async function action({ params, request }: Route.ActionArgs) {
 
     const formData = await request.formData();
 
-    const title = String(formData.get("title"));
-    const genre_id = formData.get("genre") ? String(formData.get("genre")) : undefined;
-    const author = formData.get("author") ? String(formData.get("author")) : undefined;
-    const editor = formData.get("editor") ? String(formData.get("editor")) : undefined;
-    const library_code = formData.get("library_code") ? String(formData.get("library_code")) : undefined;
-    const comment = formData.get("comment") ? String(formData.get("comment")) : undefined;
-    const ISBN = formData.get("ISBN") ? String(formData.get("ISBN")) : undefined;
+    // Parse object
+    const submission = parseWithZod(formData, { schema });
 
-    // error handling
-    const errors: Errors = {};
-
-    if (!title) {
-        errors.title = "Le titre du livre est requis";
+    // Report the submission to client if it is not successful
+    if (submission.status !== "success") {
+        return submission.reply();
     }
 
-    if (Object.keys(errors).length > 0) {
-        return data({ errors }, { status: 400 });
-    }
-
-    // book registration in database
-    /*
-    let book;
-
-    try {
-        book = await createBook(supabase, { title, genre_id, author, editor, library_code, comment, ISBN });
-    } catch (error) {
-        console.error(error);
-        return data({ errors: { form: "Erreur lors de la création de l'ajout du livre" } }, { status: 500 });
-    }
-
-    // link between the book and the list
-    try {
-        await addBookToList(supabase, { bookId: book.id, listId });
-    } catch (error) {
-        console.error(error);
-        return data({ errors: { form: "Erreur lors de l'ajout du livre'" } }, { status: 500 });
-    }
-    */
     const { data: _bookCreated, error } = await supabase.rpc("create_book", {
-        title_input: title,
+        title_input: submission.value.title,
         list_id_input: listId,
-        genre_id_input: genre_id,
-        author_input: author,
-        editor_input: editor,
-        library_code_input: library_code,
-        comment_input: comment,
-        isbn_input: ISBN,
+        genre_id_input: submission.value.genre,
+        author_input: submission.value.author,
+        editor_input: submission.value.editor,
+        library_code_input: submission.value.library_code,
+        comment_input: submission.value.comment,
+        isbn_input: submission.value.ISBN,
     });
 
     if (error) {
