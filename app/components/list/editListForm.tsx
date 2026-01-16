@@ -16,7 +16,6 @@ export const schema = z.object({
 });
 
 export default function EditListForm({ list }: ListProps) {
-    console.log(list);
     // validation data from last submit (server or client side)
     const lastResult = useActionData();
 

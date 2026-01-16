@@ -34,10 +34,9 @@ export async function action({ request, params }: Route.ActionArgs) {
     const { supabase } = getSupabase(request);
 
     const formData = await request.formData();
-    const name = String(formData.get("name"));
     const listId = params.id;
 
-    // error handling
+    // Parse object
     const submission = parseWithZod(formData, { schema });
 
     // Report the submission to client if it is not successful
@@ -47,7 +46,7 @@ export async function action({ request, params }: Route.ActionArgs) {
 
     // updating list in database
     try {
-        await updateList(supabase, { listId, name });
+        await updateList(supabase, { listId, name: submission.value.name });
     } catch (error) {
         console.error(error);
         return data({ errors: { form: "Erreur lors de la modification de la liste" } }, { status: 500 });
