@@ -3,6 +3,8 @@ import { redirect, data } from "react-router";
 import { getSupabase } from "~/db/client";
 import type { Route } from "./+types/deleteList";
 import { removeList } from "~/db/list";
+import { getBooksIdsInList, removeBooksLinksInList } from "~/db/booklist";
+import { removeBooksInList } from "~/db/book";
 import { authMiddleware } from "~/middlewares/authMiddleware";
 
 export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
@@ -16,6 +18,13 @@ export async function action({ params, request }: Route.ActionArgs) {
     }
 
     try {
+        // get books id
+        const bookIds = await getBooksIdsInList(supabase, { listId });
+        // delete links between books and list
+        await removeBooksLinksInList(supabase, { listId });
+        // delete books in list
+        await removeBooksInList(supabase, { bookIds });
+        // delete list
         await removeList(supabase, { listId });
     } catch (error) {
         console.error(error);

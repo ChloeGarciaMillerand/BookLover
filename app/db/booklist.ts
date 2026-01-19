@@ -59,3 +59,19 @@ export async function deleteLinkBookList(
         throw new Error(error.message);
     }
 }
+
+export async function removeBooksLinksInList(supabase: MySupabaseClient, { listId }: { listId: string }) {
+    const { error } = await supabase.from("booklist").delete().eq("list_id", listId);
+
+    if (error) {
+        throw new Error(error.message);
+    }
+}
+
+export async function getBooksIdsInList(supabase: MySupabaseClient, { listId }: { listId: string }) {
+    const { data, error } = await supabase.from("booklist").select("book_id").eq("list_id", listId);
+
+    if (error) throw new Error(error.message);
+
+    return data.map(({ book_id }) => book_id).filter((id): id is string => id !== null);
+}

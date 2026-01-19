@@ -82,3 +82,13 @@ export async function removeBook(supabase: MySupabaseClient, { bookId }: { bookI
         throw new Error(error.message);
     }
 }
+
+export async function removeBooksInList(supabase: MySupabaseClient, { bookIds }: { bookIds: string[] }) {
+    if (bookIds.length === 0) return;
+
+    const { error } = await supabase.from("book").delete().in("id", bookIds);
+
+    if (error) {
+        throw new Error(error.message);
+    }
+}

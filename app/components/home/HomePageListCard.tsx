@@ -32,7 +32,7 @@ export default function HomePageListCard({ list }: HomePageListCardProps) {
                             method="post"
                             action={`/delete-list/${list.id}`}
                             onSubmit={(e) => {
-                                if (!confirm(`Supprimer la liste "${list.name}" ?`)) {
+                                if (!confirm(`Supprimer la liste "${list.name}" et les livres qu'elle contient?`)) {
                                     e.preventDefault();
                                 }
                             }}
