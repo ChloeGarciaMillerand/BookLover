@@ -1,18 +1,16 @@
 import { data, redirect, useLoaderData } from "react-router";
+import { parseWithZod } from "@conform-to/zod/v4";
 
 import { getSupabase } from "~/db/client";
 import type { Route } from "./+types/editList";
 
-import EditListForm from "~/components/list/editListForm";
-import { getOneList, updateList } from "~/db/list";
 import { authMiddleware } from "~/middlewares/authMiddleware";
 
-export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
+import EditListForm from "~/components/list/editListForm";
+import { getOneList, updateList } from "~/db/list";
+import { schema } from "~/components/list/editListForm";
 
-type Errors = {
-    name?: string;
-    form?: string;
-};
+export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
 
 // load list data
 export async function loader({ params, request }: Route.LoaderArgs) {
@@ -25,7 +23,7 @@ export async function loader({ params, request }: Route.LoaderArgs) {
 
     const list = await getOneList(supabase, listId);
 
-    return { list };
+    return list;
 }
 
 // update list
@@ -33,23 +31,19 @@ export async function action({ request, params }: Route.ActionArgs) {
     const { supabase } = getSupabase(request);
 
     const formData = await request.formData();
-    const name = String(formData.get("name"));
     const listId = params.id;
 
-    // error handling
-    const errors: Errors = {};
+    // Parse object
+    const submission = parseWithZod(formData, { schema });
 
-    if (!name) {
-        errors.name = "Nom de la liste obligatoire";
-    }
-
-    if (Object.keys(errors).length > 0) {
-        return data({ errors }, { status: 400 });
+    // Report the submission to client if it is not successful
+    if (submission.status !== "success") {
+        return submission.reply();
     }
 
     // updating list in database
     try {
-        await updateList(supabase, { listId, name });
+        await updateList(supabase, { listId, name: submission.value.name });
     } catch (error) {
         console.error(error);
         return data({ errors: { form: "Erreur lors de la modification de la liste" } }, { status: 500 });

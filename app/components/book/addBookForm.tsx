@@ -1,5 +1,8 @@
 import { Form, useActionData } from "react-router";
 import { useState } from "react";
+import { getFormProps, getInputProps, getSelectProps, getTextareaProps, useForm } from "@conform-to/react";
+import { getZodConstraint, parseWithZod } from "@conform-to/zod/v4";
+import * as z from "zod";
 
 import type { Genre } from "~/types";
 
@@ -10,46 +13,66 @@ type GenreProps = {
     genres: Genre[];
 };
 
+export const schema = z.object({
+    title: z.string({ message: "Le nom du livre est requis" }).min(1),
+    genre: z.optional(z.string()),
+    author: z.optional(z.string()),
+    editor: z.optional(z.string()),
+    library_code: z.optional(z.string()),
+    comment: z.optional(z.string()),
+    ISBN: z.optional(z.string()),
+});
+
 export default function AddBookForm({ genres }: GenreProps) {
-    const actionData = useActionData();
+    const lastResult = useActionData();
 
     // used to create new genres
     const [showModal, setShowModal] = useState(false);
 
+    const [form, fields] = useForm({
+        lastResult,
+        defaultValue: {
+            genre: "Choisir un genre",
+        },
+        constraint: getZodConstraint(schema),
+        // Validate field once user leaves the field
+        shouldValidate: "onBlur",
+        // Then, revalidate field as user types again
+        shouldRevalidate: "onInput",
+        // Run the same validation logic on client with Zod
+        onValidate({ formData }) {
+            return parseWithZod(formData, { schema });
+        },
+    });
+
     return (
         <>
             {/*returns form-related errors (e.g. book name is required)*/}
-            <Form method="POST">
-                {actionData?.errors.form ? (
-                    <p className="register-error-text" role="alert">
-                        {actionData?.errors?.form}
-                    </p>
-                ) : null}
+            <Form method="POST" {...getFormProps(form)}>
+                <div id={form.errorId}>{form.errors}</div>
                 {/* form fields */}
                 <div>
                     {/* Title */}
-                    <fieldset className="fieldset">
-                        <label htmlFor="title">Titre*</label>
+                    <div className="fieldset">
+                        <label className="fieldset-legend" htmlFor={fields.title.id}>
+                            Titre*
+                        </label>
                         <input
-                            id="title"
-                            name="title"
-                            type="text"
-                            required
                             className="input"
+                            {...getInputProps(fields.title, { type: "text" })}
                             placeholder="Titre du livre"
-                            aria-describedby={actionData?.errors?.title ? "title-error" : undefined}
                         />
-                        {actionData?.errors?.title ? (
-                            <p className="register-error-text" id="title-error">
-                                {actionData?.errors?.title}
-                            </p>
-                        ) : null}
-                    </fieldset>
+                        <div id={fields.title.errorId} className="label">
+                            {fields.title.errors}
+                        </div>
+                    </div>
 
                     {/* Select genre */}
-                    <fieldset className="fieldset">
-                        <label htmlFor="genre">Genre</label>
-                        <select id="genre" name="genre" defaultValue="Choisir un genre" className="select">
+                    <div className="fieldset">
+                        <label className="fieldset-legend" htmlFor={fields.genre.id}>
+                            Genre
+                        </label>
+                        <select className="select" {...getSelectProps(fields.genre)}>
                             <option disabled={true}>Choisir un genre</option>
                             {genres.map((genre) =>
                                 genre ? (
@@ -66,85 +89,79 @@ export default function AddBookForm({ genres }: GenreProps) {
                                 Ajouter un genre
                             </Button>
                         </div>
-                    </fieldset>
+                    </div>
 
                     {/* Author */}
-                    <fieldset className="fieldset">
-                        <label htmlFor="author">Auteur</label>
+                    <div className="fieldset">
+                        <label className="fieldset-legend" htmlFor={fields.author.id}>
+                            Auteur
+                        </label>
                         <input
-                            id="author"
-                            name="author"
-                            type="text"
                             className="input"
+                            {...getInputProps(fields.author, { type: "text" })}
                             placeholder="Nom de l'auteur"
-                            aria-describedby={actionData?.errors?.author ? "author-error" : undefined}
                         />
-                        {actionData?.errors?.author ? (
-                            <p className="register-error-text" id="author-error">
-                                {actionData?.errors?.author}
-                            </p>
-                        ) : null}
-                    </fieldset>
+                        <div id={fields.author.errorId} className="label">
+                            {fields.author.errors}
+                        </div>
+                    </div>
 
                     {/* Editor */}
-                    <fieldset className="fieldset">
-                        <label htmlFor="editor">Editeur</label>
+                    <div className="fieldset">
+                        <label className="fieldset" htmlFor={fields.editor.id}>
+                            Editeur
+                        </label>
                         <input
-                            id="editor"
-                            name="editor"
-                            type="text"
                             className="input"
+                            {...getInputProps(fields.editor, { type: "text" })}
                             placeholder="Nom de l'éditeur"
-                            aria-describedby={actionData?.errors?.editor ? "editor-error" : undefined}
                         />
-                        {actionData?.errors?.editor ? (
-                            <p className="register-error-text" id="editor-error">
-                                {actionData?.errors?.editor}
-                            </p>
-                        ) : null}
-                    </fieldset>
+                        <div id={fields.editor.errorId} className="label">
+                            {fields.editor.errors}
+                        </div>
+                    </div>
 
                     {/* Library code */}
-                    <fieldset className="fieldset">
-                        <label htmlFor="library_code">Cote bibliothèque</label>
+                    <div className="fieldset">
+                        <label className="fieldset-legend" htmlFor={fields.library_code.id}>
+                            Cote bibliothèque
+                        </label>
                         <input
-                            id="library_code"
-                            name="library_code"
-                            type="text"
+                            {...getInputProps(fields.library_code, { type: "text" })}
                             className="input"
                             placeholder="Exemple: J BOS 38"
-                            aria-describedby={actionData?.errors?.library_code ? "library_code-error" : undefined}
                         />
-                        {actionData?.errors?.library_code ? (
-                            <p className="register-error-text" id="library_code-error">
-                                {actionData?.errors?.library_code}
-                            </p>
-                        ) : null}
-                    </fieldset>
+                        <div id={fields.library_code.errorId} className="label">
+                            {fields.library_code.errors}
+                        </div>
+                    </div>
 
                     {/* Comment */}
-                    <fieldset className="fieldset">
-                        <label htmlFor="comment">Commentaire</label>
-                        <textarea id="comment" name="comment" className="input" placeholder="Ajouter un commentaire" />
-                    </fieldset>
+                    <div className="fieldset">
+                        <label className="fieldset" htmlFor={fields.comment.id}>
+                            Commentaire
+                        </label>
+                        <textarea
+                            {...getTextareaProps(fields.comment)}
+                            className="input"
+                            placeholder="Ajouter un commentaire"
+                        />
+                    </div>
 
                     {/* ISBN */}
-                    <fieldset className="fieldset">
-                        <label htmlFor="ISBN">ISBN</label>
+                    <div className="fieldset">
+                        <label className="fieldset" htmlFor={fields.ISBN.id}>
+                            ISBN
+                        </label>
                         <input
-                            id="ISBN"
-                            name="ISBN"
-                            type="text"
+                            {...getInputProps(fields.ISBN, { type: "text" })}
                             className="input"
                             placeholder="Exemple: 978-2-07-061275-8"
-                            aria-describedby={actionData?.errors?.ISBN ? "ISBN-error" : undefined}
                         />
-                        {actionData?.errors?.ISBN ? (
-                            <p className="register-error-text" id="ISBN-error">
-                                {actionData?.errors?.ISBN}
-                            </p>
-                        ) : null}
-                    </fieldset>
+                        <div id={fields.ISBN.errorId} className="label">
+                            {fields.ISBN.errors}
+                        </div>
+                    </div>
 
                     {/* submit button */}
                     <div className="mt-5 flex justify-end md:justify-start">
