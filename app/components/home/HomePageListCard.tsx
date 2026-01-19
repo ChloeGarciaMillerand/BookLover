@@ -16,15 +16,20 @@ export default function HomePageListCard({ list }: HomePageListCardProps) {
     return (
         <div className="card bg-base-300 text-base-content w-x1 mx-auto my-5">
             <div className="card-body">
-                <div className="flex flex-row justify-between">
+                <div className="flex flex-col sm:flex-row justify-between">
                     <Link to={`list/${list.id}`}>
                         <h2 className="card-title hover:text-info">{list.name}</h2>
                     </Link>
 
-                    <div className="flex gap-2">
+                    <div className="flex gap-4">
                         {/* EDIT LIST */}
-                        <Link to={`edit-list/${list.id}`} aria-label="Modifier la liste" className="hover:text-info">
+                        <Link
+                            to={`edit-list/${list.id}`}
+                            aria-label="Modifier la liste"
+                            className="hover:text-info flex flex-row gap-1"
+                        >
                             <Pen size={18} aria-hidden="true" />
+                            <p>Modifier</p>
                         </Link>
 
                         {/* DELETE LIST */}
@@ -39,10 +44,11 @@ export default function HomePageListCard({ list }: HomePageListCardProps) {
                         >
                             <button
                                 type="submit"
-                                className="cursor-pointer hover:text-error"
+                                className="cursor-pointer hover:text-error flex flex-row gap-1"
                                 aria-label="supprimer la liste"
                             >
                                 <Trash size={18} aria-hidden="true" />
+                                <p>Supprimer</p>
                             </button>
                         </fetcher.Form>
                     </div>

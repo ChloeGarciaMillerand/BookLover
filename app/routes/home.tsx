@@ -36,7 +36,7 @@ export default function HomePage(props: Route.ComponentProps) {
     }
 
     return (
-        <div className="m-auto w-4/5 mt-4">
+        <div className="m-auto w-3/5 mt-4">
             {/* Meta*/}
             <title>BookLover - Accueil</title>
             <meta name="description" content="Bienvenue dans votre gestionnaire de livres!" />
@@ -56,7 +56,7 @@ export default function HomePage(props: Route.ComponentProps) {
 
             <div className="flex justify-end">
                 <Link to="/add-list">
-                    <Button className="btn-primary">+</Button>
+                    <Button className="btn-primary">Créer une liste</Button>
                 </Link>
             </div>
         </div>

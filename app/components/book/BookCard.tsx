@@ -16,13 +16,18 @@ export default function BookCard({ book, list }: BookProps) {
     return (
         <div className="card bg-base-300 text-base-content w-x1 mx-auto my-5">
             <div className="card-body">
-                <div className="flex flex-row justify-between">
+                <div className="flex flex-col sm:flex-row justify-between">
                     <h2 className="card-title">{book.title}</h2>
 
-                    <div className="flex gap-2">
+                    <div className="flex gap-4">
                         {/* EDIT BOOK */}
-                        <Link to={`edit-book/${book.id}`} aria-label="Modifier le livre" className="hover:text-info">
+                        <Link
+                            to={`edit-book/${book.id}`}
+                            aria-label="Modifier le livre"
+                            className="hover:text-info flex flex-row"
+                        >
                             <Pen size={18} aria-hidden="true" />
+                            <p>Modifier</p>
                         </Link>
 
                         {/* DELETE BOOK */}
@@ -37,10 +42,11 @@ export default function BookCard({ book, list }: BookProps) {
                         >
                             <button
                                 type="submit"
-                                className="cursor-pointer hover:text-error"
+                                className="cursor-pointer hover:text-error flex flex-row"
                                 aria-label="supprimer le livre"
                             >
                                 <Trash size={18} aria-hidden="true" />
+                                <p>Supprimer</p>
                             </button>
                         </fetcher.Form>
                     </div>
