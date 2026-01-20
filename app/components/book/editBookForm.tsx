@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Form, useActionData } from "react-router";
+import { Form, Link, useActionData } from "react-router";
 import { getFormProps, getInputProps, getSelectProps, getTextareaProps, useForm } from "@conform-to/react";
 import { getZodConstraint, parseWithZod } from "@conform-to/zod/v4";
 import * as z from "zod";
@@ -166,11 +166,15 @@ export default function EditBookForm({ book, genres, lists, currentListId }: Boo
                         </div>
                     </div>
 
-                    {/* submit button */}
-                    <div className="mt-5 flex justify-end md:justify-start">
+                    {/* submit and cancel buttons */}
+                    <div className="mt-5 mb-5 flex justify-end gap-4 md:justify-start">
                         <Button type="submit" className="btn-primary">
                             Modifier le livre
                         </Button>
+
+                        <Link to={`/list/${currentListId}`}>
+                            <Button className="btn-outline btn-secondary">Annuler</Button>
+                        </Link>
                     </div>
                 </div>
             </Form>

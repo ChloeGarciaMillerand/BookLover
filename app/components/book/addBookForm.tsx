@@ -1,4 +1,4 @@
-import { Form, useActionData } from "react-router";
+import { Form, Link, useActionData, useParams } from "react-router";
 import { useState } from "react";
 import { getFormProps, getInputProps, getSelectProps, getTextareaProps, useForm } from "@conform-to/react";
 import { getZodConstraint, parseWithZod } from "@conform-to/zod/v4";
@@ -25,6 +25,7 @@ export const schema = z.object({
 
 export default function AddBookForm({ genres }: GenreProps) {
     const lastResult = useActionData();
+    const { id } = useParams();
 
     // used to create new genres
     const [showModal, setShowModal] = useState(false);
@@ -48,7 +49,7 @@ export default function AddBookForm({ genres }: GenreProps) {
     return (
         <>
             {/*returns form-related errors (e.g. book name is required)*/}
-            <Form method="POST" {...getFormProps(form)}>
+            <Form method="POST" {...getFormProps(form)} className="mb-5">
                 <div id={form.errorId}>{form.errors}</div>
                 {/* form fields */}
                 <div>
@@ -163,11 +164,15 @@ export default function AddBookForm({ genres }: GenreProps) {
                         </div>
                     </div>
 
-                    {/* submit button */}
-                    <div className="mt-5 flex justify-end md:justify-start">
+                    {/* submit and cancel buttons */}
+                    <div className="mt-5 flex flex-row justify-start gap-4">
                         <Button type="submit" className="btn-primary">
                             Ajouter un livre
                         </Button>
+
+                        <Link to={`/list/${id}`}>
+                            <Button className="btn-outline btn-secondary">Annuler</Button>
+                        </Link>
                     </div>
                 </div>
             </Form>

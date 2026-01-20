@@ -24,7 +24,8 @@ export default function BookCard({ book, list }: BookProps) {
                         <Link
                             to={`edit-book/${book.id}`}
                             aria-label="Modifier le livre"
-                            className="hover:text-info flex flex-row"
+                            title="Modifier le livre"
+                            className="hover:text-info flex flex-row gap-1"
                         >
                             <Pen size={18} aria-hidden="true" />
                             <p>Modifier</p>
@@ -42,7 +43,8 @@ export default function BookCard({ book, list }: BookProps) {
                         >
                             <button
                                 type="submit"
-                                className="cursor-pointer hover:text-error flex flex-row"
+                                title="Supprimer le livre"
+                                className="cursor-pointer hover:text-error flex flex-row gap-1"
                                 aria-label="supprimer le livre"
                             >
                                 <Trash size={18} aria-hidden="true" />

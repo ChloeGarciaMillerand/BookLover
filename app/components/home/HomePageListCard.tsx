@@ -26,6 +26,7 @@ export default function HomePageListCard({ list }: HomePageListCardProps) {
                         <Link
                             to={`edit-list/${list.id}`}
                             aria-label="Modifier la liste"
+                            title="Modifier la liste"
                             className="hover:text-info flex flex-row gap-1"
                         >
                             <Pen size={18} aria-hidden="true" />
@@ -44,6 +45,7 @@ export default function HomePageListCard({ list }: HomePageListCardProps) {
                         >
                             <button
                                 type="submit"
+                                title="Supprimer la liste"
                                 className="cursor-pointer hover:text-error flex flex-row gap-1"
                                 aria-label="supprimer la liste"
                             >
@@ -65,6 +67,9 @@ export default function HomePageListCard({ list }: HomePageListCardProps) {
                     ))}
                 </ul>
                 */}
+
+                {/* LINE */}
+                <div className="w-10 border-b-5 border-primary rounded-md"></div>
 
                 <ul>
                     {/* BOOK INFO */}

@@ -94,6 +94,7 @@ export default function addBook(props: Route.ComponentProps) {
 
             {/* Content */}
             <h1 className="h1">Ajouter un livre</h1>
+
             <AddBookForm genres={genres} />
         </div>
     );

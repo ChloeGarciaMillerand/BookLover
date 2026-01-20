@@ -1,15 +1,18 @@
 import { Link, Navigate, useOutletContext } from "react-router";
+import { useEffect, useState } from "react";
+
+import type { User } from "@supabase/supabase-js";
 
 import { getSupabase } from "~/db/client";
+
 import type { Route } from "./+types/home";
+
+import { getUserLists } from "~/db/list";
 
 import HomePageListCard from "../components/home/HomePageListCard";
 import { Button } from "~/components/shared/Button";
 
-import type { User } from "@supabase/supabase-js";
 import { authMiddleware, getCurrentUser } from "~/middlewares/authMiddleware";
-
-import { getUserLists } from "~/db/list";
 
 type ContextType = {
     user: User | null;
@@ -35,8 +38,22 @@ export default function HomePage(props: Route.ComponentProps) {
         return <Navigate to="/landing" replace />;
     }
 
+    const [isScrollable, setIsScrollable] = useState(false);
+
+    useEffect(() => {
+        const checkScrollable = () => {
+            // Vérifie si le document dépasse la fenêtre
+            setIsScrollable(document.body.scrollHeight > window.innerHeight);
+        };
+
+        checkScrollable(); // check au montage
+        window.addEventListener("resize", checkScrollable); // check si la fenêtre change de taille
+
+        return () => window.removeEventListener("resize", checkScrollable);
+    }, [lists]);
+
     return (
-        <div className="m-auto w-3/5 mt-4">
+        <div className="m-auto w-4/5 mt-4 mb-5 md:w-3/5">
             {/* Meta*/}
             <title>BookLover - Accueil</title>
             <meta name="description" content="Bienvenue dans votre gestionnaire de livres!" />
@@ -46,7 +63,7 @@ export default function HomePage(props: Route.ComponentProps) {
             {/* Content */}
             <h1 className="h1">Mes listes</h1>
 
-            <ul>
+            <ul className={`${isScrollable ? "mb-25" : ""}`}>
                 {lists.map((list) => (
                     <li key={list.id}>
                         <HomePageListCard list={list} />
@@ -54,7 +71,10 @@ export default function HomePage(props: Route.ComponentProps) {
                 ))}
             </ul>
 
-            <div className="flex justify-end">
+            <div
+                className={`${isScrollable ? "fixed bottom-20 z-50" : "mt-4 flex justify-end"}`}
+                style={isScrollable ? { left: "65%" } : {}}
+            >
                 <Link to="/add-list">
                     <Button className="btn-primary">Créer une liste</Button>
                 </Link>
