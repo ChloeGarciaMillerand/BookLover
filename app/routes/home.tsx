@@ -40,17 +40,29 @@ export default function HomePage(props: Route.ComponentProps) {
 
     const [isScrollable, setIsScrollable] = useState(false);
 
+    //check if window is scrollable
     useEffect(() => {
         const checkScrollable = () => {
-            // Vérifie si le document dépasse la fenêtre
             setIsScrollable(document.body.scrollHeight > window.innerHeight);
         };
 
-        checkScrollable(); // check au montage
-        window.addEventListener("resize", checkScrollable); // check si la fenêtre change de taille
+        checkScrollable();
+        window.addEventListener("resize", checkScrollable);
 
         return () => window.removeEventListener("resize", checkScrollable);
     }, [lists]);
+
+    //message if no list exists
+    let emptyMessage = null;
+
+    if (lists.length === 0) {
+        emptyMessage = (
+            <p>
+                Il n'y a pas encore de listes. <br />
+                Commencer par en créer une.
+            </p>
+        );
+    }
 
     return (
         <div className="m-auto w-4/5 mt-4 mb-5 md:w-3/5">
@@ -62,6 +74,8 @@ export default function HomePage(props: Route.ComponentProps) {
 
             {/* Content */}
             <h1 className="h1">Mes listes</h1>
+
+            <div className="my-5">{emptyMessage}</div>
 
             <ul className={`${isScrollable ? "mb-25" : ""}`}>
                 {lists.map((list) => (

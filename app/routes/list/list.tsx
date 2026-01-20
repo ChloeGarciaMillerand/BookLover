@@ -31,6 +31,18 @@ export default function ListPage(props: Route.ComponentProps) {
     const { list } = props.loaderData;
     let fetcher = useFetcher();
 
+    //message if no book exists
+    let emptyMessage = null;
+
+    if (list.booklist.length === 0) {
+        emptyMessage = (
+            <p>
+                Il n'y a pas encore de livres. <br />
+                Commencer par en ajouter un.
+            </p>
+        );
+    }
+
     return (
         <div className="m-auto w-4/5 mt-4 mb-5 md:w-3/5">
             {/* Meta*/}
@@ -87,6 +99,8 @@ export default function ListPage(props: Route.ComponentProps) {
 
             {/* LINE */}
             <div className="w-10 border-b-8 border-primary rounded-md"></div>
+
+            <div className="my-5">{emptyMessage}</div>
 
             {/* BOOKS LIST*/}
             <ul>
