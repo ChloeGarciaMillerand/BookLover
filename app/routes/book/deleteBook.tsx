@@ -3,10 +3,12 @@ import { redirect, data } from "react-router";
 import { getSupabase } from "~/db/client";
 
 import type { Route } from "./+types/deleteBook";
+
 import { deleteLinkBookList } from "~/db/booklist";
 import { removeBook } from "~/db/book";
-import { authMiddleware } from "~/middlewares/authMiddleware";
 import { commitSession, getSession } from "~/services/sessions.server";
+
+import { authMiddleware } from "~/middlewares/authMiddleware";
 
 export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
 
@@ -16,12 +18,9 @@ export async function action({ params, request }: Route.ActionArgs) {
 
     const { id: listId, bookId } = params;
 
-    if (!bookId || !listId) {
-        /*
-        throw new Response("Missing book id or list id", { status: 400 });
-        */
+    if (!bookId) {
         session.flash("error", "Identifiant manquant");
-        return redirect(`/`, {
+        return redirect(`/list/${listId}`, {
             headers: {
                 "Set-Cookie": await commitSession(session),
             },

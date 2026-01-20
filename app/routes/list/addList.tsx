@@ -1,20 +1,24 @@
 import { data, redirect } from "react-router";
 import { parseWithZod } from "@conform-to/zod/v4";
 
-import type { Route } from "./+types/addList";
 import { getSupabase } from "~/db/client";
 
-import AddListForm from "~/components/list/addListForm";
-
-import { authMiddleware, getCurrentUser } from "~/middlewares/authMiddleware";
+import type { Route } from "./+types/addList";
 
 import { createList } from "~/db/list";
+import { commitSession, getSession } from "~/services/sessions.server";
+
+import AddListForm from "~/components/list/addListForm";
 import { schema } from "~/components/list/addListForm";
+
+import { authMiddleware, getCurrentUser } from "~/middlewares/authMiddleware";
 
 export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
 
 export async function action(params: Route.ActionArgs) {
     const { supabase } = getSupabase(params.request);
+    const session = await getSession(params.request.headers.get("Cookie"));
+
     const user = getCurrentUser(params.context);
     if (!user) {
         return redirect("/landing");
@@ -33,13 +37,19 @@ export async function action(params: Route.ActionArgs) {
     // list registration in database
     try {
         await createList(supabase, { userId: user.id, name: submission.value.name });
+        //success message
+        session.flash("success", "Liste créée avec succès!");
     } catch (error) {
         console.error(error);
         return data({ errors: { form: "Erreur lors de la création de la liste" } }, { status: 500 });
     }
 
     // Redirect after success
-    return redirect("/");
+    return redirect("/", {
+        headers: {
+            "Set-Cookie": await commitSession(session),
+        },
+    });
 }
 
 export default function addList() {

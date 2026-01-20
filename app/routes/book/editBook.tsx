@@ -2,15 +2,19 @@ import { data, redirect, useLoaderData } from "react-router";
 import { parseWithZod } from "@conform-to/zod/v4";
 
 import { getSupabase } from "~/db/client";
+
 import type { Route } from "./+types/editBook";
 
-import EditBookForm from "~/components/book/editBookForm";
-import { getOneBookWithGenre, updateBook } from "~/db/book";
-import { authMiddleware, getCurrentUser } from "~/middlewares/authMiddleware";
-import { getUserLists } from "~/db/list";
 import { getCurrentListId, updateBookList } from "~/db/booklist";
+import { getOneBookWithGenre, updateBook } from "~/db/book";
+import { getUserLists } from "~/db/list";
 import { getAllGenres } from "~/db/genre";
+import { commitSession, getSession } from "~/services/sessions.server";
+
+import EditBookForm from "~/components/book/editBookForm";
 import { schema } from "~/components/book/editBookForm";
+
+import { authMiddleware, getCurrentUser } from "~/middlewares/authMiddleware";
 
 export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
 
@@ -39,11 +43,17 @@ export async function loader({ params, request, context }: Route.LoaderArgs) {
 // update book
 export async function action({ request, params }: Route.ActionArgs) {
     const { supabase } = getSupabase(request);
+    const session = await getSession(request.headers.get("Cookie"));
 
-    const { bookId } = params;
+    const { bookId, listId } = params;
 
     if (!bookId) {
-        throw new Response("Missing book id", { status: 400 });
+        session.flash("error", "Identifiant manquant");
+        return redirect(`/list/${listId}`, {
+            headers: {
+                "Set-Cookie": await commitSession(session),
+            },
+        });
     }
 
     const formData = await request.formData();
@@ -78,8 +88,15 @@ export async function action({ request, params }: Route.ActionArgs) {
             listId: list_id,
         });
 
+        //success message
+        session.flash("success", "Livre modifié avec succès!");
+
         // Redirect after success
-        return redirect(`/list/${list_id}`);
+        return redirect(`/list/${list_id}`, {
+            headers: {
+                "Set-Cookie": await commitSession(session),
+            },
+        });
     } catch {
         return data({ errors: { form: "Erreur lors de la modification du livre" } }, { status: 500 });
     }
