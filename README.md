@@ -1,20 +1,24 @@
-# Welcome to React Router!
+# 📚 Welcome to BookLover!
 
-A modern, production-ready template for building full-stack React applications using React Router.
+BookLover is a web application designed to help users organize and manage their reading lists.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+BookLover is currently at the MVP stage, serving as a foundation for future features and iterations.
 
-## Features
+## Tech Stack
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
-
+- React – UI development
+- Vite – fast development environment
+- React Router – client-side routing
+- Supabase – authentication, database, and backend services
+- Playwright – End-to-End Testing
+- Deployment – deployment service to be finalized
+  
 ## Getting Started
+
+### Prerequisites
+
+- Node.js ≥ 18
+- A Supabase account
 
 ### Installation
 
@@ -22,6 +26,15 @@ Install the dependencies:
 
 ```bash
 npm install
+```
+
+### Environment variables
+
+Create a .env file at the root of the project:
+
+```bash
+VITE_SUPABASE_URL=https://xxxx.supabase.co
+VITE_SUPABASE_ANON_KEY=your_anon_key
 ```
 
 ### Development
@@ -32,56 +45,27 @@ Start the development server with HMR:
 npm run dev
 ```
 
-Your application will be available at `http://localhost:5173`.
+## Project Management
 
-## Building for Production
+Project planning and task tracking are managed using GitHub Projects:
+[Project](https://github.com/users/ChloeGarciaMillerand/projects/5)
 
-Create a production build:
+## Project Status
 
-```bash
-npm run build
-```
+BookLover is currently in the MVP stage.
+The project focuses on clean architecture, core features, and real-world workflows (authentication, CRUD operations, testing, and deployment).
 
-## Deployment
+## Why this project?
 
-### Docker Deployment
+This project demonstrates:
 
-To build and run using Docker:
+- the ability to design and structure a React application
+- integration of a real backend (auth + database)
+- handling of common product features (auth, CRUD, routing)
+- testing and deployment in a realistic environment
+- the ability to make technical decisions and manage a project from concept to delivery
 
-```bash
-docker build -t my-app .
+BookLover was born from a real personal need: my family and I read a lot, and we wanted a simple and efficient way to organize and track our reading lists.
+This real-world context guided both the functional scope and the technical choices made throughout the project.
 
-# Run the container
-docker run -p 3000:3000 my-app
-```
 
-The containerized application can be deployed to any platform that supports Docker, including:
-
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
-
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
-
----
-
-Built with ❤️ using React Router.
