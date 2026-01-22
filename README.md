@@ -68,4 +68,9 @@ This project demonstrates:
 BookLover was born from a real personal need: my family and I read a lot, and we wanted a simple and efficient way to organize and track our reading lists.
 This real-world context guided both the functional scope and the technical choices made throughout the project.
 
+## Design
 
+The application was initially designed using Figma, where I created the first mockups and user flows.
+This design phase is something I genuinely enjoy and consider essential for building coherent and user-focused applications.
+
+![BookLover](https://github.com/ChloeGarciaMillerand/BookLover/blob/refacto-ui/booklover_mockup.png?raw=true)
