@@ -33,8 +33,10 @@ npm install
 Create a .env file at the root of the project:
 
 ```bash
-VITE_SUPABASE_URL=https://xxxx.supabase.co
-VITE_SUPABASE_ANON_KEY=your_anon_key
+SUPABASE_URL="http://127.0.0.1:XXXXX"
+SUPABASE_PUBLISHABLE_KEY=your_publishable_key
+SESSION_SECRET=your_secret
+
 ```
 
 ### Development
@@ -73,4 +75,4 @@ This real-world context guided both the functional scope and the technical choic
 The application was initially designed using Figma, where I created the first mockups and user flows.
 This design phase is something I genuinely enjoy and consider essential for building coherent and user-focused applications.
 
-![BookLover](https://github.com/ChloeGarciaMillerand/BookLover/blob/refacto-ui/booklover_mockup.png?raw=true)
+![BookLover](https://github.com/ChloeGarciaMillerand/BookLover/blob/main/booklover_mockup.png?raw=true)
