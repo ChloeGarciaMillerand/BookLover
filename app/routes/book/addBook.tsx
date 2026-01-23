@@ -1,12 +1,14 @@
 import { data, redirect } from "react-router";
 import { parseWithZod } from "@conform-to/zod/v4";
 
-import type { Route } from "./+types/addBook";
 import { getSupabase } from "~/db/client";
 
-import AddBookForm from "~/components/book/addBookForm";
+import type { Route } from "./+types/addBook";
 
 import { getAllGenres } from "~/db/genre";
+import { commitSession, getSession } from "~/services/sessions.server";
+
+import AddBookForm from "~/components/book/addBookForm";
 import { schema } from "~/components/book/addBookForm";
 
 import { authMiddleware, getCurrentUser } from "~/middlewares/authMiddleware";
@@ -30,10 +32,16 @@ export async function loader(params: Route.LoaderArgs) {
 // add new book in database
 export async function action({ params, request }: Route.ActionArgs) {
     const { supabase } = getSupabase(request);
+    const session = await getSession(request.headers.get("Cookie"));
 
     const listId = params.id;
     if (!listId) {
-        return data({ errors: { form: "Liste invalide" } }, { status: 400 });
+        session.flash("error", "Liste invalide");
+        return redirect(`/list/${listId}`, {
+            headers: {
+                "Set-Cookie": await commitSession(session),
+            },
+        });
     }
 
     const formData = await request.formData();
@@ -57,13 +65,20 @@ export async function action({ params, request }: Route.ActionArgs) {
         isbn_input: submission.value.ISBN,
     });
 
+    //success message
+    session.flash("success", "Livre ajouté avec succès!");
+
     if (error) {
         console.error("Erreur RPC create_book:", error);
         return data({ errors: { form: "Erreur lors de la création du livre" } }, { status: 500 });
     }
 
     // Redirect after success
-    return redirect(`/list/${listId}`);
+    return redirect(`/list/${listId}`, {
+        headers: {
+            "Set-Cookie": await commitSession(session),
+        },
+    });
 }
 
 export default function addBook(props: Route.ComponentProps) {
@@ -79,6 +94,7 @@ export default function addBook(props: Route.ComponentProps) {
 
             {/* Content */}
             <h1 className="h1">Ajouter un livre</h1>
+
             <AddBookForm genres={genres} />
         </div>
     );

@@ -2,19 +2,23 @@ import { data, redirect, useLoaderData } from "react-router";
 import { parseWithZod } from "@conform-to/zod/v4";
 
 import { getSupabase } from "~/db/client";
+
 import type { Route } from "./+types/editList";
 
-import { authMiddleware } from "~/middlewares/authMiddleware";
+import { getOneList, updateList } from "~/db/list";
+import { commitSession, getSession } from "~/services/sessions.server";
 
 import EditListForm from "~/components/list/editListForm";
-import { getOneList, updateList } from "~/db/list";
 import { schema } from "~/components/list/editListForm";
+
+import { authMiddleware } from "~/middlewares/authMiddleware";
 
 export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
 
 // load list data
 export async function loader({ params, request }: Route.LoaderArgs) {
     const { supabase } = getSupabase(request);
+
     const listId = params.id;
 
     if (!listId) {
@@ -29,9 +33,19 @@ export async function loader({ params, request }: Route.LoaderArgs) {
 // update list
 export async function action({ request, params }: Route.ActionArgs) {
     const { supabase } = getSupabase(request);
+    const session = await getSession(request.headers.get("Cookie"));
 
     const formData = await request.formData();
     const listId = params.id;
+
+    if (!listId) {
+        session.flash("error", "Identifiant de la liste manquant");
+        return redirect("/", {
+            headers: {
+                "Set-Cookie": await commitSession(session),
+            },
+        });
+    }
 
     // Parse object
     const submission = parseWithZod(formData, { schema });
@@ -44,13 +58,19 @@ export async function action({ request, params }: Route.ActionArgs) {
     // updating list in database
     try {
         await updateList(supabase, { listId, name: submission.value.name });
+        //success message
+        session.flash("success", "Liste modifiée avec succès!");
     } catch (error) {
         console.error(error);
         return data({ errors: { form: "Erreur lors de la modification de la liste" } }, { status: 500 });
     }
 
     // Redirect after success
-    return redirect("/");
+    return redirect("/", {
+        headers: {
+            "Set-Cookie": await commitSession(session),
+        },
+    });
 }
 
 export default function editList() {

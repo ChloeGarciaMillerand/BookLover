@@ -1,4 +1,4 @@
-import { Form, useActionData } from "react-router";
+import { Form, Link, useActionData } from "react-router";
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { getZodConstraint, parseWithZod } from "@conform-to/zod/v4";
 import * as z from "zod";
@@ -46,11 +46,14 @@ export default function AddListForm() {
                         {fields.name.errors}
                     </div>
                 </div>
-                {/* submit button */}
-                <div className="mt-5 flex justify-end md:justify-start">
+                {/* submit and cancel buttons */}
+                <div className="mt-5 flex justify-end gap-4 md:justify-start">
                     <Button type="submit" className="btn-primary">
                         Créer une liste
                     </Button>
+                    <Link to="/">
+                        <Button className="btn-outline btn-secondary">Annuler</Button>
+                    </Link>
                 </div>
             </div>
         </Form>

@@ -10,7 +10,7 @@ type HeaderProps = {
 
 export default function Header({ user }: HeaderProps) {
     return (
-        <header>
+        <header className="m-auto w-95/100 md:w-85/100 lg:w-75/100 ">
             <div className="navbar w-full bg-base-100 shadow-sm">
                 {/* logo */}
                 <div className="navbar-start">

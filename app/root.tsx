@@ -1,25 +1,43 @@
-import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
+import { data, isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
 
 import { getSupabase } from "~/db/client";
+import { commitSession, getSession } from "./services/sessions.server";
 
 import type { Route } from "./+types/root";
 import "./app.css";
 
 import Footer from "./components/shared/footer";
 import Header from "./components/shared/header";
+import { useEffect, useState } from "react";
 
 export async function loader({ request }: Route.LoaderArgs) {
     const { supabase } = getSupabase(request);
+    const session = await getSession(request.headers.get("Cookie"));
 
+    // user
     const {
         data: { user },
     } = await supabase.auth.getUser();
 
     if (user == null) {
-        return { user: null };
+        return { user: null, flash: null };
     }
 
-    return { user: { id: user.id, email: user.email } };
+    //flash messages
+    const success = session.get("success") ?? null;
+    const error = session.get("error") ?? null;
+
+    return data(
+        {
+            user: { id: user.id, email: user.email },
+            flash: { success, error },
+        },
+        {
+            headers: {
+                "Set-Cookie": await commitSession(session),
+            },
+        },
+    );
 }
 
 export const links: Route.LinksFunction = () => [
@@ -45,7 +63,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <Meta />
                 <Links />
             </head>
-            <body className="min-h-screen flex flex-col">
+            <body className="min-h-screen flex flex-col  min-w-[320px]">
                 {children}
                 <ScrollRestoration />
                 <Scripts />
@@ -55,15 +73,38 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App(props: Route.ComponentProps) {
-    const { user } = props.loaderData;
+    const { user, flash } = props.loaderData;
     return (
         <>
             <Header user={user} />
             <main className="flex-1 h-full">
                 <Outlet context={{ user }} />
             </main>
+
+            {/* flash messages*/}
+
+            {flash?.success && <Notification message={flash.success} type="success" />}
+            {flash?.error && <Notification message={flash.error} type="error" />}
+
             <Footer />
         </>
+    );
+}
+
+function Notification({ message, type }: { message: string; type: "success" | "error" }) {
+    const [isVisible, setIsVisible] = useState(true);
+    useEffect(() => {
+        setTimeout(() => setIsVisible(false), 5000);
+    }, []);
+
+    if (!isVisible) return null;
+
+    return (
+        <div className="toast toast-top toast-end z-50">
+            <div className={`alert ${type === "error" ? "alert-error" : "alert-success"}`}>
+                <span>{message}</span>
+            </div>
+        </div>
     );
 }
 
