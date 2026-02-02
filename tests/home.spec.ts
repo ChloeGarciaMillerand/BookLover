@@ -31,15 +31,19 @@ async function fillListName(page: Page, name = "Playwright List") {
     await page.getByLabel("Titre*").fill(name);
 }
 
+async function fillBookName(page: Page, title = "Test title") {
+    await page.getByLabel("Titre*").fill(title);
+}
+
 test("Authenticated users can create lists", async ({ page }) => {
+    // connexion
     await using _test = await setup();
     await signin(page);
 
-    // Expects page to have a heading with the name of Installation.
+    // check heading and button
     const heading = page.getByRole("heading", { level: 1, name: /Mes listes/i });
     await expect(heading).toBeVisible();
 
-    // Expects page to have a heading with the name of Installation.
     const button = page.getByRole("button", { name: /Créer une liste/i });
     await expect(button).toBeVisible();
 
@@ -57,26 +61,38 @@ test("Authenticated users can create lists", async ({ page }) => {
 });
 
 test("Authenticated users can update lists", async ({ page }) => {
+    // connexion
     await using _test = await setup();
     await signin(page);
 
-    // Expects page to have a heading with the name of Installation.
-    const heading = page.getByRole("heading", { level: 1, name: /Mes listes/i });
-    await expect(heading).toBeVisible();
-
-    // Expects page to have a heading with the name of Installation.
-    const button = page.getByRole("button", { name: /Créer une liste/i });
-    await expect(button).toBeVisible();
-
-    // Create a list
+    //create a list
     await page.getByRole("button", { name: /Créer une liste/i }).click();
     await page.waitForURL("/add-list");
-    const titleInput = page.getByLabel("Titre*");
-    await expect(titleInput).toBeVisible();
     await fillListName(page);
     await page.getByRole("button", { name: /Créer une liste/i }).click();
 
-    //Expects the new list is visible
-    const listItem = page.getByText("Playwright List");
-    await expect(listItem).toBeVisible();
+    // check list title and click
+    const heading = page.getByRole("heading", { name: /Playwright List/i });
+    await expect(heading).toBeVisible();
+
+    // navigate to test list
+    await heading.click();
+    await page.waitForURL(/\/list\/.+/);
+
+    // get the id of the list
+    const url = page.url();
+    const listId = url.split("/list/")[1];
+
+    // create a book
+    await page.getByRole("button", { name: /Ajouter un livre/i }).click();
+    await page.waitForURL(`/list/${listId}/add-book`);
+
+    const titleInput = page.getByLabel("Titre*");
+    await expect(titleInput).toBeVisible();
+    await fillBookName(page);
+    await page.getByRole("button", { name: /Ajouter un livre/i }).click();
+
+    //Expects the new book is visible
+    const BookItem = page.getByText("Test title");
+    await expect(BookItem).toBeVisible();
 });
