@@ -27,16 +27,56 @@ async function signin(page: Page, email = "chloe@test.com", password = "grosmotd
     await page.getByRole("button", { name: /OK/i }).click();
 }
 
+async function fillListName(page: Page, name = "Playwright List") {
+    await page.getByLabel("Titre*").fill(name);
+}
+
 test("Authenticated users can create lists", async ({ page }) => {
     await using _test = await setup();
     await signin(page);
-    const heading = page.getByRole("heading", { level: 1, name: /Mes listes/i });
 
     // Expects page to have a heading with the name of Installation.
+    const heading = page.getByRole("heading", { level: 1, name: /Mes listes/i });
     await expect(heading).toBeVisible();
 
+    // Expects page to have a heading with the name of Installation.
     const button = page.getByRole("button", { name: /Créer une liste/i });
+    await expect(button).toBeVisible();
+
+    // Create a list
+    await page.getByRole("button", { name: /Créer une liste/i }).click();
+    await page.waitForURL("/add-list");
+    const titleInput = page.getByLabel("Titre*");
+    await expect(titleInput).toBeVisible();
+    await fillListName(page);
+    await page.getByRole("button", { name: /Créer une liste/i }).click();
+
+    //Expects the new list is visible
+    const listItem = page.getByText("Playwright List");
+    await expect(listItem).toBeVisible();
+});
+
+test("Authenticated users can update lists", async ({ page }) => {
+    await using _test = await setup();
+    await signin(page);
 
     // Expects page to have a heading with the name of Installation.
+    const heading = page.getByRole("heading", { level: 1, name: /Mes listes/i });
+    await expect(heading).toBeVisible();
+
+    // Expects page to have a heading with the name of Installation.
+    const button = page.getByRole("button", { name: /Créer une liste/i });
     await expect(button).toBeVisible();
+
+    // Create a list
+    await page.getByRole("button", { name: /Créer une liste/i }).click();
+    await page.waitForURL("/add-list");
+    const titleInput = page.getByLabel("Titre*");
+    await expect(titleInput).toBeVisible();
+    await fillListName(page);
+    await page.getByRole("button", { name: /Créer une liste/i }).click();
+
+    //Expects the new list is visible
+    const listItem = page.getByText("Playwright List");
+    await expect(listItem).toBeVisible();
 });
