@@ -60,7 +60,7 @@ test("Authenticated users can create lists", async ({ page }) => {
     await expect(listItem).toBeVisible();
 });
 
-test("Authenticated users can update lists", async ({ page }) => {
+test("Authenticated users can add book", async ({ page }) => {
     // connexion
     await using _test = await setup();
     await signin(page);
