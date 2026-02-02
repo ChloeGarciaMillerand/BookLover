@@ -1,5 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
-import { supabase } from "./supabase";
+import { supabase } from "tests/supabase";
 
 async function setup() {
     const { data, error } = await supabase.auth.admin.createUser({
@@ -15,6 +15,20 @@ async function setup() {
     return {
         user: data.user,
         async [Symbol.asyncDispose]() {
+            // get user list
+            const { data: lists } = await supabase.from("list").select("id").eq("user_id", data.user.id);
+
+            // delete books
+            if (lists) {
+                for (const list of lists) {
+                    await supabase.from("booklist").delete().eq("list_id", list.id);
+                }
+            }
+
+            // delete lists
+            await supabase.from("list").delete().eq("user_id", data.user.id);
+
+            // delete auth user
             await supabase.auth.admin.deleteUser(data.user.id);
         },
     };
@@ -35,31 +49,6 @@ async function fillBookName(page: Page, title = "Test title") {
     await page.getByLabel("Titre*").fill(title);
 }
 
-test("Authenticated users can create lists", async ({ page }) => {
-    // connexion
-    await using _test = await setup();
-    await signin(page);
-
-    // check heading and button
-    const heading = page.getByRole("heading", { level: 1, name: /Mes listes/i });
-    await expect(heading).toBeVisible();
-
-    const button = page.getByRole("button", { name: /Créer une liste/i });
-    await expect(button).toBeVisible();
-
-    // Create a list
-    await page.getByRole("button", { name: /Créer une liste/i }).click();
-    await page.waitForURL("/add-list");
-    const titleInput = page.getByLabel("Titre*");
-    await expect(titleInput).toBeVisible();
-    await fillListName(page);
-    await page.getByRole("button", { name: /Créer une liste/i }).click();
-
-    //Expects the new list is visible
-    const listItem = page.getByText("Playwright List");
-    await expect(listItem).toBeVisible();
-});
-
 test("Authenticated users can add book", async ({ page }) => {
     // connexion
     await using _test = await setup();
@@ -71,7 +60,7 @@ test("Authenticated users can add book", async ({ page }) => {
     await fillListName(page);
     await page.getByRole("button", { name: /Créer une liste/i }).click();
 
-    // check list title and click
+    // check list title
     const heading = page.getByRole("heading", { name: /Playwright List/i });
     await expect(heading).toBeVisible();
 
