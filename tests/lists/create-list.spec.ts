@@ -1,10 +1,17 @@
 import { test, expect, type Page } from "@playwright/test";
 import { supabase } from "tests/supabase";
 
+const testUserEmail = process.env.TEST_USER_EMAIL;
+const testUserPassword = process.env.TEST_USER_PASSWORD;
+
+if (!testUserEmail || !testUserPassword) {
+    throw new Error("Missing TEST_USER_EMAIL or TEST_USER_PASSWORD");
+}
+
 async function setup() {
     const { data, error } = await supabase.auth.admin.createUser({
-        email: "chloe@test.com",
-        password: "grosmotdepasse",
+        email: testUserEmail,
+        password: testUserPassword,
         email_confirm: true,
     });
     if (error) {
@@ -34,7 +41,7 @@ async function setup() {
     };
 }
 
-async function signin(page: Page, email = "chloe@test.com", password = "grosmotdepasse") {
+async function signin(page: Page, email = testUserEmail!, password = testUserPassword!) {
     await page.goto("/signin");
     await page.getByLabel("Email*").fill(email);
     await page.getByLabel("Mot de passe*").fill(password);
