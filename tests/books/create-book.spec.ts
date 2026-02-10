@@ -1,40 +1,25 @@
 import { test, expect } from "tests/fixtures/auth";
 import { signin } from "tests/helpers/signin";
-import { fillListName } from "tests/helpers/fillListName";
-import { fillBookName } from "tests/helpers/fillBookName";
+import { createList } from "tests/helpers/createList";
+import { createBook } from "tests/helpers/createBook";
+import { openListAndGetId } from "tests/helpers/openListAndGetId";
 
 test("Authenticated users can add book", async ({ page, testUser }) => {
+    const listName = "Playwright List";
+
     // connexion
     await signin(page, testUser.email, testUser.password);
 
-    //create a list
-    await page.getByRole("button", { name: /Créer une liste/i }).click();
-    await page.waitForURL("/add-list");
-    await fillListName(page);
-    await page.getByRole("button", { name: /Créer une liste/i }).click();
+    // create a list
+    await createList(page);
 
-    // check list title
-    const heading = page.getByRole("heading", { name: /Playwright List/i });
-    await expect(heading).toBeVisible();
-
-    // navigate to test list
-    await heading.click();
-    await page.waitForURL(/\/list\/.+/);
-
-    // get the id of the list
-    const url = page.url();
-    const listId = url.split("/list/")[1];
+    // navigate to test list and get the id of the list
+    const listId = await openListAndGetId(page, listName);
 
     // create a book
-    await page.getByRole("button", { name: /Ajouter un livre/i }).click();
-    await page.waitForURL(`/list/${listId}/add-book`);
+    await createBook(page, listId);
 
-    const titleInput = page.getByLabel("Titre*");
-    await expect(titleInput).toBeVisible();
-    await fillBookName(page);
-    await page.getByRole("button", { name: /Ajouter un livre/i }).click();
-
-    //Expects the new book is visible
+    // expects the new book is visible
     const BookItem = page.getByText("Test title");
     await expect(BookItem).toBeVisible();
 });

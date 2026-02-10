@@ -1,20 +1,13 @@
 import { test, expect } from "tests/fixtures/auth";
 import { signin } from "tests/helpers/signin";
-import { fillListName } from "tests/helpers/fillListName";
+import { createList } from "tests/helpers/createList";
 
 test("Authenticated users can delete lists", async ({ page, testUser }) => {
     // connexion
     await signin(page, testUser.email, testUser.password);
 
     //create a list
-    await page.getByRole("button", { name: /Créer une liste/i }).click();
-    await page.waitForURL("/add-list");
-    await fillListName(page);
-    await page.getByRole("button", { name: /Créer une liste/i }).click();
-
-    // check list title
-    const heading = page.getByRole("heading", { name: /Playwright List/i });
-    await expect(heading).toBeVisible();
+    await createList(page);
 
     // accept confirmation
     page.once("dialog", async (dialog) => {
