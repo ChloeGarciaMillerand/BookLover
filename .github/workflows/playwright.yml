@@ -16,7 +16,9 @@ jobs:
     - name: Install dependencies
       run: npm install -g pnpm && pnpm install
     - name: Install Supabase CLI
-      run: curl -fsSL https://supabase.com/install.sh | sh
+      run: |
+        curl -fsSL https://supabase.com/install.sh | sh
+        echo "$HOME/.supabase/bin" >> $GITHUB_PATH
     - name: Start Supabase
       run: supabase start
     - name: Install Playwright Browsers
