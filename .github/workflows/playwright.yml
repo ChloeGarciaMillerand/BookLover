@@ -20,7 +20,7 @@ jobs:
         curl -fsSL https://supabase.com/install.sh | sh
         echo "$HOME/.supabase/bin" >> $GITHUB_PATH
     - name: Start Supabase
-      run: supabase start
+      run: $HOME/.supabase/bin/supabase start
     - name: Install Playwright Browsers
       run: pnpm exec playwright install --with-deps
     - name: Run Playwright tests
