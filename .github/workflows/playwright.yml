@@ -29,10 +29,6 @@ jobs:
     - name: Start Supabase
       run: supabase start
 
-    - name: Export Supabase env
-      run: |
-        supabase status --output env >> $GITHUB_ENV
-
     - name: Install Playwright Browsers
       run: pnpm exec playwright install --with-deps
 
