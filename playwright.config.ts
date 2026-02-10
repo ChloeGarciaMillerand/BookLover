@@ -37,7 +37,15 @@ export default defineConfig({
     projects: [
         {
             name: "chromium",
-            use: { ...devices["Desktop Chrome"] },
+            use: {
+                ...devices["Desktop Chrome"],
+                launchOptions: {
+                    // Chromium issue: https://github.com/microsoft/playwright/issues/36395#issuecomment-2999532212
+                    args: [
+                        "--disable-features=AcceptCHFrame,AutoExpandDetailsElement,AvoidUnnecessaryBeforeUnloadCheckSync,CertificateTransparencyComponentUpdater,DestroyProfileOnBrowserClose,DialMediaRouteProvider,ExtensionManifestV2Disabled,GlobalMediaControls,HttpsUpgrades,ImprovedCookieControls,LazyFrameLoading,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,Translate,DeferRendererTasksAfterInput",
+                    ],
+                },
+            },
         },
 
         {
