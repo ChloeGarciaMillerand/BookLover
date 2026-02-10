@@ -31,9 +31,7 @@ jobs:
 
     - name: Export Supabase env
       run: |
-        source supabase/.env
-        echo "SUPABASE_URL=$SUPABASE_URL" >> $GITHUB_ENV
-        echo "SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY" >> $GITHUB_ENV
+        supabase status --output env >> $GITHUB_ENV
 
     - name: Install Playwright Browsers
       run: pnpm exec playwright install --with-deps
