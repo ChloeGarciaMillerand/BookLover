@@ -1,10 +1,6 @@
-import type { Page } from "@playwright/test";
 import { test, expect } from "tests/fixtures/auth";
 import { signin } from "tests/helpers/signin";
-
-async function fillListName(page: Page, name = "Playwright List") {
-    await page.getByLabel("Titre*").fill(name);
-}
+import { fillListName } from "tests/helpers/fillListName";
 
 test("Authenticated users can create lists", async ({ page, testUser }) => {
     // connexion

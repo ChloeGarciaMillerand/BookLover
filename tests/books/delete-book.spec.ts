@@ -1,14 +1,7 @@
-import type { Page } from "@playwright/test";
 import { test, expect } from "tests/fixtures/auth";
 import { signin } from "tests/helpers/signin";
-
-async function fillListName(page: Page, name = "Playwright List") {
-    await page.getByLabel("Titre*").fill(name);
-}
-
-async function fillBookName(page: Page, title = "Test title") {
-    await page.getByLabel("Titre*").fill(title);
-}
+import { fillListName } from "tests/helpers/fillListName";
+import { fillBookName } from "tests/helpers/fillBookName";
 
 test("Authenticated users can delete books", async ({ page, testUser }) => {
     // connexion
