@@ -1,7 +1,7 @@
 import { test, expect } from "tests/fixtures/auth";
 import { signin } from "tests/helpers/signin";
 import { createList } from "tests/helpers/createList";
-import { editListName } from "tests/helpers/editListName";
+import { fillInput } from "tests/helpers/fillInput";
 
 test("Authenticated users can update lists", async ({ page, testUser }) => {
     // connexion
@@ -17,7 +17,7 @@ test("Authenticated users can update lists", async ({ page, testUser }) => {
     // update list
     const titleInput = page.getByLabel("Titre*");
     await expect(titleInput).toBeVisible();
-    await editListName(page);
+    await fillInput(titleInput, "Updated Playwright List");
     await page.getByRole("button", { name: /Modifier la liste/i }).click();
 
     //Expects the list name is updated

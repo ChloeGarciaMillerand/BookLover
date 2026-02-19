@@ -1,5 +1,5 @@
 import { expect, type Page } from "@playwright/test";
-import { fillBookName } from "tests/helpers/fillBookName";
+import { fillInput } from "tests/helpers/fillInput";
 
 export async function createBook(page: Page, listId: string) {
     await page.getByRole("button", { name: /Ajouter un livre/i }).click();
@@ -7,6 +7,6 @@ export async function createBook(page: Page, listId: string) {
 
     const titleInput = page.getByLabel("Titre*");
     await expect(titleInput).toBeVisible();
-    await fillBookName(page);
+    await fillInput(titleInput, "Test title");
     await page.getByRole("button", { name: /Ajouter un livre/i }).click();
 }

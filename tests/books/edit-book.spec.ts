@@ -1,8 +1,6 @@
 import { test, expect } from "tests/fixtures/auth";
 import { signin } from "tests/helpers/signin";
-import { fillListName } from "tests/helpers/fillListName";
-import { fillBookName } from "tests/helpers/fillBookName";
-import { editBookName } from "tests/helpers/editBookName";
+import { fillInput } from "tests/helpers/fillInput";
 
 test("Authenticated users can update books", async ({ page, testUser }) => {
     // connexion
@@ -11,7 +9,7 @@ test("Authenticated users can update books", async ({ page, testUser }) => {
     //create a list
     await page.getByRole("button", { name: /Créer une liste/i }).click();
     await page.waitForURL("/add-list");
-    await fillListName(page);
+    await fillInput(page.getByLabel("Titre*"), "Playwright List");
     await page.getByRole("button", { name: /Créer une liste/i }).click();
 
     // check list title
@@ -32,7 +30,7 @@ test("Authenticated users can update books", async ({ page, testUser }) => {
 
     const titleInput = page.getByLabel("Titre*");
     await expect(titleInput).toBeVisible();
-    await fillBookName(page);
+    await fillInput(titleInput, "Test title");
     await page.getByRole("button", { name: /Ajouter un livre/i }).click();
 
     // expects the new book is visible
@@ -46,7 +44,7 @@ test("Authenticated users can update books", async ({ page, testUser }) => {
     //update book
     const titleEditInput = page.getByLabel("Titre*");
     await expect(titleEditInput).toBeVisible();
-    await editBookName(page);
+    await fillInput(titleEditInput, "Updated Playwright Book");
     await page.getByRole("button", { name: /Modifier le livre/i }).click();
 
     //expects the book name is updated
