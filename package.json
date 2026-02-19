@@ -12,7 +12,7 @@
     "lint": "oxlint .",
     "prepare": "husky",
     "test:supabase": "supabase start",
-    "test:run": "pnpm exec playwright test",
+    "test:run": "pnpm exec playwright test --reporter=list",
     "test:dev": "pnpm exec playwright test --ui",
     "test": "pnpm run test:supabase && pnpm run test:run"
   },

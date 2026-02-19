@@ -5,6 +5,7 @@ on:
     branches: [ main, master ]
   pull_request:
     branches: [ main, master ]
+  workflow_dispatch:
 
 jobs:
   test:
@@ -33,7 +34,7 @@ jobs:
       run: pnpm exec playwright install --with-deps
 
     - name: Run Playwright tests
-      run: pnpm exec playwright test
+      run: pnpm exec playwright test --reporter=list
       env:
         SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
         SUPABASE_PUBLISHABLE_KEY: ${{ secrets.SUPABASE_PUBLISHABLE_KEY }}
