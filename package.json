@@ -5,7 +5,7 @@
   "scripts": {
     "build": "react-router build",
     "dev": "react-router dev",
-    "start": "react-router-serve ./build/server/index.js",
+    "start": "PORT=4173 react-router-serve ./build/server/index.js",
     "db:reset": "pnpx supabase db reset",
     "typecheck": "react-router typegen && tsc",
     "format": "oxfmt .",
