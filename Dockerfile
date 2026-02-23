@@ -1,19 +1,22 @@
-FROM node:20-alpine AS deps
+FROM node:24-alpine AS development-dependencies-env
+COPY . /app
 WORKDIR /app
-COPY package.json pnpm-lock.yaml ./
-RUN npm install -g pnpm \
-  && pnpm install --frozen-lockfile
+RUN npm ci
 
-FROM node:20-alpine AS build
+FROM node:24-alpine AS production-dependencies-env
+COPY ./package.json package-lock.json /app/
 WORKDIR /app
-RUN npm install -g pnpm
-COPY . .
-COPY --from=deps /app/node_modules ./node_modules
-RUN pnpm run build
+RUN npm ci --omit=dev
 
-FROM node:20-alpine AS production
+FROM node:24-alpine AS build-env
+COPY . /app/
+COPY --from=development-dependencies-env /app/node_modules /app/node_modules
 WORKDIR /app
-COPY --from=build /app/build ./build
-COPY --from=deps /app/node_modules ./node_modules
-EXPOSE 8080
-CMD ["node", "build/server/index.js"]
+RUN npm run build
+
+FROM node:24-alpine
+COPY ./package.json package-lock.json /app/
+COPY --from=production-dependencies-env /app/node_modules /app/node_modules
+COPY --from=build-env /app/build /app/build
+WORKDIR /app
+CMD ["npm", "run", "start"]
