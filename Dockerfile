@@ -6,6 +6,7 @@ RUN npm install -g pnpm \
 
 FROM node:20-alpine AS build
 WORKDIR /app
+RUN npm install -g pnpm
 COPY . .
 COPY --from=deps /app/node_modules ./node_modules
 RUN pnpm run build
