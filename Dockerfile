@@ -14,6 +14,6 @@ RUN pnpm run build
 FROM node:20-alpine AS production
 WORKDIR /app
 COPY --from=build /app/build ./build
-RUN npm install -g serve
+COPY --from=deps /app/node_modules ./node_modules
 EXPOSE 8080
-CMD ["serve", "-s", "build", "-l", "8080"]
+CMD ["node", "build/index.js"]
