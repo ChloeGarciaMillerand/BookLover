@@ -13,7 +13,9 @@ RUN --mount=type=cache,id=pnpm,target=/pnpm/store pnpm install --frozen-lockfile
 RUN pnpm run build
 
 FROM base
+ENV PORT="8080"
 ENV NODE_ENV="production"
 COPY --from=prod-deps /app/node_modules /app/node_modules
 COPY --from=build /app/build /app/build
+EXPOSE 8080
 CMD [ "pnpm", "start" ]
