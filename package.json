@@ -10,7 +10,7 @@
     "typecheck": "react-router typegen && tsc",
     "format": "oxfmt .",
     "lint": "oxlint .",
-    "prepare": "node .husky/install.mjs",
+    "prepare": "husky || true",
     "test:supabase": "supabase start",
     "test:run": "pnpm exec playwright test --reporter=list",
     "test:dev": "pnpm exec playwright test --ui",
