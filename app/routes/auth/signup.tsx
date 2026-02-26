@@ -44,7 +44,7 @@ export async function action({ request }: Route.ActionArgs) {
     }
 
     // Redirect after success
-    return redirect("/", { headers });
+    return redirect("/signup-success", { headers });
 }
 
 export default function SignupPage() {

@@ -9,6 +9,7 @@ export default [
     route("signup", "routes/auth/signup.tsx"),
     route("signin", "routes/auth/signin.tsx"),
     route("signout", "routes/auth/signout.tsx"),
+    route("signup-success", "routes/auth/signupSuccess.tsx"),
 
     // ROUTES WITH AUTHENFICATION REQUIRED
     // HOME
