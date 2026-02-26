@@ -24,7 +24,7 @@ export default function SigninForm() {
                             name="email"
                             type="email"
                             required
-                            className="input"
+                            className="input w-full"
                             placeholder="john.doe@mail.com"
                             aria-describedby={actionData?.errors?.email ? "email-error" : undefined}
                         />
@@ -43,7 +43,7 @@ export default function SigninForm() {
                             name="password"
                             type="password"
                             required
-                            className="input"
+                            className="input w-full"
                             placeholder="Votre mot de passe"
                             aria-describedby={actionData?.errors?.password ? "password-error" : undefined}
                         />

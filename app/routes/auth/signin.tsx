@@ -63,10 +63,13 @@ export default function SigninPage() {
         <div className="m-auto w-4/5 md:w-2/5 mt-4">
             <h1 className="h1">Connexion</h1>
             <SigninForm />
-            <div className="mt-10">
+
+            <div className="divider "></div>
+
+            <div>
                 <p className="mb-3">Pas encore de compte?</p>
                 <Link to="/signup" className="btn btn-primary">
-                    S'inscrire
+                    Créer un nouveau compte
                 </Link>
             </div>
         </div>
