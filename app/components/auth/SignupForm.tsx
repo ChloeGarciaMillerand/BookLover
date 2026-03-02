@@ -29,7 +29,7 @@ export default function SignupForm() {
                             aria-describedby={actionData?.errors?.email ? "email-error" : undefined}
                         />
                         {actionData?.errors?.email ? (
-                            <p className="register-error-text" id="email-error">
+                            <p className="text-error mt-1 text-sm" id="email-error">
                                 {actionData?.errors?.email}
                             </p>
                         ) : null}
@@ -48,7 +48,7 @@ export default function SignupForm() {
                             aria-describedby={actionData?.errors?.password ? "password-error" : undefined}
                         />
                         {actionData?.errors?.password ? (
-                            <p className="register-error-text" id="password-error">
+                            <p className="text-error mt-1 text-sm" id="password-error">
                                 {actionData?.errors?.password}
                             </p>
                         ) : null}
@@ -67,7 +67,7 @@ export default function SignupForm() {
                             aria-describedby={actionData?.errors?.confirmPassword ? "confirmPassword-error" : undefined}
                         />
                         {actionData?.errors?.confirmPassword ? (
-                            <p className="register-error-text" id="confirmPassword-error">
+                            <p className="text-error mt-1 text-sm" id="confirmPassword-error">
                                 {actionData?.errors?.confirmPassword}
                             </p>
                         ) : null}

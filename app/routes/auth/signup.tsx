@@ -36,8 +36,15 @@ export async function action({ request }: Route.ActionArgs) {
     const { supabase, headers } = getSupabase(request);
     try {
         await signup({ supabase, credentials: { email, password } });
-    } catch {
-        return new Response(JSON.stringify({ errors: { form: "Erreur lors de la création du compte" } }), {
+    } catch (err: any) {
+        // check if email already exists
+        if (err?.message?.includes("already registered") || err?.message?.includes("User already registered")) {
+            errors.email = "Cet email est déjà utilisé";
+        } else {
+            errors.form = "Erreur lors de la création du compte";
+        }
+
+        return new Response(JSON.stringify({ errors }), {
             status: 500,
             headers: { "Content-Type": "application/json" },
         });
