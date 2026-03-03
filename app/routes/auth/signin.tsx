@@ -63,6 +63,9 @@ export default function SigninPage() {
         <div className="m-auto w-3/5 md:w-3/10 lg:w-1/5 mt-4">
             <h1 className="h1">Connexion</h1>
             <SigninForm />
+            <Link to="/forgot-password" className="link link-primary">
+                Mot de passe oublié?
+            </Link>
 
             <div className="divider "></div>
 
