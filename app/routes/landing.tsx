@@ -21,9 +21,14 @@ export default function landing() {
             {/* Content */}
             <h1 className="h1">BookLover</h1>
             <p>L'application qui vous facilite la lecture!</p>
-            <Link to="/signin" className="btn btn-primary mt-5">
-                Se connecter / s'inscrire
-            </Link>
+            <div className="flex flex-row gap-4">
+                <Link to="/signin" className="btn btn-primary mt-5">
+                    Se connecter
+                </Link>
+                <Link to="/signup" className="btn btn-outline btn-primary mt-5">
+                    S'inscrire
+                </Link>
+            </div>
         </div>
     );
 }
