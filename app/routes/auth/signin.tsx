@@ -60,13 +60,19 @@ export async function action({ request }: Route.ActionArgs) {
 
 export default function SigninPage() {
     return (
-        <div className="m-auto w-4/5 md:w-2/5 mt-4">
+        <div className="m-auto w-3/5 md:w-3/10 lg:w-1/5 mt-4">
             <h1 className="h1">Connexion</h1>
             <SigninForm />
-            <div className="mt-10">
+            <Link to="/forgot-password" className="link link-primary">
+                Mot de passe oublié?
+            </Link>
+
+            <div className="divider "></div>
+
+            <div>
                 <p className="mb-3">Pas encore de compte?</p>
                 <Link to="/signup" className="btn btn-primary">
-                    S'inscrire
+                    Créer un nouveau compte
                 </Link>
             </div>
         </div>

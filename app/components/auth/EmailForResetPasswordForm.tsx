@@ -2,7 +2,7 @@ import { Form, useActionData } from "react-router";
 
 import { Button } from "../shared/Button";
 
-export default function SigninForm() {
+export default function ResetPasswordForm() {
     const actionData = useActionData();
 
     return (
@@ -29,27 +29,8 @@ export default function SigninForm() {
                             aria-describedby={actionData?.errors?.email ? "email-error" : undefined}
                         />
                         {actionData?.errors?.email ? (
-                            <p className="register-error-text" id="email-error">
+                            <p className="text-error mt-1 text-sm" id="email-error">
                                 {actionData?.errors?.email}
-                            </p>
-                        ) : null}
-                    </fieldset>
-
-                    {/* Password */}
-                    <fieldset className="fieldset">
-                        <label htmlFor="password">Mot de passe*</label>
-                        <input
-                            id="password"
-                            name="password"
-                            type="password"
-                            required
-                            className="input w-full"
-                            placeholder="Votre mot de passe"
-                            aria-describedby={actionData?.errors?.password ? "password-error" : undefined}
-                        />
-                        {actionData?.errors?.password ? (
-                            <p className="register-error-text" id="password-error">
-                                {actionData?.errors?.password}
                             </p>
                         ) : null}
                     </fieldset>
@@ -57,7 +38,7 @@ export default function SigninForm() {
                     {/* submit button */}
                     <div className="mt-5 flex justify-end md:justify-start">
                         <Button type="submit" className="btn-primary">
-                            OK
+                            Recevoir un lien de réinitialisation
                         </Button>
                     </div>
                 </div>

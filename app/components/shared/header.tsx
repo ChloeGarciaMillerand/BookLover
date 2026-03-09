@@ -41,32 +41,47 @@ export default function Header({ user }: HeaderProps) {
                             </svg>
                         </button>
                         <ul className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow text-right">
-                            <li className="text-right">
-                                <NavLink to="/" className="nav-links block truncate">
-                                    Mes listes
-                                </NavLink>
-                            </li>
-                            <li className="text-right">
-                                <NavLink to="tags" className="nav-links block truncate">
-                                    Tags
-                                </NavLink>
-                            </li>
-                            <li className="text-right">
-                                <NavLink to="account" className="nav-links block truncate">
-                                    Mon compte
-                                </NavLink>
-                            </li>
-                            {user && (
-                                <li>
-                                    <Form method="post" action="/signout">
-                                        <button
-                                            type="submit"
-                                            className="nav-links block truncate w-full text-right cursor-pointer"
-                                        >
-                                            Se déconnecter
-                                        </button>
-                                    </Form>
-                                </li>
+                            {user ? (
+                                <>
+                                    <li className="text-right">
+                                        <NavLink to="/" className="nav-links block truncate">
+                                            Mes listes
+                                        </NavLink>
+                                    </li>
+                                    <li className="text-right">
+                                        <NavLink to="tags" className="nav-links block truncate">
+                                            Tags
+                                        </NavLink>
+                                    </li>
+                                    <li className="text-right">
+                                        <NavLink to="account" className="nav-links block truncate">
+                                            Mon compte
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <Form method="post" action="/signout">
+                                            <button
+                                                type="submit"
+                                                className="nav-links block truncate w-full text-right cursor-pointer"
+                                            >
+                                                Se déconnecter
+                                            </button>
+                                        </Form>
+                                    </li>
+                                </>
+                            ) : (
+                                <>
+                                    <li>
+                                        <NavLink to="/signin" className="nav-links block truncate">
+                                            Connexion
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink to="/signup" className="nav-links block truncate">
+                                            Inscription
+                                        </NavLink>
+                                    </li>
+                                </>
                             )}
                         </ul>
                     </div>

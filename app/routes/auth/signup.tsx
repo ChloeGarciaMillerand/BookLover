@@ -36,23 +36,33 @@ export async function action({ request }: Route.ActionArgs) {
     const { supabase, headers } = getSupabase(request);
     try {
         await signup({ supabase, credentials: { email, password } });
-    } catch {
-        return new Response(JSON.stringify({ errors: { form: "Erreur lors de la création du compte" } }), {
+    } catch (err: any) {
+        // check if email already exists
+        if (err?.message?.includes("already registered") || err?.message?.includes("User already registered")) {
+            errors.email = "Cet email est déjà utilisé";
+        } else {
+            errors.form = "Erreur lors de la création du compte";
+        }
+
+        return new Response(JSON.stringify({ errors }), {
             status: 500,
             headers: { "Content-Type": "application/json" },
         });
     }
 
     // Redirect after success
-    return redirect("/", { headers });
+    return redirect("/signup-success", { headers });
 }
 
 export default function SignupPage() {
     return (
-        <div className="m-auto w-4/5 md:w-2/5 mt-4">
+        <div className="m-auto w-3/5 md:w-3/10 lg:w-1/5 mt-4">
             <h1 className="h1">Inscription</h1>
             <SignupForm />
-            <div className="mt-10">
+
+            <div className="divider "></div>
+
+            <div>
                 <p className="mb-3">Déjà un compte?</p>
                 <Link to="/signin" className="btn btn-primary">
                     Se connecter

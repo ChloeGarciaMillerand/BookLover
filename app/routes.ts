@@ -9,6 +9,10 @@ export default [
     route("signup", "routes/auth/signup.tsx"),
     route("signin", "routes/auth/signin.tsx"),
     route("signout", "routes/auth/signout.tsx"),
+    route("signup-success", "routes/auth/signupSuccess.tsx"),
+    route("forgot-password", "routes/auth/forgotPassword.tsx"),
+    route("check-email", "routes/auth/checkEmail.tsx"),
+    route("update-password", "routes/auth/updatePassword.tsx"),
 
     // ROUTES WITH AUTHENFICATION REQUIRED
     // HOME

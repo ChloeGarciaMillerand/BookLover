@@ -2,7 +2,7 @@ import { Form, useActionData } from "react-router";
 
 import { Button } from "../shared/Button";
 
-export default function SignupForm() {
+export default function ResetPasswordForm() {
     const actionData = useActionData();
 
     return (
@@ -16,35 +16,16 @@ export default function SignupForm() {
                 ) : null}
                 {/* form fields */}
                 <div>
-                    {/* Email */}
+                    {/* New password */}
                     <fieldset className="fieldset">
-                        <label htmlFor="email">Email*</label>
-                        <input
-                            id="email"
-                            name="email"
-                            type="email"
-                            required
-                            className="input w-full"
-                            placeholder="john.doe@mail.com"
-                            aria-describedby={actionData?.errors?.email ? "email-error" : undefined}
-                        />
-                        {actionData?.errors?.email ? (
-                            <p className="text-error mt-1 text-sm" id="email-error">
-                                {actionData?.errors?.email}
-                            </p>
-                        ) : null}
-                    </fieldset>
-
-                    {/* Password */}
-                    <fieldset className="fieldset">
-                        <label htmlFor="password">Mot de passe*</label>
+                        <label htmlFor="password">Nouveau mot de passe*</label>
                         <input
                             id="password"
                             name="password"
                             type="password"
                             required
                             className="input w-full"
-                            placeholder="Votre mot de passe"
+                            placeholder="Votre nouveau mot de passe"
                             aria-describedby={actionData?.errors?.password ? "password-error" : undefined}
                         />
                         {actionData?.errors?.password ? (
@@ -76,7 +57,7 @@ export default function SignupForm() {
                     {/* submit button */}
                     <div className="mt-5 flex justify-end md:justify-start">
                         <Button type="submit" className="btn-primary">
-                            Créer un compte
+                            Réinitialiser le mot de passe
                         </Button>
                     </div>
                 </div>
