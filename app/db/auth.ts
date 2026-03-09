@@ -31,7 +31,6 @@ export async function signout(options: { supabase: SupabaseClient }) {
 
 export async function resetPasswordRequest(options: { supabase: SupabaseClient; email: string }) {
     const redirectTo = `${import.meta.env.VITE_APP_URL}/update-password`;
-
     const { error } = await options.supabase.auth.resetPasswordForEmail(options.email, { redirectTo });
 
     if (error) {

@@ -16,7 +16,27 @@ type Errors = {
     form?: string;
 };
 
+export async function loader({ request }: Route.LoaderArgs) {
+    const { supabase, headers } = getSupabase(request);
+
+    //start a new session to get the access token from the url
+    const url = new URL(request.url);
+    const code = url.searchParams.get("code");
+
+    if (code) {
+        const { error } = await supabase.auth.exchangeCodeForSession(code);
+
+        if (error) {
+            throw redirect("/signin");
+        }
+    }
+
+    return data({}, { headers });
+}
+
 export async function action({ request }: Route.ActionArgs) {
+    const { supabase, headers } = getSupabase(request);
+
     const formData = await request.formData();
     const password = String(formData.get("password"));
 
@@ -32,7 +52,7 @@ export async function action({ request }: Route.ActionArgs) {
     }
 
     //update password
-    const { supabase, headers } = getSupabase(request);
+
     try {
         await updatePassword({ supabase, password });
     } catch (error: any) {
