@@ -1,4 +1,5 @@
 import { Link, Navigate, useOutletContext } from "react-router";
+import { useEffect, useState } from "react";
 
 import type { User } from "@supabase/supabase-js";
 
@@ -7,6 +8,9 @@ import { getSupabase } from "~/db/client";
 import type { Route } from "./+types/genres";
 
 import { getAllGenres } from "~/db/genre";
+
+import GenreCard from "~/components/genre/GenreCard";
+import { Button } from "~/components/shared/Button";
 
 import { authMiddleware, getCurrentUser } from "~/middlewares/authMiddleware";
 
@@ -34,6 +38,20 @@ export default function GenresPage(props: Route.ComponentProps) {
         return <Navigate to="/landing" replace />;
     }
 
+    const [isScrollable, setIsScrollable] = useState(false);
+
+    //check if window is scrollable
+    useEffect(() => {
+        const checkScrollable = () => {
+            setIsScrollable(document.body.scrollHeight > window.innerHeight);
+        };
+
+        checkScrollable();
+        window.addEventListener("resize", checkScrollable);
+
+        return () => window.removeEventListener("resize", checkScrollable);
+    }, [genres]);
+
     return (
         <div className="m-auto w-4/5 mt-4 mb-5 md:w-3/5">
             {/* Meta*/}
@@ -44,6 +62,23 @@ export default function GenresPage(props: Route.ComponentProps) {
 
             {/* Content */}
             <h1 className="h1">Genres</h1>
+
+            <ul className={`${isScrollable ? "mb-25" : ""}`}>
+                {genres.map((genre) => (
+                    <li key={genre.id}>
+                        <GenreCard genre={genre} />
+                    </li>
+                ))}
+            </ul>
+
+            <div
+                className={`${isScrollable ? "fixed bottom-20 z-50" : "mt-4 flex justify-end"}`}
+                style={isScrollable ? { left: "65%" } : {}}
+            >
+                <Link to="/add-genre">
+                    <Button className="btn-primary">Créer un genre</Button>
+                </Link>
+            </div>
         </div>
     );
 }
