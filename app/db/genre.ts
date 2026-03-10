@@ -21,6 +21,16 @@ export async function getAllGenres(supabase: MySupabaseClient, { userId }: { use
     return data;
 }
 
+export async function getOneGenre(supabase: MySupabaseClient, genreId: string): Promise<Genre> {
+    const { data, error } = await supabase.from("genre").select().eq("id", genreId).single();
+
+    if (error) {
+        throw new Error(error.message);
+    }
+
+    return data;
+}
+
 export async function createGenre(
     supabase: MySupabaseClient,
     { userId, name, color }: { userId: string; name: string; color: string },
@@ -32,4 +42,25 @@ export async function createGenre(
     }
 
     return data;
+}
+
+export async function updateGenre(
+    supabase: MySupabaseClient,
+    { genreId, name, color }: { genreId: string; name: string; color: string },
+) {
+    const { data, error } = await supabase.from("genre").update({ name, color }).eq("id", genreId).select().single();
+
+    if (error) {
+        throw new Error(error.message);
+    }
+
+    return data;
+}
+
+export async function deleteGenre(supabase: MySupabaseClient, { genreId }: { genreId: string }) {
+    const { error } = await supabase.from("genre").delete().eq("id", genreId);
+
+    if (error) {
+        throw new Error(error.message);
+    }
 }
