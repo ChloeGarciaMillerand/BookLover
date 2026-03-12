@@ -49,13 +49,8 @@ export default function Header({ user }: HeaderProps) {
                                         </NavLink>
                                     </li>
                                     <li className="text-right">
-                                        <NavLink to="tags" className="nav-links block truncate">
-                                            Tags
-                                        </NavLink>
-                                    </li>
-                                    <li className="text-right">
-                                        <NavLink to="account" className="nav-links block truncate">
-                                            Mon compte
+                                        <NavLink to="/genres" className="nav-links block truncate">
+                                            Genres
                                         </NavLink>
                                     </li>
                                     <li>

@@ -11,6 +11,7 @@ import { getAllGenres } from "~/db/genre";
 
 import GenreCard from "~/components/genre/GenreCard";
 import { Button } from "~/components/shared/Button";
+import { AddGenreModal } from "~/routes/genre/addGenre";
 
 import { authMiddleware, getCurrentUser } from "~/middlewares/authMiddleware";
 
@@ -52,33 +53,39 @@ export default function GenresPage(props: Route.ComponentProps) {
         return () => window.removeEventListener("resize", checkScrollable);
     }, [genres]);
 
+    // used to create new genres
+    const [showModal, setShowModal] = useState(false);
+
     return (
-        <div className="m-auto w-4/5 mt-4 mb-5 md:w-3/5">
-            {/* Meta*/}
-            <title>BookLover - Genres</title>
-            <meta name="description" content="Visualiser les genres de vos livres !" />
-            <meta property="og:title" content="BookLover - Genres" />
-            <meta property="og:description" content="L'application qui facilite vos lectures." />
+        <>
+            <div className="m-auto w-4/5 mt-4 mb-5 md:w-3/5">
+                {/* Meta*/}
+                <title>BookLover - Genres</title>
+                <meta name="description" content="Visualiser les genres de vos livres !" />
+                <meta property="og:title" content="BookLover - Genres" />
+                <meta property="og:description" content="L'application qui facilite vos lectures." />
 
-            {/* Content */}
-            <h1 className="h1">Genres</h1>
+                {/* Content */}
+                <h1 className="h1">Genres</h1>
 
-            <ul className={`${isScrollable ? "mb-25" : ""}`}>
-                {genres.map((genre) => (
-                    <li key={genre.id}>
-                        <GenreCard genre={genre} />
-                    </li>
-                ))}
-            </ul>
+                <ul className={`${isScrollable ? "mb-25" : ""}`}>
+                    {genres.map((genre) => (
+                        <li key={genre.id}>
+                            <GenreCard genre={genre} />
+                        </li>
+                    ))}
+                </ul>
 
-            <div
-                className={`${isScrollable ? "fixed bottom-20 z-50" : "mt-4 flex justify-end"}`}
-                style={isScrollable ? { left: "65%" } : {}}
-            >
-                <Link to="/add-genre">
-                    <Button className="btn-primary">Créer un genre</Button>
-                </Link>
+                <div
+                    className={`${isScrollable ? "fixed bottom-20 z-50" : "mt-4 flex justify-end"}`}
+                    style={isScrollable ? { left: "65%" } : {}}
+                >
+                    <Button className="btn-primary" onClick={() => setShowModal(true)}>
+                        Créer un genre
+                    </Button>
+                </div>
             </div>
-        </div>
+            {showModal && <AddGenreModal onClose={() => setShowModal(false)} />}
+        </>
     );
 }

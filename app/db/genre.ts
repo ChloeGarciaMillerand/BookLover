@@ -12,7 +12,11 @@ export async function getUsersGenres(supabase: MySupabaseClient, { userId }: { u
 }
 
 export async function getAllGenres(supabase: MySupabaseClient, { userId }: { userId: string }): Promise<Genre[]> {
-    const { data, error } = await supabase.from("genre").select().or(`user_id.eq.${userId},user_id.is.null`);
+    const { data, error } = await supabase
+        .from("genre")
+        .select()
+        .or(`user_id.eq.${userId},user_id.is.null`)
+        .order("name", { ascending: true });
 
     if (error) {
         throw new Error(error.message);

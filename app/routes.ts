@@ -29,6 +29,6 @@ export default [
     // GENRE
     route("add-genre", "routes/genre/addGenre.tsx"),
     route("genres", "routes/genre/genres.tsx"),
-    route("edit-genre/:id", "routes/genre/editGenre.tsx"),
+    route("genres/edit-genre/:id", "routes/genre/editGenre.tsx"),
     route("delete-genre/:id", "routes/genre/deleteGenre.tsx"),
 ] satisfies RouteConfig;

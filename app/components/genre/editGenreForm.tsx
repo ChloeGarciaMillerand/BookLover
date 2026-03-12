@@ -1,4 +1,4 @@
-import { Form, useActionData } from "react-router";
+import { Form, Link, useActionData } from "react-router";
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { getZodConstraint, parseWithZod } from "@conform-to/zod/v4";
 import * as z from "zod";
@@ -57,15 +57,20 @@ export default function EditGenreForm({ genre }: GenreProps) {
                     <label className="fieldset-legend" htmlFor={fields.color.id}>
                         Couleur*
                     </label>
-                    <input className="input" {...getInputProps(fields.color, { type: "color" })} />
+                    <input {...getInputProps(fields.color, { type: "color" })} />
                     <div id={fields.color.errorId} className="label">
                         {fields.color.errors}
                     </div>
                 </div>
             </div>
-            <Button type="submit" className="mt-4">
-                Enregistrer
-            </Button>
+            <div className="flex justify-end gap-2 mt-4">
+                <Link to={`/genres`}>
+                    <Button className="btn-outline">Annuler</Button>
+                </Link>
+                <Button type="submit" className="btn-primary">
+                    Enregistrer
+                </Button>
+            </div>
         </Form>
     );
 }
