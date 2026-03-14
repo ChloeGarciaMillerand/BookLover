@@ -6,7 +6,7 @@ SET client_min_messages = warning;
 SET search_path = public;
 
 -- GENRES --
-insert into genre (name, color)
+insert into genre_templates (name, color)
 VALUES
 ('Thriller', '#1e1e1e'),
 ('Cosy crime', '#1e1e1e'),
