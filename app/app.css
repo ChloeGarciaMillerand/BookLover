@@ -1,15 +1,65 @@
 @import "tailwindcss";
 
 @plugin "daisyui" {
-    themes: light --default, dark --prefersdark, lofi;
+    themes: light --default, dark --prefersdark;
 }
 
+/* OVERRIDE COLORS */
+/* Thème light custom */
+@plugin "daisyui/theme" {
+    name: "light";
+    default: true;
+
+    --color-primary: oklch(0.7314 0.1511 163.37);
+    --color-primary-content: oklch(26% 0.065 152.934);
+    --color-secondary: oklch(0.7949 0.1032 206.39);
+    --color-secondary-content: oklch(29% 0.066 243.157);
+    --color-accent: oklch(0.7705 0.1357 29.28);
+    --color-accent-content: oklch(26% 0.079 36.259);
+    --color-neutral: oklch(14% 0.005 285.823);
+    --color-neutral-content: oklch(92% 0.004 286.32);
+    --color-info: oklch(0.7774 0.1332 231.26);
+    --color-info-content: oklch(29% 0.066 243.157);
+    --color-success: oklch(76% 0.177 163.223);
+    --color-success-content: oklch(26% 0.051 172.552);
+    --color-warning: oklch(82% 0.189 84.429);
+    --color-warning-content: oklch(27% 0.077 45.635);
+    --color-error: oklch(0.6514 0.1836 30.83);
+    --color-error-content: oklch(27% 0.105 12.094);
+}
+
+
+/* Thème dark custom */
+@plugin "daisyui/theme" {
+    name: "dark";
+    prefersdark: true;
+
+    --color-primary: oklch(0.7314 0.1511 163.37);
+    --color-primary-content: oklch(26% 0.065 152.934);
+    --color-secondary: oklch(0.7949 0.1032 206.39);
+    --color-secondary-content: oklch(29% 0.066 243.157);
+    --color-accent: oklch(0.7705 0.1357 29.28);
+    --color-accent-content: oklch(26% 0.079 36.259);
+    --color-neutral: oklch(14% 0.005 285.823);
+    --color-neutral-content: oklch(92% 0.004 286.32);
+    --color-info: oklch(0.7774 0.1332 231.26);
+    --color-info-content: oklch(29% 0.066 243.157);
+    --color-success: oklch(76% 0.177 163.223);
+    --color-success-content: oklch(26% 0.051 172.552);
+    --color-warning: oklch(82% 0.189 84.429);
+    --color-warning-content: oklch(27% 0.077 45.635);
+    --color-error: oklch(0.6514 0.1836 30.83);
+    --color-error-content: oklch(27% 0.105 12.094);
+}
+
+
+/* HEADINGS */
 .h1 {
-  @apply text-4xl font-bold text-primary mb-4;
+    @apply text-4xl font-bold text-primary mb-4;
 }
 
 .h2 {
-  @apply text-2xl font-bold text-primary mb-4;
+    @apply text-2xl font-bold text-primary mb-4;
 }
 
 /*
