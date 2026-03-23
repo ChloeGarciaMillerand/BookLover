@@ -52,6 +52,30 @@
     --color-error-content: oklch(27% 0.105 12.094);
 }
 
+/* ADDITIONAL COLORS */
+/* Thème light custom */
+[data-theme="light"] .pale-yellow-background {
+  background-color: oklch(0.9649 0.0356 83.78);
+}
+
+/* LOGOS */
+/* light */
+[data-theme="light"] .logo-light {
+  display: block;
+}
+
+[data-theme="light"] .logo-dark {
+  display: none;
+}
+
+/* dark */
+[data-theme="dark"] .logo-light {
+  display: none;
+}
+
+[data-theme="dark"] .logo-dark {
+  display: block;
+}
 
 /* HEADINGS */
 .h1 {
@@ -60,6 +84,10 @@
 
 .h2 {
     @apply text-2xl font-bold text-primary mb-4;
+}
+
+.emphasis {
+    @apply text-xl text-primary font-bold;
 }
 
 /*
