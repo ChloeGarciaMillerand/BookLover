@@ -7,6 +7,7 @@ import landingBooks from "~/assets/images/landing_books.svg";
 import landingTablet from "~/assets/images/landing_tablet.webp";
 import landingGenres from "~/assets/images/landing_genres.svg";
 import landingLine from "~/assets/images/landing_line.svg";
+import landingLibrary from "~/assets/images/landing_library.webp";
 
 export function meta(_args: Route.MetaArgs) {
     return [{ title: "BookLover" }, { name: "description", content: "BookLover, organisez vos lectures facilement!" }];
@@ -87,13 +88,29 @@ export default function landing() {
                         <span>Ajoutez vos propres genres </span>pour correspondre à vos lectures.
                     </p>
                 </div>
-                <div className="relative w-full md:w1/2">
+                <div className="relative w-full md:w-1/2">
                     <img
                         src={landingGenres}
                         alt="possible genres and icons for science fiction, magic and romance"
                         className="relative z-10 mb-8"
                     />
                     <img src={landingLine} alt="graphic line" className="absolute bottom-0 -right-20 z-0" />
+                </div>
+            </div>
+
+            {/* Find your books */}
+            <div
+                className="bg-cover bg-center w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] py-16 opacity-80"
+                style={{ backgroundImage: `url(${landingLibrary})` }}
+            >
+                <div className="mx-auto w-90/100 md:w-85/100 lg:w-75/100 flex justify-end">
+                    <div className="bg-white rounded-lg w-full p-8 md:w-1/2">
+                        <h2 className="h2 text-transform: uppercase text-right">Gardez vos livres à portée de main</h2>
+                        <p className="text-right">
+                            Notez les livres qui vous intéressent et consultez vos listes à la bibliothèque, chez un ami
+                            ou en librairie pour trouver votre prochaine lecture.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
