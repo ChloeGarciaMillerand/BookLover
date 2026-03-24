@@ -10,7 +10,7 @@ type HeaderProps = {
 
 export default function Header({ user }: HeaderProps) {
     return (
-        <header className="m-auto w-95/100 md:w-85/100 lg:w-75/100 ">
+        <header className="m-auto w-90/100 md:w-85/100 lg:w-75/100 ">
             <div className="navbar w-full bg-base-100">
                 {/* logo */}
                 <div className="navbar-start">
@@ -68,7 +68,7 @@ export default function Header({ user }: HeaderProps) {
                                 </ul>
                             </>
                         ) : (
-                            <div className="flex flex-row gap-4">
+                            <div className="hidden md:flex flex-row gap-4">
                                 <Link to="/signin" className="btn btn-outline btn-secondary mt-5">
                                     Se connecter
                                 </Link>
