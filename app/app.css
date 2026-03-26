@@ -58,25 +58,6 @@
   background-color: oklch(0.9649 0.0356 83.78);
 }
 
-/* LOGOS */
-/* light */
-[data-theme="light"] .logo-light {
-  display: block;
-}
-
-[data-theme="light"] .logo-dark {
-  display: none;
-}
-
-/* dark */
-[data-theme="dark"] .logo-light {
-  display: none;
-}
-
-[data-theme="dark"] .logo-dark {
-  display: block;
-}
-
 /* HEADINGS */
 .h1 {
     @apply text-4xl font-black text-primary mb-4;
