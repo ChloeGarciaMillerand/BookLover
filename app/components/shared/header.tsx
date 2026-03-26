@@ -15,8 +15,8 @@ export default function Header({ user }: HeaderProps) {
                 {/* logo */}
                 <div className="navbar-start">
                     <a href="/" className="logo">
-                        <img src={logoLight} alt="Logo BookLover" className="block dark:hidden w-full" />
-                        <img src={logoDark} alt="Logo Booklover" className="hidden dark:block w-full" />
+                        <img src={logoLight} alt="Logo BookLover" className="logo-light w-full" />
+                        <img src={logoDark} alt="Logo Booklover" className="logo-dark w-full" />
                     </a>
                 </div>
 
