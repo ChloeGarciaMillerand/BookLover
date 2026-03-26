@@ -59,7 +59,7 @@ export default function landing() {
                         </Link>
                     </div>
                 </div>
-                <img src={landingBooks} alt="BookLover" className="w-2/3 md:w-1/2" />
+                <img src={landingBooks} alt="BookLover" className="w-2/3 md:w-2/5" />
             </div>
 
             {/* Create lists */}
@@ -68,14 +68,14 @@ export default function landing() {
                     <div className="mb-8 md:md-0">
                         <h2 className="h2 text-transform: uppercase">Créez vos propres listes de lecture</h2>
                         <p>
-                            <span>Ajoutez, modifiez, supprimez des listes </span>pour organiser vos lectures et
-                            retrouver facilement vos livres.
+                            <span className="font-black">Ajoutez, modifiez, supprimez des listes </span>pour organiser
+                            vos lectures et retrouver facilement vos livres.
                         </p>
                     </div>
                     <img
                         src={landingTablet}
                         alt="Preview of how lists are displayed on a tablet"
-                        className="rounded-t-lg shadow-[4px_-4px_10px_rgba(0,0,0,0.15)] md:w-full"
+                        className="rounded-t-lg shadow-[4px_-4px_10px_rgba(0,0,0,0.15)] md:w-4/5 lg:md-w-3/5"
                     />
                 </div>
             </div>
@@ -85,7 +85,7 @@ export default function landing() {
                 <div>
                     <h2 className="h2 text-transform: uppercase">Ajoutez des genres personnalisés</h2>
                     <p>
-                        <span>Ajoutez vos propres genres </span>pour correspondre à vos lectures.
+                        <span className="font-black">Ajoutez vos propres genres </span>pour correspondre à vos lectures.
                     </p>
                 </div>
                 <div className="relative w-full md:w-1/2">
