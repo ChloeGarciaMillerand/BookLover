@@ -11,7 +11,7 @@ test("display landing page", async ({ page }) => {
     await page.goto("/landing");
 
     // Click the get started link.
-    const heading = page.getByRole("heading", { level: 1, name: /BookLover/i });
+    const heading = page.getByRole("heading", { level: 1, name: /Book Lover/i });
 
     // Expects page to have a heading with the name of Installation.
     await expect(heading).toBeVisible();
