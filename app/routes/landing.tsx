@@ -39,7 +39,7 @@ export default function landing() {
 
             {/* Content */}
             {/* Home */}
-            <div className="flex flex-col-reverse mb-8 md:flex-row md:justify-between md:items-center gap-4">
+            <div className="flex flex-col-reverse mb-16 md:mb-24 md:flex-row md:justify-between md:items-center gap-4">
                 <div>
                     <h1 className="text-5xl font-black mt-4 mb-4 text-transform: uppercase md:mt-0 lg:text-6xl">
                         Book Lover
@@ -63,8 +63,8 @@ export default function landing() {
             </div>
 
             {/* Create lists */}
-            <div className="pale-yellow-background w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] pt-8">
-                <div className="mx-auto w-90/100 md:w-85/100 lg:w-75/100 flex flex-col md:flex-row-reverse gap-8 items-center">
+            <div className="pale-yellow-background w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] pt-16">
+                <div className="mx-auto w-90/100 md:w-85/100 lg:w-75/100 flex flex-col md:flex-row-reverse gap-8 md:gap-16 items-center">
                     <div className="mb-8 md:md-0">
                         <h2 className="h2 text-transform: uppercase">Créez vos propres listes de lecture</h2>
                         <p>
@@ -81,7 +81,7 @@ export default function landing() {
             </div>
 
             {/* Add genres */}
-            <div className="flex flex-col mt-8 md:flex-row md:justify-between md:items-center gap-4">
+            <div className="flex flex-col mt-16 gap-8 md:flex-row md:justify-between md:items-center md:gap-16">
                 <div>
                     <h2 className="h2 text-transform: uppercase">Ajoutez des genres personnalisés</h2>
                     <p>
@@ -92,19 +92,19 @@ export default function landing() {
                     <img
                         src={landingGenres}
                         alt="possible genres and icons for science fiction, magic and romance"
-                        className="relative z-10 mb-8"
+                        className="relative z-10 mb-16"
                     />
-                    <img src={landingLine} alt="graphic line" className="absolute bottom-0 -right-20 z-0" />
+                    <img src={landingLine} alt="graphic line" className="absolute bottom-0 -right-40 z-0" />
                 </div>
             </div>
 
             {/* Find your books */}
             <div
-                className="bg-cover bg-center w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] py-16 opacity-80"
+                className="bg-cover bg-center w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] py-24 opacity-80"
                 style={{ backgroundImage: `url(${landingLibrary})` }}
             >
                 <div className="mx-auto w-90/100 md:w-85/100 lg:w-75/100 flex justify-end">
-                    <div className="bg-white rounded-lg w-full p-8 md:w-1/2">
+                    <div className="bg-white rounded-lg w-full p-8 md:w-1/2 md:p-16">
                         <h2 className="h2 text-transform: uppercase text-right">Gardez vos livres à portée de main</h2>
                         <p className="text-right">
                             Notez les livres qui vous intéressent et consultez vos listes à la bibliothèque, chez un ami
