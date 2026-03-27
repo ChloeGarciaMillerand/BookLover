@@ -3,14 +3,38 @@ import { Link } from "react-router";
 
 import type { Route } from "./+types/landing";
 
+import { getLocale, getInstance } from "~/middlewares/i18next";
+
 import landingBooks from "~/assets/images/landing_books.svg";
 import landingTablet from "~/assets/images/landing_tablet.webp";
 import landingGenres from "~/assets/images/landing_genres.svg";
 import landingLine from "~/assets/images/landing_line.svg";
 import landingLibrary from "~/assets/images/landing_library.webp";
 
-export function meta(_args: Route.MetaArgs) {
-    return [{ title: "BookLover" }, { name: "description", content: "BookLover, organisez vos lectures facilement!" }];
+export async function loader({ context }: Route.LoaderArgs) {
+    const locale = getLocale(context);
+    const date = new Date().toLocaleDateString(locale, {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+    });
+
+    const i18next = getInstance(context);
+
+    return {
+        date,
+        title: i18next.t("title"),
+        description: i18next.t("description"),
+    };
+}
+
+export function meta({ data }: { data: { title: string; description: string } }) {
+    return [
+        { title: data?.title },
+        { name: "description", content: data?.description },
+        { property: "og:title", content: data?.title },
+        { property: "og:description", content: data?.description },
+    ];
 }
 
 export default function landing() {
