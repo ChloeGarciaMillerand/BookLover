@@ -1,6 +1,8 @@
 import { defineConfig, devices } from "@playwright/test";
 import "dotenv/config";
 
+const APP_URL = process.env.APP_URL || "http://localhost:4173";
+
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -27,7 +29,7 @@ export default defineConfig({
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
     use: {
         /* Base URL to use in actions like `await page.goto('')`. */
-        baseURL: "http://localhost:4173",
+        baseURL: APP_URL,
 
         /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
         trace: "on-first-retry",
@@ -82,7 +84,7 @@ export default defineConfig({
     /* Run your local dev server before starting the tests */
     webServer: {
         command: "pnpm run start",
-        url: "http://localhost:4173",
+        url: APP_URL,
         // Give it 120 seconds. Increase/decrease depending on your dev server speed.
         timeout: 120000,
         reuseExistingServer: !process.env.CI,

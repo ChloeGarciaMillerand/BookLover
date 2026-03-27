@@ -19,6 +19,18 @@ export const test = base.extend<AuthFixtures>({
             throw new Error("Missing TEST_USER_EMAIL or TEST_USER_PASSWORD");
         }
 
+        const listUsersResult = await supabase.auth.admin.listUsers();
+        const users = "users" in listUsersResult.data ? listUsersResult.data.users : [];
+        const existingUser = users.find((u) => u.email === email);
+
+        if (existingUser) {
+            const { error } = await supabase.auth.admin.deleteUser(existingUser.id);
+            if (error) {
+                console.error(error);
+                throw error;
+            }
+        }
+
         const { data, error } = await supabase.auth.admin.createUser({
             email,
             password,
