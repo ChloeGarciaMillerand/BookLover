@@ -14,6 +14,9 @@ export default [
     route("check-email", "routes/auth/checkEmail.tsx"),
     route("update-password", "routes/auth/updatePassword.tsx"),
 
+    // TRANSLATION
+    route("locales/:lng/:ns", "routes/locales.ts"),
+
     // ROUTES WITH AUTHENFICATION REQUIRED
     // HOME
     index("routes/home.tsx"),
