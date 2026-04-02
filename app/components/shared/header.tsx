@@ -1,4 +1,5 @@
-import { NavLink, Form, Link } from "react-router";
+import { NavLink, Form, Link, useFetcher } from "react-router";
+import { useTranslation } from "react-i18next";
 
 import logoLight from "~/assets/icons/logo-light.svg";
 import logoDark from "~/assets/icons/logo-dark.svg";
@@ -9,6 +10,19 @@ type HeaderProps = {
 };
 
 export default function Header({ user }: HeaderProps) {
+    const { i18n } = useTranslation();
+    const fetcher = useFetcher();
+
+    const changeLanguage = (lng: string) => {
+        i18n.changeLanguage(lng);
+
+        // Update the cookie on the server
+        fetcher.submit(
+            { lng },
+            { method: "post", action: "/set-locale" }, // update this to your route that sets the locale cookie
+        );
+    };
+
     return (
         <header className="m-auto w-90/100 md:w-85/100 lg:w-75/100 ">
             <div className="navbar w-full bg-base-100">
@@ -78,6 +92,16 @@ export default function Header({ user }: HeaderProps) {
                             </div>
                         )}
                     </div>
+
+                    {/* Language selector */}
+                    <select
+                        value={i18n.language}
+                        onChange={(e) => changeLanguage(e.target.value)}
+                        className="select select-secondary select-sm w-auto min-w-0 mt-5 ml-4"
+                    >
+                        <option value="en">EN</option>
+                        <option value="fr">FR</option>
+                    </select>
                 </div>
             </div>
         </header>

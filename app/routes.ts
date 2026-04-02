@@ -4,6 +4,7 @@ export default [
     // PUBLIC ROUTE
     // TRANSLATION
     route("locales/:lng/:ns", "routes/locales.ts"),
+    route("set-locale", "routes/setLocale.tsx"),
 
     // LANDING
     route("landing", "routes/landing.tsx"),
