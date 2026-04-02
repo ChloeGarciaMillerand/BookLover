@@ -1,0 +1,13 @@
+{
+    "meta": {
+        "landing": {
+            "title": "BookLover",
+            "description": "BookLover : organize your reading easily !"
+        }
+    },
+    "404": {
+        "title": "Oops",
+        "text": "This page doesn't exist",
+        "backHome": "Back to Home"
+    }
+}

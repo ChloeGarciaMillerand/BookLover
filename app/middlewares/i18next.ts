@@ -17,6 +17,10 @@ export const [i18nextMiddleware, getLocale, getInstance] = createI18nextMiddlewa
         supportedLanguages: ["fr", "en"], // Your supported languages, the fallback should be last
         fallbackLanguage: "fr", // Your fallback language
         cookie: localeCookie, // The cookie to store the user preference
+        findLocale: async (request) => {
+            let locale = new URL(request.url).pathname.split("/").at(1);
+            return locale ?? null;
+        },
     },
     i18next: { resources }, // Your locales
     plugins: [initReactI18next], // Plugins you may need, like react-i18next

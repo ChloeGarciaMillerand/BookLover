@@ -19,12 +19,15 @@ export async function loader({ context }: Route.LoaderArgs) {
         day: "2-digit",
     });
 
-    const i18next = getInstance(context);
+    const i18n = getInstance(context);
+
+    // set default language
+    i18n.changeLanguage("fr");
 
     return {
         date,
-        title: i18next.t("title"),
-        description: i18next.t("description"),
+        title: i18n.t("meta.landing.title"),
+        description: i18n.t("meta.landing.description"),
     };
 }
 

@@ -1,4 +1,4 @@
-import { data, isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
+import { data, isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration, redirect } from "react-router";
 
 import { getSupabase } from "~/db/client";
 import { commitSession, getSession } from "./services/sessions.server";
@@ -18,7 +18,20 @@ export const middleware = [i18nextMiddleware];
 export async function loader({ request, context }: Route.LoaderArgs) {
     const { supabase } = getSupabase(request);
     const session = await getSession(request.headers.get("Cookie"));
-    let locale = getLocale(context);
+
+    const url = new URL(request.url);
+    const lng = url.searchParams.get("lng");
+
+    if (lng) {
+        const pathname = url.pathname.split("/").slice(2).join("/");
+        return redirect(`/${lng}/${pathname}`, {
+            headers: {
+                "Set-Cookie": await localeCookie.serialize(lng),
+            },
+        });
+    }
+
+    let locale = lng || getLocale(context);
 
     // user
     const {
