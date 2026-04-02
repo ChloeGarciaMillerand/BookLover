@@ -12,7 +12,7 @@ async function main() {
         .use(Fetch)
         .use(I18nextBrowserLanguageDetector)
         .init({
-            fallbackLng: "fr", // Change this to your default language
+            fallbackLng: "en", // Change this to your default language
             // Here we only want to detect the language from the html tag
             // since the middleware already detected the language server-side
             detection: { order: ["htmlTag"], caches: [] },

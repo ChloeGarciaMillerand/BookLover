@@ -1,4 +1,15 @@
+import type { Translations } from "~/locales/en/translation";
+
 export default {
-    title: "BookLover",
-    description: "BookLover, organisez vos lectures facilement!",
-} satisfies typeof import("~/locales/en/translation").default;
+    meta: {
+        landing: {
+            title: "BookLover - Accueil",
+            description: "BookLover, organisez vos lectures facilement!",
+        },
+    },
+    "404": {
+        title: "Oops",
+        text: "Cette page n'existe pas",
+        backHome: "Retour à l'accueil",
+    },
+} satisfies Translations;

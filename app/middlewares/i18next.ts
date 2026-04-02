@@ -15,12 +15,8 @@ export const localeCookie = createCookie("lng", {
 export const [i18nextMiddleware, getLocale, getInstance] = createI18nextMiddleware({
     detection: {
         supportedLanguages: ["fr", "en"], // Your supported languages, the fallback should be last
-        fallbackLanguage: "fr", // Your fallback language
+        fallbackLanguage: "en", // Your fallback language
         cookie: localeCookie, // The cookie to store the user preference
-        findLocale: async (request) => {
-            let locale = new URL(request.url).pathname.split("/").at(1);
-            return locale ?? null;
-        },
     },
     i18next: { resources }, // Your locales
     plugins: [initReactI18next], // Plugins you may need, like react-i18next
@@ -30,6 +26,6 @@ export const [i18nextMiddleware, getLocale, getInstance] = createI18nextMiddlewa
 declare module "i18next" {
     interface CustomTypeOptions {
         defaultNS: "translation";
-        resources: typeof resources.fr; // Use `fr` as source of truth for the types
+        resources: typeof resources.en; // Use `en` as source of truth for the types
     }
 }

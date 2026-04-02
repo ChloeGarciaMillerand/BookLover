@@ -1,4 +1,4 @@
-import { data, isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration, redirect } from "react-router";
+import { data, isRouteErrorResponse, Links, Outlet, Scripts, ScrollRestoration } from "react-router";
 
 import { getSupabase } from "~/db/client";
 import { commitSession, getSession } from "./services/sessions.server";
@@ -19,19 +19,7 @@ export async function loader({ request, context }: Route.LoaderArgs) {
     const { supabase } = getSupabase(request);
     const session = await getSession(request.headers.get("Cookie"));
 
-    const url = new URL(request.url);
-    const lng = url.searchParams.get("lng");
-
-    if (lng) {
-        const pathname = url.pathname.split("/").slice(2).join("/");
-        return redirect(`/${lng}/${pathname}`, {
-            headers: {
-                "Set-Cookie": await localeCookie.serialize(lng),
-            },
-        });
-    }
-
-    let locale = lng || getLocale(context);
+    let locale = getLocale(context);
 
     // user
     const {
@@ -81,7 +69,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <meta charSet="utf-8" />
                 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <Meta />
                 <Links />
             </head>
             <body className="min-h-screen flex flex-col  min-w-[320px]">

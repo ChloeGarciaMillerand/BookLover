@@ -1,9 +1,7 @@
 import { useEffect } from "react";
-import { Link } from "react-router";
+import { Link, useLoaderData } from "react-router";
 
 import type { Route } from "./+types/landing";
-
-import { getLocale, getInstance } from "~/middlewares/i18next";
 
 import landingBooks from "~/assets/images/landing_books.svg";
 import landingTablet from "~/assets/images/landing_tablet.webp";
@@ -11,36 +9,15 @@ import landingGenres from "~/assets/images/landing_genres.svg";
 import landingLine from "~/assets/images/landing_line.svg";
 import landingLibrary from "~/assets/images/landing_library.webp";
 
+import { getInstance } from "~/middlewares/i18next";
+
 export async function loader({ context }: Route.LoaderArgs) {
-    const locale = getLocale(context);
-    const date = new Date().toLocaleDateString(locale, {
-        year: "numeric",
-        month: "2-digit",
-        day: "2-digit",
-    });
-
-    const i18n = getInstance(context);
-
-    // set default language
-    i18n.changeLanguage("fr");
-
-    return {
-        date,
-        title: i18n.t("meta.landing.title"),
-        description: i18n.t("meta.landing.description"),
-    };
-}
-
-export function meta({ data }: { data: { title: string; description: string } }) {
-    return [
-        { title: data?.title },
-        { name: "description", content: data?.description },
-        { property: "og:title", content: data?.title },
-        { property: "og:description", content: data?.description },
-    ];
+    let i18next = getInstance(context);
+    return { title: i18next.t("meta.landing.title"), description: i18next.t("meta.landing.description") };
 }
 
 export default function landing() {
+    const { title, description } = useLoaderData();
     // set theme to light on landing page
     useEffect(() => {
         const root = document.documentElement;
@@ -56,13 +33,10 @@ export default function landing() {
     return (
         <div className="mx-auto w-90/100 md:w-85/100 lg:w-75/100">
             {/* Meta*/}
-            <title>BookLover - Accueil</title>
-            <meta
-                name="description"
-                content="Découvrez BookLover, l'application de gestions de listes de lecture et inscrivez-vous!"
-            />
-            <meta property="og:title" content="BookLover - Accueil" />
-            <meta property="og:description" content="L'application qui facilite vos lectures." />
+            <title>{title}</title>
+            <meta name="description" content={description} />
+            <meta property="og:title" content={title} />
+            <meta property="og:description" content={description} />
 
             {/* Content */}
             {/* Home */}
