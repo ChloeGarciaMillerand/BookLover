@@ -17,7 +17,7 @@ async function main() {
             // since the middleware already detected the language server-side
             detection: { order: ["htmlTag"], caches: [] },
             // Update this to the path where your locales will be served
-            backend: { loadPath: "app/locales/{{lng}}/{{ns}}" },
+            backend: { loadPath: "/locales/{{lng}}/{{ns}}" },
         });
 
     startTransition(() => {

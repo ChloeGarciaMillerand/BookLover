@@ -2,6 +2,9 @@ import { type RouteConfig, index, route } from "@react-router/dev/routes";
 
 export default [
     // PUBLIC ROUTE
+    // TRANSLATION
+    route("locales/:lng/:ns", "routes/locales.ts"),
+
     // LANDING
     route("landing", "routes/landing.tsx"),
 
@@ -13,9 +16,6 @@ export default [
     route("forgot-password", "routes/auth/forgotPassword.tsx"),
     route("check-email", "routes/auth/checkEmail.tsx"),
     route("update-password", "routes/auth/updatePassword.tsx"),
-
-    // TRANSLATION
-    route("locales/:lng/:ns", "routes/locales.ts"),
 
     // ROUTES WITH AUTHENFICATION REQUIRED
     // HOME
