@@ -1,5 +1,5 @@
 import { NavLink, Form, Link, useFetcher } from "react-router";
-import { useTranslation } from "react-i18next";
+import { Trans, useTranslation } from "react-i18next";
 
 import logoLight from "~/assets/icons/logo-light.svg";
 import logoDark from "~/assets/icons/logo-dark.svg";
@@ -12,6 +12,8 @@ type HeaderProps = {
 export default function Header({ user }: HeaderProps) {
     const { i18n } = useTranslation();
     const fetcher = useFetcher();
+
+    const currentLang = i18n.language?.split("-")[0] || "en";
 
     const changeLanguage = (lng: string) => {
         i18n.changeLanguage(lng);
@@ -84,10 +86,10 @@ export default function Header({ user }: HeaderProps) {
                         ) : (
                             <div className="hidden md:flex flex-row gap-4">
                                 <Link to="/signin" className="btn btn-outline btn-secondary mt-5">
-                                    Se connecter
+                                    <Trans i18nKey="buttons.signinButton">Sign In</Trans>
                                 </Link>
                                 <Link to="/signup" className="btn btn-primary mt-5">
-                                    Créer un compte
+                                    <Trans i18nKey="buttons.signupButton">Sign Up</Trans>
                                 </Link>
                             </div>
                         )}
@@ -95,7 +97,7 @@ export default function Header({ user }: HeaderProps) {
 
                     {/* Language selector */}
                     <select
-                        value={i18n.language}
+                        value={currentLang}
                         onChange={(e) => changeLanguage(e.target.value)}
                         className="select select-secondary select-sm w-auto min-w-0 mt-5 ml-4"
                     >
