@@ -14,6 +14,10 @@ export default {
             title: "BookLover - Créer une liste",
             description: "Créer une nouvelle liste de lecture BookLover",
         },
+        editList: {
+            title: "BookLover - Modifier une liste",
+            description: "Modifier une liste de lecture BookLover",
+        },
     },
     "404": {
         title: "Oups",
@@ -55,6 +59,18 @@ export default {
         nameLabel: "Nom de la liste",
         namePlaceholder: "Mes livres favoris",
         submitButton: "Créer une liste",
+        cancelButton: "Annuler",
+    },
+    editList: {
+        successMessage: "Liste mise à jour avec succès!",
+        errorMessage: "Une erreur est survenue lors de la mise à jour de la liste",
+        title: 'Modifier la liste "{{name}}"',
+    },
+    editListForm: {
+        errorMessage: "Le nom de la liste est requis",
+        nameLabel: "Nom de la liste",
+        namePlaceholder: "Mes livres favoris",
+        submitButton: "Modifier la liste",
         cancelButton: "Annuler",
     },
     buttons: {

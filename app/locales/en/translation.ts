@@ -1,3 +1,5 @@
+import editList from "~/routes/list/editList";
+
 const messages = {
     meta: {
         landing: {
@@ -11,6 +13,10 @@ const messages = {
         addList: {
             title: "BookLover - Create a list",
             description: "Create a new BookLover reading list",
+        },
+        editList: {
+            title: "BookLover - Edit a list",
+            description: "Edit a BookLover reading list",
         },
     },
     "404": {
@@ -53,6 +59,18 @@ const messages = {
         nameLabel: "List name",
         namePlaceholder: "My favorite books",
         submitButton: "Create a list",
+        cancelButton: "Cancel",
+    },
+    editList: {
+        successMessage: "List updated successfully!",
+        errorMessage: "An error occurred while updating the list",
+        title: 'Update the list "{{name}}"',
+    },
+    editListForm: {
+        errorMessage: "Name list is required",
+        nameLabel: "List name",
+        namePlaceholder: "My favorite books",
+        submitButton: "Update the list",
         cancelButton: "Cancel",
     },
     buttons: {

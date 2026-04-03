@@ -40,7 +40,6 @@ export async function action(params: Route.ActionArgs) {
 
     // list registration in database
     const t = i18n.t;
-
     try {
         await createList(supabase, { userId: user.id, name: submission.value.name });
         //success message
