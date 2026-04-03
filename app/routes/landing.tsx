@@ -87,7 +87,7 @@ export default function landing() {
                     <img
                         src={landingTablet}
                         alt="Preview of how lists are displayed on a tablet"
-                        className="rounded-t-lg shadow-[4px_-4px_10px_rgba(0,0,0,0.15)] md:w-4/5 lg:md-w-3/5"
+                        className="rounded-t-lg shadow-[4px_-4px_10px_rgba(0,0,0,0.15)] md:w-4/5 lg:w-3/5"
                     />
                 </div>
             </div>

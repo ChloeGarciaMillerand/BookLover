@@ -1,8 +1,15 @@
+import { title } from "process";
+import { createList } from "~/db/list";
+
 const messages = {
     meta: {
         landing: {
-            title: "BookLover - Home",
+            title: "BookLover - Welcome",
             description: "BookLover, organize your reading easily!",
+        },
+        home: {
+            title: "BookLover - Home",
+            description: "Welcome to your book manager!",
         },
     },
     "404": {
@@ -24,6 +31,11 @@ const messages = {
         keepYourBooksTitle: "Keep your books with you",
         keepYourBooksText:
             "Save books you’re interested in and access your lists at the library, at a friend’s place, or in a bookstore to discover your next read.",
+    },
+    home: {
+        title: "My Lists",
+        emptyMessage: "You have no lists yet. <br /> Start by creating one.",
+        createListButton: "Create a list",
     },
     buttons: {
         signupButton: "Sign Up",

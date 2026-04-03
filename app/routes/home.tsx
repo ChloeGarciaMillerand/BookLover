@@ -1,5 +1,6 @@
 import { Link, Navigate, useOutletContext } from "react-router";
 import { useEffect, useState } from "react";
+import { Trans, useTranslation } from "react-i18next";
 
 import type { User } from "@supabase/supabase-js";
 
@@ -30,6 +31,7 @@ export async function loader(params: Route.LoaderArgs) {
 }
 
 export default function HomePage(props: Route.ComponentProps) {
+    const { t } = useTranslation();
     const { user } = useOutletContext<ContextType>();
     const { lists } = props.loaderData;
 
@@ -58,8 +60,10 @@ export default function HomePage(props: Route.ComponentProps) {
     if (lists.length === 0) {
         emptyMessage = (
             <p>
-                Il n'y a pas encore de listes. <br />
-                Commencer par en créer une.
+                <Trans i18nKey="home.emptyMessage">
+                    You have no lists yet. <br />
+                    Start by creating one.
+                </Trans>
             </p>
         );
     }
@@ -67,13 +71,15 @@ export default function HomePage(props: Route.ComponentProps) {
     return (
         <div className="m-auto w-4/5 mt-4 mb-5 md:w-3/5">
             {/* Meta*/}
-            <title>BookLover - Accueil</title>
-            <meta name="description" content="Bienvenue dans votre gestionnaire de livres!" />
-            <meta property="og:title" content="BookLover - Accueil" />
-            <meta property="og:description" content="L'application qui facilite vos lectures." />
+            <title>{t("meta.home.title")}</title>
+            <meta name="description" content={t("meta.home.description")} />
+            <meta property="og:title" content={t("meta.home.title")} />
+            <meta property="og:description" content={t("meta.home.description")} />
 
             {/* Content */}
-            <h1 className="h1">Mes listes</h1>
+            <h1 className="h1">
+                <Trans i18nKey="home.title">My Lists</Trans>
+            </h1>
 
             <div className="my-5">{emptyMessage}</div>
 
@@ -90,7 +96,9 @@ export default function HomePage(props: Route.ComponentProps) {
                 style={isScrollable ? { left: "65%" } : {}}
             >
                 <Link to="/add-list">
-                    <Button className="btn-primary">Créer une liste</Button>
+                    <Button className="btn-primary">
+                        <Trans i18nKey="home.createListButton">Create a list</Trans>
+                    </Button>
                 </Link>
             </div>
         </div>
