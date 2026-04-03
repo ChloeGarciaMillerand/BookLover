@@ -1,5 +1,6 @@
 import { title } from "process";
 import { createList } from "~/db/list";
+import editList from "~/routes/list/editList";
 
 const messages = {
     meta: {
@@ -36,6 +37,11 @@ const messages = {
         title: "My Lists",
         emptyMessage: "You have no lists yet. <br /> Start by creating one.",
         createListButton: "Create a list",
+        editListButton: "Edit",
+        editListButtonAria: "Edit the list",
+        deleteListConfirm: 'Delete the list "{{name}}" and the books it contains?',
+        deleteListButton: "Delete",
+        deleteListButtonAria: "Delete the list",
     },
     buttons: {
         signupButton: "Sign Up",

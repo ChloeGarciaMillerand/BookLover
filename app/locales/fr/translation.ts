@@ -35,6 +35,11 @@ export default {
         title: "Mes listes",
         emptyMessage: "Vous n'avez pas encore de listes. <br /> Commencez par en créer une.",
         createListButton: "Créer une liste",
+        editListButton: "Modifier",
+        editListButtonAria: "Modifier la liste",
+        deleteListConfirm: 'Supprimer la liste "{{name}}" et les livres qu\'elle contient?',
+        deleteListButton: "Supprimer",
+        deleteListButtonAria: "Supprimer la liste",
     },
     buttons: {
         signupButton: "Créer un compte",
