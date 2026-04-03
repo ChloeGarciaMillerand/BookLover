@@ -1,4 +1,5 @@
 import { Link, useFetcher } from "react-router";
+import { Trans, useTranslation } from "react-i18next";
 import { Pen, Trash } from "lucide-react";
 
 import { getSupabase } from "~/db/client";
@@ -29,6 +30,7 @@ export async function loader({ params, request }: Route.LoaderArgs) {
 
 export default function ListPage(props: Route.ComponentProps) {
     const { list } = props.loaderData;
+    const { t } = useTranslation();
     let fetcher = useFetcher();
 
     //message if no book exists

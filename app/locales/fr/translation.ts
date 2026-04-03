@@ -18,6 +18,10 @@ export default {
             title: "BookLover - Modifier une liste",
             description: "Modifier une liste de lecture BookLover",
         },
+        list: {
+            title: "BookLover - Détail d'une liste",
+            description: "Visualiser une liste de lecture BookLover",
+        },
     },
     "404": {
         title: "Oups",
@@ -72,6 +76,15 @@ export default {
         namePlaceholder: "Mes livres favoris",
         submitButton: "Modifier la liste",
         cancelButton: "Annuler",
+    },
+    list: {
+        emptyMessage: "Il n'y a pas encore de livres. <br /> Commencez par en ajouter un.",
+        addBookButton: "Ajouter un livre",
+        editBookButton: "Modifier",
+        editBookButtonAria: "Modifier le livre",
+        deleteBookConfirm: 'Supprimer le livre "{{name}}" de la liste?',
+        deleteBookButton: "Supprimer",
+        deleteBookButtonAria: "Supprimer le livre",
     },
     buttons: {
         signupButton: "Créer un compte",

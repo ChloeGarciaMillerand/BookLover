@@ -1,5 +1,3 @@
-import editList from "~/routes/list/editList";
-
 const messages = {
     meta: {
         landing: {
@@ -17,6 +15,10 @@ const messages = {
         editList: {
             title: "BookLover - Edit a list",
             description: "Edit a BookLover reading list",
+        },
+        list: {
+            title: "BookLover - List details",
+            description: "View a BookLover reading list",
         },
     },
     "404": {
@@ -72,6 +74,15 @@ const messages = {
         namePlaceholder: "My favorite books",
         submitButton: "Update the list",
         cancelButton: "Cancel",
+    },
+    list: {
+        emptyMessage: "This list has no books yet. <br /> Start by adding one.",
+        addBookButton: "Add a book",
+        editBookButton: "Edit",
+        editBookButtonAria: "Edit the book",
+        deleteBookConfirm: 'Delete the book "{{name}}" from the list?',
+        deleteBookButton: "Delete",
+        deleteBookButtonAria: "Delete the book",
     },
     buttons: {
         signupButton: "Sign Up",
