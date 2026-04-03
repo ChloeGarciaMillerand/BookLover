@@ -10,6 +10,10 @@ export default {
             title: "BookLover - Accueil",
             description: "Bienvenue dans votre gestionnaire de livres!",
         },
+        addList: {
+            title: "BookLover - Créer une liste",
+            description: "Créer une nouvelle liste de lecture BookLover",
+        },
     },
     "404": {
         title: "Oups",
@@ -40,6 +44,18 @@ export default {
         deleteListConfirm: 'Supprimer la liste "{{name}}" et les livres qu\'elle contient?',
         deleteListButton: "Supprimer",
         deleteListButtonAria: "Supprimer la liste",
+    },
+    createList: {
+        successMessage: "Liste créée avec succès!",
+        errorMessage: "Une erreur est survenue lors de la création de la liste",
+        title: "Créer une liste",
+    },
+    createListForm: {
+        errorMessage: "Le nom de la liste est requis",
+        nameLabel: "Nom de la liste",
+        namePlaceholder: "Mes livres favoris",
+        submitButton: "Créer une liste",
+        cancelButton: "Annuler",
     },
     buttons: {
         signupButton: "Créer un compte",

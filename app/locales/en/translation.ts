@@ -1,7 +1,3 @@
-import { title } from "process";
-import { createList } from "~/db/list";
-import editList from "~/routes/list/editList";
-
 const messages = {
     meta: {
         landing: {
@@ -11,6 +7,10 @@ const messages = {
         home: {
             title: "BookLover - Home",
             description: "Welcome to your book manager!",
+        },
+        addList: {
+            title: "BookLover - Create a list",
+            description: "Create a new BookLover reading list",
         },
     },
     "404": {
@@ -42,6 +42,18 @@ const messages = {
         deleteListConfirm: 'Delete the list "{{name}}" and the books it contains?',
         deleteListButton: "Delete",
         deleteListButtonAria: "Delete the list",
+    },
+    createList: {
+        successMessage: "List created successfully!",
+        errorMessage: "An error occurred while creating the list",
+        title: "Create a list",
+    },
+    createListForm: {
+        errorMessage: "Name list is required",
+        nameLabel: "List name",
+        namePlaceholder: "My favorite books",
+        submitButton: "Create a list",
+        cancelButton: "Cancel",
     },
     buttons: {
         signupButton: "Sign Up",

@@ -1,5 +1,7 @@
 import { data, redirect } from "react-router";
 import { parseWithZod } from "@conform-to/zod/v4";
+import { getInstance } from "~/middlewares/i18next";
+import { Trans, useTranslation } from "react-i18next";
 
 import { getSupabase } from "~/db/client";
 
@@ -9,7 +11,7 @@ import { createList } from "~/db/list";
 import { commitSession, getSession } from "~/services/sessions.server";
 
 import AddListForm from "~/components/list/addListForm";
-import { schema } from "~/components/list/addListForm";
+import { createSchema } from "~/components/list/addListForm";
 
 import { authMiddleware, getCurrentUser } from "~/middlewares/authMiddleware";
 
@@ -27,6 +29,8 @@ export async function action(params: Route.ActionArgs) {
     const formData = await params.request.formData();
 
     // Parse object
+    const i18n = getInstance(params.context);
+    const schema = createSchema(i18n.t);
     const submission = parseWithZod(formData, { schema });
 
     // Report the submission to client if it is not successful
@@ -35,13 +39,15 @@ export async function action(params: Route.ActionArgs) {
     }
 
     // list registration in database
+    const t = i18n.t;
+
     try {
         await createList(supabase, { userId: user.id, name: submission.value.name });
         //success message
-        session.flash("success", "Liste créée avec succès!");
+        session.flash("success", t("createList.successMessage"));
     } catch (error) {
         console.error(error);
-        return data({ errors: { form: "Erreur lors de la création de la liste" } }, { status: 500 });
+        return data({ errors: { form: t("createList.errorMessage") } }, { status: 500 });
     }
 
     // Redirect after success
@@ -53,16 +59,19 @@ export async function action(params: Route.ActionArgs) {
 }
 
 export default function addList() {
+    const { t } = useTranslation();
     return (
         <div className="m-auto w-4/5 md:w-2/5 mt-4">
             {/* Meta*/}
-            <title>BookLover - Créer une liste</title>
-            <meta name="description" content="Créer une nouvelle liste de lecture BookLover" />
-            <meta property="og:title" content="BookLover - Créer une liste" />
-            <meta property="og:description" content="L'application qui facilite vos lectures." />
+            <title>{t("meta.addList.title")}</title>
+            <meta name="description" content={t("meta.addList.description")} />
+            <meta property="og:title" content={t("meta.addList.title")} />
+            <meta property="og:description" content={t("meta.addList.description")} />
 
             {/* Content */}
-            <h1 className="h1">Créer une liste</h1>
+            <h1 className="h1">
+                <Trans i18nKey="createList.title">Create a List </Trans>
+            </h1>
 
             <AddListForm />
         </div>
