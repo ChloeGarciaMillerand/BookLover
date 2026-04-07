@@ -39,8 +39,9 @@ export default function ListPage(props: Route.ComponentProps) {
     if (list.booklist.length === 0) {
         emptyMessage = (
             <p>
-                Il n'y a pas encore de livres. <br />
-                Commencer par en ajouter un.
+                <Trans i18nKey="list.emptyMessage">
+                    This list has no books yet. <br /> Start by adding one.
+                </Trans>
             </p>
         );
     }
@@ -48,15 +49,17 @@ export default function ListPage(props: Route.ComponentProps) {
     return (
         <div className="m-auto w-4/5 mt-4 mb-5 md:w-3/5">
             {/* Meta*/}
-            <title>BookLover - Détail d'une liste</title>
-            <meta name="description" content="Visualiser une liste de lecture BookLover" />
-            <meta property="og:title" content="BookLover - Détail d'une liste" />
-            <meta property="og:description" content="L'application qui facilite vos lectures." />
+            <title>{t("meta.list.title")}</title>
+            <meta name="description" content={t("meta.list.description")} />
+            <meta property="og:title" content={t("meta.list.title")} />
+            <meta property="og:description" content={t("meta.list.description")} />
 
             {/* Content */}
             <div className="mb-5 ">
                 <Link to="/">
-                    <p className="hover:underline">{"<"} Retour aux listes</p>
+                    <p className="hover:underline">
+                        {"<"} <Trans i18nKey="list.returnLink">Back to lists</Trans>
+                    </p>
                 </Link>
             </div>
 
@@ -68,12 +71,14 @@ export default function ListPage(props: Route.ComponentProps) {
                     {/* EDIT LIST */}
                     <Link
                         to={`/edit-list/${list.id}`}
-                        aria-label="Modifier la liste"
-                        title="Modifier la liste"
+                        aria-label={t("list.editListAria")}
+                        title={t("list.editListAria")}
                         className="hover:text-info flex flex-row gap-1"
                     >
                         <Pen size={18} aria-hidden="true" />
-                        <p>Modifier</p>
+                        <p>
+                            <Trans i18nKey="list.editList">Edit</Trans>
+                        </p>
                     </Link>
 
                     {/* DELETE LIST */}
@@ -81,19 +86,21 @@ export default function ListPage(props: Route.ComponentProps) {
                         method="post"
                         action={`/delete-list/${list.id}`}
                         onSubmit={(e) => {
-                            if (!confirm(`Supprimer la liste "${list.name}" et les livres qu'elle contient?`)) {
+                            if (!confirm(t("list.deleteListConfirm", { name: list.name }))) {
                                 e.preventDefault();
                             }
                         }}
                     >
                         <button
                             type="submit"
-                            title="Supprimer la liste"
+                            title={t("list.deleteListAria")}
                             className="cursor-pointer hover:text-error flex flex-row gap-1"
-                            aria-label="supprimer la liste"
+                            aria-label={t("list.deleteListAria")}
                         >
                             <Trash size={18} aria-hidden="true" />
-                            <p>Supprimer</p>
+                            <p>
+                                <Trans i18nKey="list.deleteList">Delete</Trans>
+                            </p>
                         </button>
                     </fetcher.Form>
                 </div>
@@ -117,7 +124,9 @@ export default function ListPage(props: Route.ComponentProps) {
 
             <div className="flex justify-end">
                 <Link to={`/list/${list.id}/add-book`}>
-                    <Button className="btn-primary">Ajouter un livre</Button>
+                    <Button className="btn-primary">
+                        <Trans i18nKey="list.addBookButton">Add a book</Trans>
+                    </Button>
                 </Link>
             </div>
         </div>

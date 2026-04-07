@@ -1,3 +1,5 @@
+import editList from "~/routes/list/editList";
+
 const messages = {
     meta: {
         landing: {
@@ -76,6 +78,12 @@ const messages = {
         cancelButton: "Cancel",
     },
     list: {
+        returnLink: "Back to lists",
+        editList: "Edit",
+        editListAria: "Edit the list",
+        deleteList: "Delete",
+        deleteListAria: "Delete the list",
+        deleteListConfirm: 'Delete the list "{{name}}" and the books it contains?',
         emptyMessage: "This list has no books yet. <br /> Start by adding one.",
         addBookButton: "Add a book",
         editBookButton: "Edit",
@@ -83,6 +91,11 @@ const messages = {
         deleteBookConfirm: 'Delete the book "{{name}}" from the list?',
         deleteBookButton: "Delete",
         deleteBookButtonAria: "Delete the book",
+        bookAuthor: "Author: {{author}}",
+        bookEditor: "Editor: {{editor}}",
+        libraryCode: "Library code: {{code}}",
+        comment: "Comment: {{comment}}",
+        ISBN: "ISBN: {{ISBN}}",
     },
     buttons: {
         signupButton: "Sign Up",
