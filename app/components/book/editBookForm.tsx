@@ -10,7 +10,6 @@ import type { Book, Genre, List } from "~/types";
 
 import { Button } from "../shared/Button";
 import { AddGenreModal } from "~/routes/genre/addGenre";
-import type { T } from "node_modules/react-router/dist/development/router-CwNp5l9u.mjs";
 
 type BookProps = {
     book: Book;
