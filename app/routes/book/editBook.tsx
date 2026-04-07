@@ -114,7 +114,7 @@ export default function editBook() {
     return (
         <div className="m-auto w-4/5 md:w-2/5 mt-4">
             {/* Meta*/}
-            <title>{t("editBook.title", { name: book.title })}</title>
+            <title>{t("meta.editBook.description")}</title>
             <meta name="description" content={t("meta.editBook.description")} />
             <meta property="og:title" content={t("meta.editBook.title")} />
             <meta property="og:description" content={t("meta.editBook.description")} />
