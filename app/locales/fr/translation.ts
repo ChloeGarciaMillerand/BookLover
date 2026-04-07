@@ -22,6 +22,10 @@ export default {
             title: "BookLover - Détail d'une liste",
             description: "Visualiser une liste de lecture BookLover",
         },
+        editBook: {
+            title: "BookLover - Modifier un livre",
+            description: "Modifier un livre de votre liste de lecture BookLover",
+        },
     },
     "404": {
         title: "Oups",
@@ -96,6 +100,27 @@ export default {
         libraryCode: "Code bibliothèque: {{code}}",
         comment: "Commentaire: {{comment}}",
         ISBN: "ISBN: {{ISBN}}",
+    },
+    editBook: {
+        successMessage: "Livre modifié avec succès!",
+        errorMessage: "Une erreur est survenue lors de la modification du livre",
+        title: 'Modifier le livre "{{title}}"',
+    },
+    editBookForm: {
+        titleErrorMessage: "Le nom du livre est requis",
+        listErrorMessage: "Veuillez sélectionner une liste",
+        titleLabel: "Titre",
+        listLabel: "Liste",
+        genreLabel: "Genre",
+        genreOption: "Choisir un genre",
+        addGenreButton: "Ajouter un genre",
+        authorLabel: "Auteur",
+        editorLabel: "Éditeur",
+        libraryCodeLabel: "Code bibliothèque",
+        commentLabel: "Commentaire",
+        ISBNLabel: "ISBN",
+        submitButton: "Modifier le livre",
+        cancelButton: "Annuler",
     },
     buttons: {
         signupButton: "Créer un compte",

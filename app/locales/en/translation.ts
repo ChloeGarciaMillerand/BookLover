@@ -1,5 +1,3 @@
-import editList from "~/routes/list/editList";
-
 const messages = {
     meta: {
         landing: {
@@ -21,6 +19,10 @@ const messages = {
         list: {
             title: "BookLover - List details",
             description: "View a BookLover reading list",
+        },
+        editBook: {
+            title: "BookLover - Edit a book",
+            description: "Edit a book in your BookLover reading list",
         },
     },
     "404": {
@@ -96,6 +98,27 @@ const messages = {
         libraryCode: "Library code: {{code}}",
         comment: "Comment: {{comment}}",
         ISBN: "ISBN: {{ISBN}}",
+    },
+    editBook: {
+        successMessage: "Book updated successfully!",
+        errorMessage: "An error occurred while updating the book",
+        title: 'Update the book "{{title}}"',
+    },
+    editBookForm: {
+        titleErrorMessage: "Book title is required",
+        listErrorMessage: "Please select a list",
+        titleLabel: "Title",
+        listLabel: "List",
+        genreLabel: "Genre",
+        genreOption: "Choose a genre",
+        addGenreButton: "Add a genre",
+        authorLabel: "Author",
+        editorLabel: "Editor",
+        libraryCodeLabel: "Library code",
+        commentLabel: "Comment",
+        ISBNLabel: "ISBN",
+        submitButton: "Update the book",
+        cancelButton: "Cancel",
     },
     buttons: {
         signupButton: "Sign Up",
