@@ -101,6 +101,10 @@ export default {
         comment: "Commentaire: {{comment}}",
         ISBN: "ISBN: {{ISBN}}",
     },
+    addBookForm: {
+        titleErrorMessage: "Le nom du livre est requis",
+        defaultGenreOption: "Choisir un genre",
+    },
     editBook: {
         successMessage: "Livre modifié avec succès!",
         errorMessage: "Une erreur est survenue lors de la modification du livre",
@@ -111,6 +115,7 @@ export default {
         listErrorMessage: "Veuillez sélectionner une liste",
         titleLabel: "Titre",
         listLabel: "Liste",
+        chooseListOption: "Choisir une liste",
         genreLabel: "Genre",
         genreOption: "Choisir un genre",
         addGenreButton: "Ajouter un genre",

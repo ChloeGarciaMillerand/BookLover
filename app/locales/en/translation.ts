@@ -99,6 +99,10 @@ const messages = {
         comment: "Comment: {{comment}}",
         ISBN: "ISBN: {{ISBN}}",
     },
+    addBookForm: {
+        titleErrorMessage: "Book title is required",
+        defaultGenreOption: "Choose a genre",
+    },
     editBook: {
         successMessage: "Book updated successfully!",
         errorMessage: "An error occurred while updating the book",
@@ -109,6 +113,7 @@ const messages = {
         listErrorMessage: "Please select a list",
         titleLabel: "Title",
         listLabel: "List",
+        chooseListOption: "Choose a list",
         genreLabel: "Genre",
         genreOption: "Choose a genre",
         addGenreButton: "Add a genre",
