@@ -1,5 +1,6 @@
-import { Link, Navigate, useOutletContext } from "react-router";
+import { Navigate, useOutletContext } from "react-router";
 import { useEffect, useState } from "react";
+import { Trans, useTranslation } from "react-i18next";
 
 import type { User } from "@supabase/supabase-js";
 
@@ -34,6 +35,8 @@ export default function GenresPage(props: Route.ComponentProps) {
     const { user } = useOutletContext<ContextType>();
     const { genres } = props.loaderData;
 
+    const { t } = useTranslation();
+
     //redirect if no user logged in
     if (!user) {
         return <Navigate to="/landing" replace />;
@@ -60,10 +63,10 @@ export default function GenresPage(props: Route.ComponentProps) {
         <>
             <div className="m-auto w-4/5 mt-4 mb-5 md:w-3/5">
                 {/* Meta*/}
-                <title>BookLover - Genres</title>
-                <meta name="description" content="Visualiser les genres de vos livres !" />
-                <meta property="og:title" content="BookLover - Genres" />
-                <meta property="og:description" content="L'application qui facilite vos lectures." />
+                <title>{t("meta.genres.title")}</title>
+                <meta name="description" content={t("meta.genres.description")} />
+                <meta property="og:title" content={t("meta.genres.title")} />
+                <meta property="og:description" content={t("meta.genres.description")} />
 
                 {/* Content */}
                 <h1 className="h1">Genres</h1>
@@ -81,7 +84,7 @@ export default function GenresPage(props: Route.ComponentProps) {
                     style={isScrollable ? { left: "65%" } : {}}
                 >
                     <Button className="btn-primary" onClick={() => setShowModal(true)}>
-                        Créer un genre
+                        <Trans i18nKey="genre.addGenreButton">Add a genre</Trans>
                     </Button>
                 </div>
             </div>

@@ -30,6 +30,10 @@ export default {
             title: "BookLover - Modifier un livre",
             description: "Modifier un livre de votre liste de lecture BookLover",
         },
+        genres: {
+            title: "BookLover - Genres",
+            description: "Visualiser et gérer les genres de vos livres dans BookLover",
+        },
     },
     header: {
         listsLink: "Mes listes",
@@ -164,6 +168,14 @@ export default {
     deleteBook: {
         successMessage: "Livre supprimé avec succès!",
         errorMessage: "Une erreur est survenue lors de la suppression du livre",
+    },
+    genre: {
+        addGenreButton: "Ajouter un genre",
+        editGenreButton: "Modifier",
+        editGenreButtonAria: "Modifier le genre",
+        deleteGenreConfirm: 'Supprimer le genre "{{name}}" ?',
+        deleteGenreButton: "Supprimer",
+        deleteGenreButtonAria: "Supprimer le genre",
     },
     buttons: {
         signupButton: "Créer un compte",

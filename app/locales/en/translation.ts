@@ -28,6 +28,10 @@ const messages = {
             title: "BookLover - Edit a book",
             description: "Edit a book in your BookLover reading list",
         },
+        genres: {
+            title: "BookLover - Genres",
+            description: "View and manage your book genres in BookLover",
+        },
     },
     header: {
         listsLink: "My Lists",
@@ -162,6 +166,14 @@ const messages = {
     deleteBook: {
         successMessage: "Book deleted successfully!",
         errorMessage: "An error occurred while deleting the book",
+    },
+    genre: {
+        addGenreButton: "Add a genre",
+        editGenreButton: "Edit",
+        editGenreButtonAria: "Edit the genre",
+        deleteGenreConfirm: 'Delete the genre "{{name}}" ?',
+        deleteGenreButton: "Delete",
+        deleteGenreButtonAria: "Delete the genre",
     },
     buttons: {
         signupButton: "Sign Up",

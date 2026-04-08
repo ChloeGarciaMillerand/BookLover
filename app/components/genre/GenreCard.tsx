@@ -1,4 +1,5 @@
 import { Link, useFetcher } from "react-router";
+import { Trans, useTranslation } from "react-i18next";
 import { Pen, Trash } from "lucide-react";
 
 import type { Genre } from "~/types";
@@ -8,6 +9,7 @@ type GenreProps = {
 };
 
 export default function GenreCard({ genre }: GenreProps) {
+    const { t } = useTranslation();
     let fetcher = useFetcher();
     return (
         <div className="card bg-base-300 text-base-content w-x1 mx-auto my-5">
@@ -22,12 +24,14 @@ export default function GenreCard({ genre }: GenreProps) {
                         {/* EDIT GENRE */}
                         <Link
                             to={`edit-genre/${genre.id}`}
-                            aria-label="Modifier le genre"
-                            title="Modifier le genre"
+                            aria-label={t("genre.editGenreButtonAria")}
+                            title={t("genre.editGenreButton")}
                             className="hover:text-info flex flex-row gap-1"
                         >
                             <Pen size={18} aria-hidden="true" />
-                            <p>Modifier</p>
+                            <p>
+                                <Trans i18nKey="genre.editGenreButton">Edit</Trans>
+                            </p>
                         </Link>
 
                         {/* DELETE GENRE */}
@@ -35,19 +39,21 @@ export default function GenreCard({ genre }: GenreProps) {
                             method="post"
                             action={`/delete-genre/${genre.id}`}
                             onSubmit={(e) => {
-                                if (!confirm(`Supprimer le genre "${genre.name}" ?`)) {
+                                if (!confirm(t("genre.deleteGenreConfirm", { name: genre.name }))) {
                                     e.preventDefault();
                                 }
                             }}
                         >
                             <button
                                 type="submit"
-                                title="Supprimer le genre"
+                                title={t("genre.deleteGenreButton")}
                                 className="cursor-pointer hover:text-error flex flex-row gap-1"
-                                aria-label="supprimer le genre"
+                                aria-label={t("genre.deleteGenreButtonAria")}
                             >
                                 <Trash size={18} aria-hidden="true" />
-                                <p>Supprimer</p>
+                                <p>
+                                    <Trans i18nKey="genre.deleteGenreButton">Delete</Trans>
+                                </p>
                             </button>
                         </fetcher.Form>
                     </div>
