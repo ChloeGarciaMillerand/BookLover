@@ -62,12 +62,12 @@ export default function Header({ user }: HeaderProps) {
                                     <>
                                         <li className="text-right">
                                             <NavLink to="/" className="nav-links block truncate">
-                                                Mes listes
+                                                <Trans i18nKey="header.listsLink">My Lists</Trans>
                                             </NavLink>
                                         </li>
                                         <li className="text-right">
                                             <NavLink to="/genres" className="nav-links block truncate">
-                                                Genres
+                                                <Trans i18nKey="header.genresLink">Genres</Trans>
                                             </NavLink>
                                         </li>
                                         <li>
@@ -76,7 +76,7 @@ export default function Header({ user }: HeaderProps) {
                                                     type="submit"
                                                     className="nav-links block truncate w-full text-right cursor-pointer"
                                                 >
-                                                    Se déconnecter
+                                                    <Trans i18nKey="header.logoutButton">Logout</Trans>
                                                 </button>
                                             </Form>
                                         </li>

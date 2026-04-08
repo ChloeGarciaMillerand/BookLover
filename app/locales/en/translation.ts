@@ -1,5 +1,3 @@
-import { de } from "zod/v4/locales";
-
 const messages = {
     meta: {
         landing: {
@@ -30,6 +28,11 @@ const messages = {
             title: "BookLover - Edit a book",
             description: "Edit a book in your BookLover reading list",
         },
+    },
+    header: {
+        listsLink: "My Lists",
+        genresLink: "Genres",
+        logoutButton: "Logout",
     },
     "404": {
         title: "Oops",

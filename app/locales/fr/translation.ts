@@ -31,6 +31,11 @@ export default {
             description: "Modifier un livre de votre liste de lecture BookLover",
         },
     },
+    header: {
+        listsLink: "Mes listes",
+        genresLink: "Genres",
+        logoutButton: "Se déconnecter",
+    },
     "404": {
         title: "Oups",
         text: "Cette page n'existe pas",
