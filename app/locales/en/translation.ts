@@ -1,3 +1,5 @@
+import addBook from "~/routes/book/addBook";
+
 const messages = {
     meta: {
         landing: {
@@ -19,6 +21,10 @@ const messages = {
         list: {
             title: "BookLover - List details",
             description: "View a BookLover reading list",
+        },
+        addBook: {
+            title: "BookLover - Add a book",
+            description: "Add a new book to your BookLover reading list",
         },
         editBook: {
             title: "BookLover - Edit a book",
@@ -99,9 +105,30 @@ const messages = {
         comment: "Comment: {{comment}}",
         ISBN: "ISBN: {{ISBN}}",
     },
+    addBook: {
+        successMessage: "Book added successfully!",
+        errorMessage: "An error occurred while adding the book",
+        title: "Add a book",
+    },
     addBookForm: {
         titleErrorMessage: "Book title is required",
+        titleLabel: "Title",
+        titlePlaceholder: "Book title",
+        genreLabel: "Genre",
         defaultGenreOption: "Choose a genre",
+        addGenreButton: "Add a genre",
+        authorLabel: "Author",
+        authorPlaceholder: "Author name",
+        editorLabel: "Editor",
+        editorPlaceholder: "Editor name",
+        libraryCodeLabel: "Library code",
+        libraryCodePlaceholder: "Exemple: J BOS 38",
+        commentLabel: "Comment",
+        commentPlaceholder: "Add a comment",
+        ISBNLabel: "ISBN",
+        ISBNPlaceholder: "Exemple: 978-2-07-061275-8",
+        submitButton: "Add a book",
+        cancelButton: "Cancel",
     },
     editBook: {
         successMessage: "Book updated successfully!",
