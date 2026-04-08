@@ -1,4 +1,4 @@
-import addBook from "~/routes/book/addBook";
+import { de } from "zod/v4/locales";
 
 const messages = {
     meta: {
@@ -105,6 +105,10 @@ const messages = {
         comment: "Comment: {{comment}}",
         ISBN: "ISBN: {{ISBN}}",
     },
+    deleteList: {
+        successMessage: "List deleted successfully!",
+        errorMessage: "An error occurred while deleting the list",
+    },
     addBook: {
         successMessage: "Book added successfully!",
         errorMessage: "An error occurred while adding the book",
@@ -151,6 +155,10 @@ const messages = {
         ISBNLabel: "ISBN",
         submitButton: "Update the book",
         cancelButton: "Cancel",
+    },
+    deleteBook: {
+        successMessage: "Book deleted successfully!",
+        errorMessage: "An error occurred while deleting the book",
     },
     buttons: {
         signupButton: "Sign Up",

@@ -105,6 +105,10 @@ export default {
         comment: "Commentaire: {{comment}}",
         ISBN: "ISBN: {{ISBN}}",
     },
+    deleteList: {
+        successMessage: "Liste supprimée avec succès!",
+        errorMessage: "Une erreur est survenue lors de la suppression de la liste",
+    },
     addBook: {
         successMessage: "Livre ajouté avec succès!",
         errorMessage: "Une erreur est survenue lors de l'ajout du livre",
@@ -151,6 +155,10 @@ export default {
         ISBNLabel: "ISBN",
         submitButton: "Modifier le livre",
         cancelButton: "Annuler",
+    },
+    deleteBook: {
+        successMessage: "Livre supprimé avec succès!",
+        errorMessage: "Une erreur est survenue lors de la suppression du livre",
     },
     buttons: {
         signupButton: "Créer un compte",
