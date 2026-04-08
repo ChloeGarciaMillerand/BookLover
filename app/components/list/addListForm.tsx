@@ -15,7 +15,7 @@ export const schema = z.object({
 
 export const createSchema = (t: TFunction) =>
     z.object({
-        name: z.string().min(1, { message: t("createListForm.errorMessage") }),
+        name: z.string({ message: t("createListForm.errorMessage") }).min(1),
     });
 
 export default function AddListForm() {
