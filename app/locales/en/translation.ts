@@ -175,6 +175,16 @@ const messages = {
         deleteGenreButton: "Delete",
         deleteGenreButtonAria: "Delete the genre",
     },
+    addGenre: {
+        nameErrorMessage: "Genre name is required",
+        colorErrorMessage: "Genre color is required",
+        errorMessage: "An error occurred while adding the genre",
+        addGenreTitle: "Add a genre",
+        nameLabel: "Name",
+        colorLabel: "Color",
+        cancelButton: "Cancel",
+        submitButton: "Create",
+    },
     buttons: {
         signupButton: "Sign Up",
         signinButton: "Sign In",

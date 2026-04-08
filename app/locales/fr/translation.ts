@@ -177,6 +177,16 @@ export default {
         deleteGenreButton: "Supprimer",
         deleteGenreButtonAria: "Supprimer le genre",
     },
+    addGenre: {
+        nameErrorMessage: "Le nom du genre est requis",
+        colorErrorMessage: "Une couleur est requise",
+        errorMessage: "Une erreur est survenue lors de l'ajout du genre",
+        addGenreTitle: "Ajouter un genre",
+        nameLabel: "Nom",
+        colorLabel: "Couleur",
+        cancelButton: "Annuler",
+        submitButton: "Créer",
+    },
     buttons: {
         signupButton: "Créer un compte",
         signinButton: "Se connecter",
