@@ -202,6 +202,10 @@ export default {
         cancelButton: "Annuler",
         submitButton: "Modifier",
     },
+    deleteGenre: {
+        successMessage: "Genre supprimé avec succès!",
+        errorMessage: "Une erreur est survenue lors de la suppression du genre",
+    },
     buttons: {
         signupButton: "Créer un compte",
         signinButton: "Se connecter",

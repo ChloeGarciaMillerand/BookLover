@@ -122,7 +122,7 @@ export default function editBook() {
             {/* Content */}
             <h1 className="h1">
                 <Trans i18nKey="editBook.title" values={{ title: book.book.title }}>
-                    Edit the book "{book.book.title}"
+                    Edit "{book.book.title}" book
                 </Trans>
             </h1>
             <EditBookForm genres={genres} book={book.book} lists={lists} currentListId={currentListId} />

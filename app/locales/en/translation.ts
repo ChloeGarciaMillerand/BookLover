@@ -87,7 +87,7 @@ const messages = {
     editList: {
         successMessage: "List updated successfully!",
         errorMessage: "An error occurred while updating the list",
-        title: 'Update the list "{{name}}"',
+        title: 'Edit "{{name}}" list ',
     },
     editListForm: {
         errorMessage: "Name list is required",
@@ -148,7 +148,7 @@ const messages = {
     editBook: {
         successMessage: "Book updated successfully!",
         errorMessage: "An error occurred while updating the book",
-        title: 'Update the book "{{title}}"',
+        title: 'Edit "{{title}}" book ',
     },
     editBookForm: {
         titleErrorMessage: "Book title is required",
@@ -199,6 +199,10 @@ const messages = {
         colorLabel: "Color",
         cancelButton: "Cancel",
         submitButton: "Update",
+    },
+    deleteGenre: {
+        successMessage: "Genre deleted successfully!",
+        errorMessage: "An error occurred while deleting the genre",
     },
     buttons: {
         signupButton: "Sign Up",

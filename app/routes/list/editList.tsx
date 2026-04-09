@@ -92,7 +92,7 @@ export default function editList() {
             {/* Content */}
             <h1 className="h1">
                 <Trans i18nKey="editList.title" values={{ name: list.name }}>
-                    Edit the list {{ name: list.name }}
+                    Edit {{ name: list.name }} list
                 </Trans>
             </h1>
             <EditListForm list={list} />
