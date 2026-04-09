@@ -6,6 +6,14 @@ export default {
             title: "BookLover - Bievenue",
             description: "BookLover, organisez vos lectures facilement!",
         },
+        signup: {
+            title: "BookLover - Inscription",
+            description: "Créez un compte pour gérer vos livres facilement!",
+        },
+        signin: {
+            title: "BookLover - Connexion",
+            description: "Connectez-vous à votre compte BookLover",
+        },
         home: {
             title: "BookLover - Accueil",
             description: "Bienvenue dans votre gestionnaire de livres!",
@@ -38,6 +46,21 @@ export default {
             title: "BookLover - Modifier un genre",
             description: "Modifier un genre de votre collection BookLover",
         },
+    },
+    signin: {
+        emailRequired: "L'email est obligatoire",
+        emailInvalid: "L'email est invalide",
+        passwordRequired: "Le mot de passe est obligatoire",
+        emailLabel: "Email",
+        emailPlaceholder: "john.doe@mail.com",
+        passwordLabel: "Mot de passe",
+        passwordPlaceholder: "Votre mot de passe",
+        submitButton: "Se connecter",
+        errorMessage: "Email ou mot de passe incorrect",
+        signinTitle: "Se connecter",
+        forgotPassword: "Mot de passe oublié?",
+        notAccount: "Vous n'avez pas de compte?",
+        signupButton: "Créer un compte",
     },
     header: {
         listsLink: "Mes listes",

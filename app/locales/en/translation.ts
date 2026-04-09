@@ -4,6 +4,14 @@ const messages = {
             title: "BookLover - Welcome",
             description: "BookLover, organize your reading easily!",
         },
+        signup: {
+            title: "BookLover - Sign Up",
+            description: "Create an account to manage your books easily!",
+        },
+        signin: {
+            title: "BookLover - Sign In",
+            description: "Sign in to your BookLover account",
+        },
         home: {
             title: "BookLover - Home",
             description: "Welcome to your book manager!",
@@ -36,6 +44,21 @@ const messages = {
             title: "BookLover - Edit a genre",
             description: "Edit a genre in your BookLover collection",
         },
+    },
+    signin: {
+        emailRequired: "Email is required",
+        emailInvalid: "Email is invalid",
+        passwordRequired: "Password is required",
+        emailLabel: "Email <1>*</1>",
+        emailPlaceholder: "john.doe@mail.com",
+        passwordLabel: "Password <1>*</1>",
+        passwordPlaceholder: "Your password",
+        submitButton: "Sign In",
+        errorMessage: "Invalid email or password",
+        signinTitle: "Sign In",
+        forgotPassword: "Forgot password?",
+        notAccount: "Don't have an account?",
+        signupButton: "Create an account",
     },
     header: {
         listsLink: "My Lists",
