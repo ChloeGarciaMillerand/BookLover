@@ -34,6 +34,10 @@ export default {
             title: "BookLover - Genres",
             description: "Visualiser et gérer les genres de vos livres dans BookLover",
         },
+        editGenre: {
+            title: "BookLover - Modifier un genre",
+            description: "Modifier un genre de votre collection BookLover",
+        },
     },
     header: {
         listsLink: "Mes listes",
@@ -186,6 +190,17 @@ export default {
         colorLabel: "Couleur",
         cancelButton: "Annuler",
         submitButton: "Créer",
+    },
+    editGenre: {
+        nameErrorMessage: "Le nom du genre est requis",
+        colorErrorMessage: "Une couleur est requise",
+        successMessage: "Genre modifié avec succès!",
+        errorMessage: "Une erreur est survenue lors de la modification du genre",
+        title: 'Modifier le genre "{{name}}"',
+        nameLabel: "Nom",
+        colorLabel: "Couleur",
+        cancelButton: "Annuler",
+        submitButton: "Modifier",
     },
     buttons: {
         signupButton: "Créer un compte",

@@ -32,6 +32,10 @@ const messages = {
             title: "BookLover - Genres",
             description: "View and manage your book genres in BookLover",
         },
+        editGenre: {
+            title: "BookLover - Edit a genre",
+            description: "Edit a genre in your BookLover collection",
+        },
     },
     header: {
         listsLink: "My Lists",
@@ -184,6 +188,17 @@ const messages = {
         colorLabel: "Color",
         cancelButton: "Cancel",
         submitButton: "Create",
+    },
+    editGenre: {
+        nameErrorMessage: "Genre name is required",
+        colorErrorMessage: "Genre color is required",
+        successMessage: "Genre updated successfully!",
+        errorMessage: "An error occurred while updating the genre",
+        title: 'Edit "{{name}}" genre',
+        nameLabel: "Name",
+        colorLabel: "Color",
+        cancelButton: "Cancel",
+        submitButton: "Update",
     },
     buttons: {
         signupButton: "Sign Up",
