@@ -14,6 +14,10 @@ export default {
             title: "BookLover - Connexion",
             description: "Connectez-vous à votre compte BookLover",
         },
+        forgotPassword: {
+            title: "BookLover - Mot de passe oublié",
+            description: "Réinitialisez votre mot de passe pour accéder à votre compte BookLover",
+        },
         home: {
             title: "BookLover - Accueil",
             description: "Bienvenue dans votre gestionnaire de livres!",
@@ -80,6 +84,16 @@ export default {
         forgotPassword: "Mot de passe oublié?",
         notAccount: "Vous n'avez pas de compte?",
         signupButton: "Créer un compte",
+    },
+    forgotPassword: {
+        emailRequired: "L'email est obligatoire",
+        emailInvalid: "L'email est invalide",
+        emailLabel: "Email <1>*</1>",
+        emailPlaceholder: "john.doe@mail.com",
+        submitButton: "Recevoir un lien de réinitialisation",
+        errorMessage: "Une erreur est survenue lors de la demande de réinitialisation du mot de passe",
+        forgotPasswordTitle: "Mot de passe oublié?",
+        forgotPasswordText: "Rentrez votre email pour recevoir un lien de réinitialisation du mot de passe",
     },
     header: {
         listsLink: "Mes listes",

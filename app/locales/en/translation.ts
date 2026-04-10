@@ -12,6 +12,10 @@ const messages = {
             title: "BookLover - Sign In",
             description: "Sign in to your BookLover account",
         },
+        forgotPassword: {
+            title: "BookLover - Forgot password",
+            description: "Reset your password to access your BookLover account",
+        },
         home: {
             title: "BookLover - Home",
             description: "Welcome to your book manager!",
@@ -78,6 +82,16 @@ const messages = {
         forgotPassword: "Forgot password?",
         notAccount: "Don't have an account?",
         signupButton: "Create an account",
+    },
+    forgotPassword: {
+        emailRequired: "Email is required",
+        emailInvalid: "Email is invalid",
+        emailLabel: "Email <1>*</1>",
+        emailPlaceholder: "john.doe@mail.com",
+        submitButton: "Reset Password",
+        errorMessage: "Invalid email",
+        forgotPasswordTitle: "Forgot Password",
+        forgotPasswordText: "Enter your email to receive a password reset link",
     },
     header: {
         listsLink: "My Lists",
