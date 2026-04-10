@@ -18,6 +18,10 @@ export default {
             title: "BookLover - Mot de passe oublié",
             description: "Réinitialisez votre mot de passe pour accéder à votre compte BookLover",
         },
+        checkEmail: {
+            title: "BookLover - Vérifiez votre email",
+            description: "Vérifiez votre email pour réinitialiser votre mot de passe BookLover",
+        },
         home: {
             title: "BookLover - Accueil",
             description: "Bienvenue dans votre gestionnaire de livres!",
@@ -94,6 +98,12 @@ export default {
         errorMessage: "Une erreur est survenue lors de la demande de réinitialisation du mot de passe",
         forgotPasswordTitle: "Mot de passe oublié?",
         forgotPasswordText: "Rentrez votre email pour recevoir un lien de réinitialisation du mot de passe",
+    },
+    checkEmail: {
+        title: "Vérifiez votre email",
+        text1: "Si un compte avec cet email existe, vous recevrez un lien de réinitialisation du mot de passe. Veuillez cliquer sur le lien dans l'email pour réinitialiser votre mot de passe.",
+        text2: "Vous pourrez ensuite vous connecter avec votre nouveau mot de passe.",
+        button: "Se connecter",
     },
     header: {
         listsLink: "Mes listes",

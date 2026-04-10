@@ -16,6 +16,10 @@ const messages = {
             title: "BookLover - Forgot password",
             description: "Reset your password to access your BookLover account",
         },
+        checkEmail: {
+            title: "BookLover - Check your email",
+            description: "Check your email to reset your password and access your BookLover account",
+        },
         home: {
             title: "BookLover - Home",
             description: "Welcome to your book manager!",
@@ -92,6 +96,12 @@ const messages = {
         errorMessage: "Invalid email",
         forgotPasswordTitle: "Forgot Password",
         forgotPasswordText: "Enter your email to receive a password reset link",
+    },
+    checkEmail: {
+        title: "Check your email",
+        text1: "If an account with this email exists, you will receive a password reset link. Please, click on the link in the email to reset your password.",
+        text2: "You will then be able to sign in with your new password.",
+        button: "Sign In",
     },
     header: {
         listsLink: "My Lists",
