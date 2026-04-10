@@ -33,14 +33,9 @@ export async function action(params: Route.ActionArgs) {
     try {
         await signin({ supabase, credentials: { email, password } });
     } catch {
-        return data(
-            {
-                errors: {
-                    form: t("signin.errorMessage"),
-                },
-            },
-            { status: 401 },
-        );
+        return submission.reply({
+            formErrors: [t("signin.errorMessage")],
+        });
     }
 
     // Redirect after success

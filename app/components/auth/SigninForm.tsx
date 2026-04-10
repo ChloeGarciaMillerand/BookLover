@@ -39,7 +39,9 @@ export default function SigninForm() {
         <>
             {/*returns form-related errors (e.g. user name is required)*/}
             <Form method="POST" {...getFormProps(form)}>
-                <div id={form.errorId}>{form.errors}</div>
+                <div className="text-error" id={form.errorId}>
+                    {form.errors}
+                </div>
                 {/* form fields */}
                 <div>
                     {/* Email */}
@@ -54,7 +56,7 @@ export default function SigninForm() {
                             {...getInputProps(fields.email, { type: "email" })}
                             placeholder={t("signin.emailPlaceholder")}
                         />
-                        <div id={fields.email.errorId} className="label">
+                        <div id={fields.email.errorId} className="label text-error">
                             {fields.email.errors}
                         </div>
                     </div>
@@ -71,7 +73,7 @@ export default function SigninForm() {
                             {...getInputProps(fields.password, { type: "password" })}
                             placeholder={t("signin.passwordPlaceholder")}
                         />
-                        <div id={fields.password.errorId} className="label">
+                        <div id={fields.password.errorId} className="label text-error">
                             {fields.password.errors}
                         </div>
                     </div>
