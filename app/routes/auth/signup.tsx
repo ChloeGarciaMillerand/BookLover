@@ -1,4 +1,4 @@
-import { data, Link, redirect } from "react-router";
+import { Link, redirect } from "react-router";
 import { parseWithZod } from "@conform-to/zod/v4";
 import { getInstance } from "~/middlewares/i18next";
 import { Trans, useTranslation } from "react-i18next";
