@@ -1,52 +1,48 @@
 import { data, Link, redirect } from "react-router";
+import { parseWithZod } from "@conform-to/zod/v4";
+import { getInstance } from "~/middlewares/i18next";
+import { Trans, useTranslation } from "react-i18next";
 
 import type { Route } from "./+types/signup";
 import { getSupabase } from "~/db/client";
 import { signup } from "~/db/auth";
 
 import SignupForm from "~/components/auth/SignupForm";
+import { createSchema } from "~/components/auth/SignupForm";
 
-type Errors = {
-    email?: string;
-    password?: string;
-    form?: string;
-};
+export async function action(params: Route.ActionArgs) {
+    const formData = await params.request.formData();
 
-export async function action({ request }: Route.ActionArgs) {
-    const formData = await request.formData();
+    // Parse object
+    const i18n = getInstance(params.context);
+    const schema = createSchema(i18n.t);
+    const submission = parseWithZod(formData, { schema });
+
+    // Report the submission to client if it is not successful
+    if (submission.status !== "success") {
+        return submission.reply();
+    }
+
     const email = String(formData.get("email"));
     const password = String(formData.get("password"));
 
-    // error handling
-    const errors: Errors = {};
-
-    if (!email) {
-        errors.email = "L'email est obligatoire";
-    }
-
-    if (!password) {
-        errors.password = "Le mot de passe est obligatoire";
-    }
-
-    if (Object.keys(errors).length > 0) {
-        return data({ errors }, { status: 400 });
-    }
+    const t = i18n.t;
 
     // signup
-    const { supabase, headers } = getSupabase(request);
+    const { supabase, headers } = getSupabase(params.request);
     try {
         await signup({ supabase, credentials: { email, password } });
     } catch (err: any) {
-        // check if email already exists
         if (err?.message?.includes("already registered") || err?.message?.includes("User already registered")) {
-            errors.email = "Cet email est déjà utilisé";
-        } else {
-            errors.form = "Erreur lors de la création du compte";
+            return submission.reply({
+                fieldErrors: {
+                    email: [t("signup.errorMailMessage")],
+                },
+            });
         }
 
-        return new Response(JSON.stringify({ errors }), {
-            status: 500,
-            headers: { "Content-Type": "application/json" },
+        return submission.reply({
+            formErrors: [t("signup.errorFormMessage")],
         });
     }
 
@@ -55,17 +51,29 @@ export async function action({ request }: Route.ActionArgs) {
 }
 
 export default function SignupPage() {
+    const { t } = useTranslation();
     return (
         <div className="m-auto w-3/5 md:w-3/10 lg:w-1/5 mt-4">
-            <h1 className="h1">Inscription</h1>
+            {/* Meta tags */}
+            <title>{t("meta.signup.title")}</title>
+            <meta name="description" content={t("meta.signup.description")} />
+            <meta property="og:title" content={t("meta.signup.title")} />
+            <meta property="og:description" content={t("meta.signup.description")} />
+
+            {/* Content */}
+            <h1 className="h1">
+                <Trans i18nKey="signup.signupTitle">Sign Up</Trans>
+            </h1>
             <SignupForm />
 
             <div className="divider "></div>
 
             <div>
-                <p className="mb-3">Déjà un compte?</p>
+                <p className="mb-3">
+                    <Trans i18nKey="signup.haveAccount">Already have an account?</Trans>
+                </p>
                 <Link to="/signin" className="btn btn-primary">
-                    Se connecter
+                    <Trans i18nKey="signup.signinButton">Sign In</Trans>
                 </Link>
             </div>
         </div>

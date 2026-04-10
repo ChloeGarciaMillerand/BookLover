@@ -1,82 +1,111 @@
 import { Form, useActionData } from "react-router";
+import type { TFunction } from "i18next";
+import { Trans, useTranslation } from "react-i18next";
+import { getFormProps, getInputProps, useForm } from "@conform-to/react";
+import { getZodConstraint, parseWithZod } from "@conform-to/zod/v4";
+import * as z from "zod";
 
 import { Button } from "../shared/Button";
 
+export const createSchema = (t: TFunction) =>
+    z
+        .object({
+            email: z.string({ message: t("signup.emailRequired") }).email({ message: t("signup.emailInvalid") }),
+            password: z.string({ message: t("signup.passwordRequired") }).min(1),
+            confirmPassword: z.string({ message: t("signup.confirmPasswordRequired") }).min(1),
+        })
+        .refine((data) => data.password === data.confirmPassword, {
+            message: t("signup.confirmPasswordMatch"),
+        });
+
 export default function SignupForm() {
-    const actionData = useActionData();
+    //translation
+    const { t } = useTranslation();
+    const schema = createSchema(t);
+
+    // validation data from last submit (server or client side)
+    const lastResult = useActionData();
+
+    // build HTML constraints from Zod schema
+    const [form, fields] = useForm({
+        lastResult,
+        constraint: getZodConstraint(schema),
+        // Validate field once user leaves the field
+        shouldValidate: "onBlur",
+        // Then, revalidate field as user types again
+        shouldRevalidate: "onInput",
+        // Run the same validation logic on client with Zod
+        onValidate({ formData }) {
+            return parseWithZod(formData, { schema });
+        },
+    });
 
     return (
         <>
             {/*returns form-related errors (e.g. user name is required)*/}
-            <Form method="POST">
-                {actionData?.errors.form ? (
-                    <p className="register-error-text" role="alert">
-                        {actionData?.errors?.form}
-                    </p>
-                ) : null}
+            <Form method="POST" {...getFormProps(form)}>
+                <div className="text-error" id={form.errorId}>
+                    {form.errors}
+                </div>
                 {/* form fields */}
                 <div>
                     {/* Email */}
-                    <fieldset className="fieldset">
-                        <label htmlFor="email">Email*</label>
+                    <div className="fieldset">
+                        <label className="fieldset-legend inline-block" htmlFor={fields.email.id}>
+                            <Trans i18nKey="signup.emailLabel">
+                                Email <span aria-hidden="true">*</span>
+                            </Trans>
+                        </label>
                         <input
-                            id="email"
-                            name="email"
-                            type="email"
-                            required
-                            className="input w-full"
-                            placeholder="john.doe@mail.com"
-                            aria-describedby={actionData?.errors?.email ? "email-error" : undefined}
+                            className="input"
+                            {...getInputProps(fields.email, { type: "email" })}
+                            placeholder={t("signup.emailPlaceholder")}
                         />
-                        {actionData?.errors?.email ? (
-                            <p className="text-error mt-1 text-sm" id="email-error">
-                                {actionData?.errors?.email}
-                            </p>
-                        ) : null}
-                    </fieldset>
+                        <div id={fields.email.errorId} className="label text-error">
+                            {fields.email.errors}
+                        </div>
+                    </div>
 
                     {/* Password */}
-                    <fieldset className="fieldset">
-                        <label htmlFor="password">Mot de passe*</label>
+                    <div className="fieldset">
+                        <label className="fieldset-legend inline-block" htmlFor={fields.password.id}>
+                            <Trans i18nKey="signup.passwordLabel">
+                                Password <span aria-hidden="true">*</span>
+                            </Trans>
+                        </label>
                         <input
-                            id="password"
-                            name="password"
-                            type="password"
-                            required
-                            className="input w-full"
-                            placeholder="Votre mot de passe"
-                            aria-describedby={actionData?.errors?.password ? "password-error" : undefined}
+                            className="input"
+                            {...getInputProps(fields.password, { type: "password" })}
+                            placeholder={t("signup.passwordPlaceholder")}
+                            aria-describedby={fields.password.errorId}
                         />
-                        {actionData?.errors?.password ? (
-                            <p className="text-error mt-1 text-sm" id="password-error">
-                                {actionData?.errors?.password}
-                            </p>
-                        ) : null}
-                    </fieldset>
+                        <div id={fields.password.errorId} className="label text-error">
+                            {fields.password.errors}
+                        </div>
+                    </div>
 
                     {/* Confirm password */}
-                    <fieldset className="fieldset">
-                        <label htmlFor="confirmPassword">Confirmer le mot de passe*</label>
+                    <div className="fieldset">
+                        <label className="fieldset-legend inline-block" htmlFor={fields.confirmPassword.id}>
+                            <Trans i18nKey="signup.confirmPasswordLabel">
+                                Confirm Password <span aria-hidden="true">*</span>
+                            </Trans>
+                        </label>
                         <input
-                            id="confirmPassword"
-                            name="confirmPassword"
-                            type="password"
-                            required
-                            className="input w-full"
-                            placeholder="Votre mot de passe"
-                            aria-describedby={actionData?.errors?.confirmPassword ? "confirmPassword-error" : undefined}
+                            className="input"
+                            {...getInputProps(fields.confirmPassword, { type: "password" })}
+                            placeholder={t("signup.confirmPasswordPlaceholder")}
+                            aria-describedby={fields.confirmPassword.errorId}
                         />
-                        {actionData?.errors?.confirmPassword ? (
-                            <p className="text-error mt-1 text-sm" id="confirmPassword-error">
-                                {actionData?.errors?.confirmPassword}
-                            </p>
-                        ) : null}
-                    </fieldset>
+                        <div id={fields.confirmPassword.errorId} className="label text-error">
+                            {fields.confirmPassword.errors}
+                        </div>
+                    </div>
 
                     {/* submit button */}
                     <div className="mt-5 flex justify-end md:justify-start">
                         <Button type="submit" className="btn-primary">
-                            Créer un compte
+                            <Trans i18nKey="signup.submitButton">Create an account</Trans>
                         </Button>
                     </div>
                 </div>
