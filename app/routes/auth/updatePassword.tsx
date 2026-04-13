@@ -10,10 +10,6 @@ import { updatePassword } from "~/db/auth";
 import ResetPasswordForm from "~/components/auth/ResetPasswordForm";
 import { createSchema } from "~/components/auth/ResetPasswordForm";
 
-export function meta(_args: Route.MetaArgs) {
-    return [{ title: "BookLover" }, { name: "description", content: "Réinitialisez votre mot de passe" }];
-}
-
 export async function loader({ request }: Route.LoaderArgs) {
     const { supabase, headers } = getSupabase(request);
 
@@ -37,8 +33,6 @@ export async function action({ request, context }: Route.ActionArgs) {
 
     const formData = await request.formData();
 
-    console.log("ACTION CALLED");
-
     // Parse object
     const i18n = getInstance(context);
     const schema = createSchema(i18n.t);
@@ -49,8 +43,6 @@ export async function action({ request, context }: Route.ActionArgs) {
         return submission.reply();
     }
 
-    console.log("VALIDATION OK");
-
     const password = String(formData.get("password"));
 
     const t = i18n.t;
@@ -59,11 +51,6 @@ export async function action({ request, context }: Route.ActionArgs) {
 
     try {
         await updatePassword({ supabase, password });
-        const {
-            data: { user },
-        } = await supabase.auth.getUser();
-
-        console.log("USER:", user);
     } catch (errror: any) {
         console.error("Error updating password:", errror);
         return submission.reply({
