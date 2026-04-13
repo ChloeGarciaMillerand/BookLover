@@ -20,6 +20,10 @@ const messages = {
             title: "BookLover - Forgot password",
             description: "Reset your password to access your BookLover account",
         },
+        resetPassword: {
+            title: "BookLover - Reset password",
+            description: "Reset your password to access your BookLover account",
+        },
         checkEmail: {
             title: "BookLover - Check your email",
             description: "Check your email to reset your password and access your BookLover account",
@@ -107,6 +111,18 @@ const messages = {
         errorMessage: "Invalid email",
         forgotPasswordTitle: "Forgot Password",
         forgotPasswordText: "Enter your email to receive a password reset link",
+    },
+    resetPassword: {
+        passwordRequired: "Password is required",
+        confirmPasswordRequired: "Confirm password is required",
+        confirmPasswordMatch: "Passwords must match",
+        passwordLabel: "New Password <1>*</1>",
+        passwordPlaceholder: "Your new password",
+        confirmPasswordLabel: "Confirm New Password <1>*</1>",
+        confirmPasswordPlaceholder: "Confirm your new password",
+        submitButton: "Reset Password",
+        errorMessage: "An error occurred while resetting the password",
+        title: "Reset Password",
     },
     checkEmail: {
         title: "Check your email",

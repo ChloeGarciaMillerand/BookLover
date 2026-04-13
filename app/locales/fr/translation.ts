@@ -22,6 +22,10 @@ export default {
             title: "BookLover - Mot de passe oublié",
             description: "Réinitialisez votre mot de passe pour accéder à votre compte BookLover",
         },
+        resetPassword: {
+            title: "BookLover - Réinitialisation du mot de passe",
+            description: "Réinitialisez votre mot de passe pour accéder à votre compte BookLover",
+        },
         checkEmail: {
             title: "BookLover - Vérifiez votre email",
             description: "Vérifiez votre email pour réinitialiser votre mot de passe BookLover",
@@ -109,6 +113,18 @@ export default {
         errorMessage: "Une erreur est survenue lors de la demande de réinitialisation du mot de passe",
         forgotPasswordTitle: "Mot de passe oublié?",
         forgotPasswordText: "Rentrez votre email pour recevoir un lien de réinitialisation du mot de passe",
+    },
+    resetPassword: {
+        passwordRequired: "Le mot de passe est obligatoire",
+        confirmPasswordRequired: "La confirmation du mot de passe est obligatoire",
+        confirmPasswordMatch: "Les mots de passe doivent correspondre",
+        passwordLabel: "Nouveau mot de passe <1>*</1>",
+        passwordPlaceholder: "Votre nouveau mot de passe",
+        confirmPasswordLabel: "Confirmer le nouveau mot de passe <1>*</1>",
+        confirmPasswordPlaceholder: "Confirmez votre nouveau mot de passe",
+        submitButton: "Réinitialiser le mot de passe",
+        errorMessage: "Une erreur est survenue lors de la réinitialisation du mot de passe",
+        title: "Réinitialisation du mot de passe",
     },
     checkEmail: {
         title: "Vérifiez votre email",
