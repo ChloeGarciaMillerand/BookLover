@@ -67,6 +67,7 @@ export default {
         emailRequired: "L'email est obligatoire",
         emailInvalid: "L'email est invalide",
         passwordRequired: "Le mot de passe est obligatoire",
+        passwordMinLength: "Le mot de passe doit contenir au moins 6 caractères",
         confirmPasswordRequired: "La confirmation du mot de passe est obligatoire",
         confirmPasswordMatch: "Les mots de passe doivent correspondre",
         emailLabel: "Email <1>*</1>",

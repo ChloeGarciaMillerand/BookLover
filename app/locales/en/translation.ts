@@ -65,6 +65,7 @@ const messages = {
         emailRequired: "Email is required",
         emailInvalid: "Email is invalid",
         passwordRequired: "Password is required",
+        passwordMinLength: "Password must be at least 6 characters",
         confirmPasswordRequired: "Confirm password is required",
         confirmPasswordMatch: "Passwords must match",
         emailLabel: "Email <1>*</1>",

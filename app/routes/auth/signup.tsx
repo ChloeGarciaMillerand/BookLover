@@ -53,7 +53,7 @@ export async function action(params: Route.ActionArgs) {
 export default function SignupPage() {
     const { t } = useTranslation();
     return (
-        <div className="m-auto w-3/5 md:w-3/10 lg:w-1/5 mt-4">
+        <div className="m-auto w-4/5 md:w-2/5 lg:w-1/5 mt-4">
             {/* Meta tags */}
             <title>{t("meta.signup.title")}</title>
             <meta name="description" content={t("meta.signup.description")} />
@@ -66,7 +66,7 @@ export default function SignupPage() {
             </h1>
             <SignupForm />
 
-            <div className="divider "></div>
+            <div className="divider"></div>
 
             <div>
                 <p className="mb-3">
