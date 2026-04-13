@@ -8,6 +8,10 @@ const messages = {
             title: "BookLover - Sign Up",
             description: "Create an account to manage your books easily!",
         },
+        signupSuccess: {
+            title: "BookLover - Signup successful",
+            description: "Your account has been created successfully! Sign in to manage your books.",
+        },
         signin: {
             title: "BookLover - Sign In",
             description: "Sign in to your BookLover account",
@@ -70,6 +74,13 @@ const messages = {
         errorFormMessage: "An error occurred while creating the account",
         signupTitle: "Sign Up",
         haveAccount: "Already have an account?",
+        signinButton: "Sign In",
+    },
+    signupSuccess: {
+        title: "Welcome to BookLover!",
+        altHeartBook: "Book with a heart",
+        text1: "Your account has been created successfully and you will receive a confirmation request by email.",
+        text2: "You can then sign in to your account. ",
         signinButton: "Sign In",
     },
     signin: {

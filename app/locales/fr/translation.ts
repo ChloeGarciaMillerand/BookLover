@@ -3,12 +3,16 @@ import type { Translations } from "~/locales/en/translation";
 export default {
     meta: {
         landing: {
-            title: "BookLover - Bievenue",
+            title: "BookLover - Bienvenue",
             description: "BookLover, organisez vos lectures facilement!",
         },
         signup: {
             title: "BookLover - Inscription",
             description: "Créez un compte pour gérer vos livres facilement!",
+        },
+        signupSuccess: {
+            title: "BookLover - Inscription réussie",
+            description: "Votre compte a été créé avec succès! Connectez-vous pour gérer vos livres.",
         },
         signin: {
             title: "BookLover - Connexion",
@@ -74,6 +78,13 @@ export default {
         haveAccount: "Vous avez déjà un compte?",
         signinButton: "Se connecter",
     },
+    signupSuccess: {
+        title: "Bienvenue dans BookLover!",
+        altHeartBook: "Livre avec un coeur",
+        text1: "Votre compte a été créé avec succès et vous allez recevoir une demande de confirmation par email.",
+        text2: "Vous pourrez ensuite vous connecter à votre compte. ",
+        signinButton: "Se connecter",
+    },
     signin: {
         emailRequired: "L'email est obligatoire",
         emailInvalid: "L'email est invalide",
@@ -121,7 +132,7 @@ export default {
         homeText3: "retrouvez vos livres favoris",
         homeText4: "où qu vous soyez.",
         listsTitle: "Créez vos propres listes de lecture",
-        listsTextSpan: "Ajoutez, modifiez, supprimez des listes",
+        listsTextSpan: "Ajoutez, modifiez, supprimez des listes ",
         listsText: "pour organiser et retrouver vos livres plus facilement.",
         genresTitle: "Ajoutez des genres personnalisés",
         genresTextSpan: "Créez vos propres genres ",
