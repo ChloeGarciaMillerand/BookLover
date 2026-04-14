@@ -115,6 +115,7 @@ const messages = {
     },
     resetPassword: {
         passwordRequired: "Password is required",
+        passwordMinLength: "Password must be at least 6 characters",
         confirmPasswordRequired: "Confirm password is required",
         confirmPasswordMatch: "Passwords must match",
         passwordLabel: "New Password <1>*</1>",

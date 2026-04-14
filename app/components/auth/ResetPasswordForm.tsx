@@ -10,7 +10,9 @@ import { Button } from "../shared/Button";
 export const createSchema = (t: TFunction) =>
     z
         .object({
-            password: z.string({ message: t("resetPassword.passwordRequired") }).min(1),
+            password: z
+                .string({ message: t("resetPassword.passwordRequired") })
+                .min(6, { message: t("resetPassword.passwordMinLength") }),
             confirmPassword: z.string({ message: t("resetPassword.confirmPasswordRequired") }),
         })
         .refine((data) => data.password === data.confirmPassword, {
@@ -60,6 +62,9 @@ export default function ResetPasswordForm() {
                             placeholder={t("resetPassword.passwordPlaceholder")}
                             {...getInputProps(fields.password, { type: "password" })}
                         />
+                        <p className="text-sm text-gray-500 mt-1">
+                            <Trans i18nKey="signup.passwordMinLength">Password must be at least 6 characters</Trans>
+                        </p>
                         <div id={fields.password.errorId} className="label text-error">
                             {fields.password.errors}
                         </div>
