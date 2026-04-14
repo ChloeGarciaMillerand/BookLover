@@ -4,6 +4,7 @@ import { getInstance } from "~/middlewares/i18next";
 import { Trans, useTranslation } from "react-i18next";
 
 import { getSupabase } from "~/db/client";
+import { getSession, commitSession } from "~/services/sessions.server";
 import type { Route } from "./+types/updatePassword";
 
 import { updatePassword } from "~/db/auth";
@@ -29,7 +30,8 @@ export async function loader({ request }: Route.LoaderArgs) {
 }
 
 export async function action({ request, context }: Route.ActionArgs) {
-    const { supabase, headers } = getSupabase(request);
+    const { supabase } = getSupabase(request);
+    const session = await getSession(request.headers.get("Cookie"));
 
     const formData = await request.formData();
 
@@ -51,15 +53,19 @@ export async function action({ request, context }: Route.ActionArgs) {
 
     try {
         await updatePassword({ supabase, password });
+        //success message
+        session.flash("success", t("resetPassword.successMessage"));
     } catch (errror: any) {
         console.error("Error updating password:", errror);
-        return submission.reply({
-            formErrors: [t("resetPassword.errorMessage")],
-        });
+        session.flash("error", t("resetPassword.errorMessage"));
     }
 
     // Redirect after success
-    return redirect("/signin", { headers });
+    return redirect("/signin", {
+        headers: {
+            "Set-Cookie": await commitSession(session),
+        },
+    });
 }
 
 export default function UpdatePasswordPage() {

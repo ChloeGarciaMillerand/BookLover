@@ -114,6 +114,7 @@ const messages = {
         forgotPasswordText: "Enter your email to receive a password reset link",
     },
     resetPassword: {
+        successMessage: "Password reset successfully! You can now sign in with your new password.",
         passwordRequired: "Password is required",
         passwordMinLength: "Password must be at least 6 characters",
         confirmPasswordRequired: "Confirm password is required",

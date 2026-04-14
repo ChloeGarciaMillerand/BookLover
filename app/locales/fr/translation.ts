@@ -116,6 +116,8 @@ export default {
         forgotPasswordText: "Rentrez votre email pour recevoir un lien de réinitialisation du mot de passe",
     },
     resetPassword: {
+        successMessage:
+            "Mot de passe réinitialisé avec succès! Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.",
         passwordRequired: "Le mot de passe est obligatoire",
         passwordMinLength: "Le mot de passe doit contenir au moins 6 caractères",
         confirmPasswordRequired: "La confirmation du mot de passe est obligatoire",
