@@ -45,7 +45,7 @@ export async function action(params: Route.ActionArgs) {
 export default function SigninPage() {
     const { t } = useTranslation();
     return (
-        <div className="m-auto w-3/5 md:w-3/10 lg:w-1/5 mt-4">
+        <div className="m-auto w-4/5 md:w-2/5 lg:w-1/5 mt-4">
             {/* Meta tags */}
             <title>{t("meta.signin.title")}</title>
             <meta name="description" content={t("meta.signin.description")} />

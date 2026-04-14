@@ -52,7 +52,7 @@ export default function SigninForm() {
                             </Trans>
                         </label>
                         <input
-                            className="input"
+                            className="input w-full"
                             {...getInputProps(fields.email, { type: "email" })}
                             placeholder={t("signin.emailPlaceholder")}
                         />
@@ -69,7 +69,7 @@ export default function SigninForm() {
                             </Trans>
                         </label>
                         <input
-                            className="input"
+                            className="input w-full"
                             {...getInputProps(fields.password, { type: "password" })}
                             placeholder={t("signin.passwordPlaceholder")}
                         />

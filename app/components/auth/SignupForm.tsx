@@ -52,7 +52,7 @@ export default function SignupForm() {
                 {/* form fields */}
                 <div>
                     {/* Email */}
-                    <fieldset className="fieldset">
+                    <div className="fieldset">
                         <label className="fieldset-legend inline-block" htmlFor={fields.email.id}>
                             <Trans i18nKey="signup.emailLabel">
                                 Email <span aria-hidden="true">*</span>
@@ -66,10 +66,10 @@ export default function SignupForm() {
                         <div id={fields.email.errorId} className="label text-error">
                             {fields.email.errors}
                         </div>
-                    </fieldset>
+                    </div>
 
                     {/* Password */}
-                    <fieldset className="fieldset">
+                    <div className="fieldset">
                         <label className="fieldset-legend inline-block" htmlFor={fields.password.id}>
                             <Trans i18nKey="signup.passwordLabel">
                                 Password <span aria-hidden="true">*</span>
@@ -88,10 +88,10 @@ export default function SignupForm() {
                         <div id={fields.password.errorId} className="label text-error">
                             {fields.password.errors}
                         </div>
-                    </fieldset>
+                    </div>
 
                     {/* Confirm password */}
-                    <fieldset className="fieldset">
+                    <div className="fieldset">
                         <label className="fieldset-legend inline-block" htmlFor={fields.confirmPassword.id}>
                             <Trans i18nKey="signup.confirmPasswordLabel">
                                 Confirm Password <span aria-hidden="true">*</span>
@@ -106,7 +106,7 @@ export default function SignupForm() {
                         <div id={fields.confirmPassword.errorId} className="label text-error">
                             {fields.confirmPassword.errors}
                         </div>
-                    </fieldset>
+                    </div>
 
                     {/* submit button */}
                     <div className="mt-5">
