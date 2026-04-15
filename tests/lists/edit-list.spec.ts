@@ -11,14 +11,14 @@ test("Authenticated users can update lists", async ({ page, testUser }) => {
     await createList(page);
 
     // navigate to edit list
-    await page.getByRole("link", { name: /Modifier la liste/i }).click();
+    await page.getByRole("link", { name: /Edit/i }).click();
     await page.waitForURL(/\/edit-list\/.+/);
 
     // update list
-    const titleInput = page.getByLabel("Titre*");
+    const titleInput = page.getByLabel("List name");
     await expect(titleInput).toBeVisible();
     await fillInput(titleInput, "Updated Playwright List");
-    await page.getByRole("button", { name: /Modifier la liste/i }).click();
+    await page.getByRole("button", { name: /Update the list/i }).click();
 
     //Expects the list name is updated
     const ListItem = page.getByText("Updated Playwright List");

@@ -62,7 +62,7 @@ export default function AddListForm() {
                 {/* submit and cancel buttons */}
                 <div className="mt-5 flex justify-end gap-4 md:justify-start">
                     <Button type="submit" className="btn-primary">
-                        <Trans i18nKey="createListForm.submitButton">Create List</Trans>
+                        <Trans i18nKey="createListForm.submitButton">Create a list</Trans>
                     </Button>
                     <Link to="/">
                         <Button className="btn-outline btn-secondary">

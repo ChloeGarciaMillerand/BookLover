@@ -173,7 +173,7 @@ export default function AddBookForm({ genres }: GenreProps) {
                     {/* submit and cancel buttons */}
                     <div className="mt-5 flex flex-row justify-start gap-4">
                         <Button type="submit" className="btn-primary">
-                            <Trans i18nKey="addBookForm.submitButton">Add Book</Trans>
+                            <Trans i18nKey="addBookForm.submitButton">Add a book</Trans>
                         </Button>
 
                         <Link to={`/list/${id}`}>
