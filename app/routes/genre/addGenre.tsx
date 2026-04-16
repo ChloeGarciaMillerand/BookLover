@@ -1,4 +1,6 @@
 import { data, redirect, useFetcher } from "react-router";
+import { Trans } from "react-i18next";
+import { getInstance } from "~/middlewares/i18next";
 import { useEffect } from "react";
 
 import type { Route } from "./+types/addGenre";
@@ -30,12 +32,16 @@ export async function action({ request, context }: Route.ActionArgs) {
     // error handling
     const errors: Errors = {};
 
+    //translation
+    const i18n = getInstance(context);
+    const t = i18n.t;
+
     if (!name) {
-        errors.name = "Le nom du genre est requis";
+        errors.name = t("addGenre.nameErrorMessage");
     }
 
     if (!color) {
-        errors.color = "Une couleur est requise";
+        errors.color = t("addGenre.colorErrorMessage");
     }
 
     if (Object.keys(errors).length > 0) {
@@ -47,7 +53,7 @@ export async function action({ request, context }: Route.ActionArgs) {
         return data({ genre }, { status: 201 });
     } catch (error) {
         console.error(error);
-        return data({ errors: { form: "Erreur lors de la création du genre" } }, { status: 500 });
+        return data({ errors: { form: t("addGenre.errorMessage") } }, { status: 500 });
     }
 }
 
@@ -66,25 +72,31 @@ export function AddGenreModal({ onClose }: { onClose: () => void }) {
     return (
         <dialog open className="modal modal-bottom sm:modal-middle">
             <div className="modal-box">
-                <h3 className="font-bold text-lg">Ajouter un genre</h3>
+                <h3 className="font-bold text-lg">
+                    <Trans i18nKey="addGenre.addGenreTitle">Add a genre</Trans>
+                </h3>
 
                 <fetcher.Form method="POST" action="/add-genre">
                     <fieldset className="fieldset">
-                        <label htmlFor="name">Nom</label>
+                        <label htmlFor="name">
+                            <Trans i18nKey="addGenre.nameLabel">Name</Trans>
+                        </label>
                         <input id="name" name="name" className="input" />
                     </fieldset>
 
                     <fieldset className="fieldset">
-                        <label htmlFor="color">Couleur</label>
+                        <label htmlFor="color">
+                            <Trans i18nKey="addGenre.colorLabel">Color</Trans>
+                        </label>
                         <input id="color" name="color" type="color" />
                     </fieldset>
 
                     <div className="flex justify-end gap-2 mt-4">
                         <Button type="button" onClick={onClose}>
-                            Annuler
+                            <Trans i18nKey="addGenre.cancelButton">Cancel</Trans>
                         </Button>
                         <Button type="submit" className="btn-primary">
-                            Créer
+                            <Trans i18nKey="addGenre.submitButton">Create</Trans>
                         </Button>
                     </div>
                 </fetcher.Form>

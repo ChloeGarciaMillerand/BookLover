@@ -1,4 +1,5 @@
 import { Link, useFetcher } from "react-router";
+import { Trans, useTranslation } from "react-i18next";
 
 import { Pen, Trash } from "lucide-react";
 
@@ -11,6 +12,7 @@ type HomePageListCardProps = {
 };
 
 export default function HomePageListCard({ list }: HomePageListCardProps) {
+    const { t } = useTranslation();
     let fetcher = useFetcher();
 
     return (
@@ -25,12 +27,14 @@ export default function HomePageListCard({ list }: HomePageListCardProps) {
                         {/* EDIT LIST */}
                         <Link
                             to={`edit-list/${list.id}`}
-                            aria-label="Modifier la liste"
-                            title="Modifier la liste"
+                            aria-label={t("home.editListButtonAria")}
+                            title={t("home.editListButtonAria")}
                             className="hover:text-info flex flex-row gap-1"
                         >
                             <Pen size={18} aria-hidden="true" />
-                            <p>Modifier</p>
+                            <p>
+                                <Trans i18nKey="home.editListButton">Edit</Trans>
+                            </p>
                         </Link>
 
                         {/* DELETE LIST */}
@@ -38,19 +42,21 @@ export default function HomePageListCard({ list }: HomePageListCardProps) {
                             method="post"
                             action={`/delete-list/${list.id}`}
                             onSubmit={(e) => {
-                                if (!confirm(`Supprimer la liste "${list.name}" et les livres qu'elle contient?`)) {
+                                if (!confirm(t("home.deleteListConfirm", { name: list.name }))) {
                                     e.preventDefault();
                                 }
                             }}
                         >
                             <button
                                 type="submit"
-                                title="Supprimer la liste"
+                                title={t("home.deleteListButtonAria")}
                                 className="cursor-pointer hover:text-error flex flex-row gap-1"
-                                aria-label="supprimer la liste"
+                                aria-label={t("home.deleteListButtonAria")}
                             >
                                 <Trash size={18} aria-hidden="true" />
-                                <p>Supprimer</p>
+                                <p>
+                                    <Trans i18nKey="home.deleteListButton">Delete</Trans>
+                                </p>
                             </button>
                         </fetcher.Form>
                     </div>

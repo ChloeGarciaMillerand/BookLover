@@ -25,7 +25,7 @@ test("Authenticated users can delete books", async ({ page, testUser }) => {
     });
 
     // delete book
-    await page.getByRole("button", { name: /Supprimer le livre/i }).click();
+    await page.getByRole("button", { name: /Delete the book/i }).click();
 
     //Expects the list doesn't exist anymore
     await expect(page.getByRole("heading", { name: /Test title/i })).toHaveCount(0);

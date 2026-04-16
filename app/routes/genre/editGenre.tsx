@@ -1,5 +1,7 @@
 import { data, redirect, useLoaderData } from "react-router";
 import { parseWithZod } from "@conform-to/zod/v4";
+import { getInstance } from "~/middlewares/i18next";
+import { Trans, useTranslation } from "react-i18next";
 
 import { getSupabase } from "~/db/client";
 
@@ -9,7 +11,7 @@ import { getOneGenre, updateGenre } from "~/db/genre";
 import { commitSession, getSession } from "~/services/sessions.server";
 
 import EditGenreForm from "~/components/genre/editGenreForm";
-import { schema } from "~/components/genre/editGenreForm";
+import { createSchema } from "~/components/genre/editGenreForm";
 
 import { authMiddleware } from "~/middlewares/authMiddleware";
 
@@ -31,7 +33,7 @@ export async function loader({ params, request }: Route.LoaderArgs) {
 }
 
 //update genre
-export async function action({ request, params }: Route.ActionArgs) {
+export async function action({ request, params, context }: Route.ActionArgs) {
     const { supabase } = getSupabase(request);
     const session = await getSession(request.headers.get("Cookie"));
 
@@ -49,6 +51,8 @@ export async function action({ request, params }: Route.ActionArgs) {
     const formData = await request.formData();
 
     // Parse object
+    const i18n = getInstance(context);
+    const schema = createSchema(i18n.t);
     const submission = parseWithZod(formData, { schema });
 
     // Report the submission to client if it is not successful
@@ -56,12 +60,14 @@ export async function action({ request, params }: Route.ActionArgs) {
         return data(submission.reply());
     }
 
+    const t = i18n.t;
+
     // update genre in database
     try {
         await updateGenre(supabase, { genreId: id, name: submission.value.name, color: submission.value.color });
 
         //success message
-        session.flash("success", "Genre mis à jour avec succès");
+        session.flash("success", t("editGenre.successMessage"));
 
         // Redirect after success
         return redirect(`/genres`, {
@@ -70,22 +76,27 @@ export async function action({ request, params }: Route.ActionArgs) {
             },
         });
     } catch {
-        return data({ errors: { form: "Erreur lors de la modification du genre" } }, { status: 500 });
+        return data({ errors: { form: t("editGenre.errorMessage") } }, { status: 500 });
     }
 }
 
 export default function editGenre() {
+    const { t } = useTranslation();
     const { genre } = useLoaderData();
     return (
         <div className="m-auto w-4/5 md:w-2/5 mt-4">
             {/* Meta*/}
-            <title>BookLover - Modifier un genre</title>
-            <meta name="description" content="Modifier un genre pour organiser vos listes de lectures BookLover" />
-            <meta property="og:title" content="BookLover - Modifier un genre" />
-            <meta property="og:description" content="L'application qui facilite vos lectures" />
+            <title>{t("meta.editGenre.title")}</title>
+            <meta name="description" content={t("meta.editGenre.description")} />
+            <meta property="og:title" content={t("meta.editGenre.title")} />
+            <meta property="og:description" content={t("meta.editGenre.description")} />
 
             {/* Content */}
-            <h1 className="h1">Modifier le genre {genre.name}</h1>
+            <h1 className="h1">
+                <Trans i18nKey="editGenre.title" values={{ name: genre.name }}>
+                    Update the "{genre.name}" genre
+                </Trans>
+            </h1>
             <EditGenreForm genre={genre} />
         </div>
     );

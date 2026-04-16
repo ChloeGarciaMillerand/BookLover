@@ -1,4 +1,5 @@
 import { redirect, data } from "react-router";
+import { getInstance } from "~/middlewares/i18next";
 
 import { getSupabase } from "~/db/client";
 
@@ -13,7 +14,7 @@ import { authMiddleware } from "~/middlewares/authMiddleware";
 
 export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
 
-export async function action({ params, request }: Route.ActionArgs) {
+export async function action({ params, request, context }: Route.ActionArgs) {
     const { supabase } = getSupabase(request);
     const session = await getSession(request.headers.get("Cookie"));
 
@@ -27,6 +28,10 @@ export async function action({ params, request }: Route.ActionArgs) {
         });
     }
 
+    //translation
+    const i18n = getInstance(context);
+    const t = i18n.t;
+
     try {
         // get books id
         const bookIds = await getBooksIdsInList(supabase, { listId });
@@ -37,10 +42,10 @@ export async function action({ params, request }: Route.ActionArgs) {
         // delete list
         await removeList(supabase, { listId });
         //success message
-        session.flash("success", "Liste supprimée avec succès!");
+        session.flash("success", t("deleteList.successMessage"));
     } catch (error) {
         console.error(error);
-        return data({ errors: { form: "Erreur lors de la suppression de la liste" } }, { status: 500 });
+        return data({ errors: { form: t("deleteList.errorMessage") } }, { status: 500 });
     }
 
     return redirect("/", {

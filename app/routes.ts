@@ -2,6 +2,10 @@ import { type RouteConfig, index, route } from "@react-router/dev/routes";
 
 export default [
     // PUBLIC ROUTE
+    // TRANSLATION
+    route("locales/:lng/:ns", "routes/locales.ts"),
+    route("set-locale", "routes/setLocale.tsx"),
+
     // LANDING
     route("landing", "routes/landing.tsx"),
 
@@ -31,4 +35,7 @@ export default [
     route("genres", "routes/genre/genres.tsx"),
     route("genres/edit-genre/:id", "routes/genre/editGenre.tsx"),
     route("delete-genre/:id", "routes/genre/deleteGenre.tsx"),
+
+    //CATCH ALL 404
+    route("*", "./routes/notFound.tsx"),
 ] satisfies RouteConfig;

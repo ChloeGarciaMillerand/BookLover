@@ -1,4 +1,5 @@
-import { NavLink, Form, Link } from "react-router";
+import { NavLink, Form, Link, useFetcher } from "react-router";
+import { Trans, useTranslation } from "react-i18next";
 
 import logoLight from "~/assets/icons/logo-light.svg";
 import logoDark from "~/assets/icons/logo-dark.svg";
@@ -9,6 +10,21 @@ type HeaderProps = {
 };
 
 export default function Header({ user }: HeaderProps) {
+    const { i18n } = useTranslation();
+    const fetcher = useFetcher();
+
+    const currentLang = i18n.language?.split("-")[0] || "en";
+
+    const changeLanguage = (lng: string) => {
+        i18n.changeLanguage(lng);
+
+        // Update the cookie on the server
+        fetcher.submit(
+            { lng },
+            { method: "post", action: "/set-locale" }, // update this to your route that sets the locale cookie
+        );
+    };
+
     return (
         <header className="m-auto w-90/100 md:w-85/100 lg:w-75/100 ">
             <div className="navbar w-full bg-base-100">
@@ -46,12 +62,12 @@ export default function Header({ user }: HeaderProps) {
                                     <>
                                         <li className="text-right">
                                             <NavLink to="/" className="nav-links block truncate">
-                                                Mes listes
+                                                <Trans i18nKey="header.listsLink">My Lists</Trans>
                                             </NavLink>
                                         </li>
                                         <li className="text-right">
                                             <NavLink to="/genres" className="nav-links block truncate">
-                                                Genres
+                                                <Trans i18nKey="header.genresLink">Genres</Trans>
                                             </NavLink>
                                         </li>
                                         <li>
@@ -60,7 +76,7 @@ export default function Header({ user }: HeaderProps) {
                                                     type="submit"
                                                     className="nav-links block truncate w-full text-right cursor-pointer"
                                                 >
-                                                    Se déconnecter
+                                                    <Trans i18nKey="header.logoutButton">Logout</Trans>
                                                 </button>
                                             </Form>
                                         </li>
@@ -70,14 +86,24 @@ export default function Header({ user }: HeaderProps) {
                         ) : (
                             <div className="hidden md:flex flex-row gap-4">
                                 <Link to="/signin" className="btn btn-outline btn-secondary mt-5">
-                                    Se connecter
+                                    <Trans i18nKey="buttons.signinButton">Sign In</Trans>
                                 </Link>
                                 <Link to="/signup" className="btn btn-primary mt-5">
-                                    Créer un compte
+                                    <Trans i18nKey="buttons.signupButton">Sign Up</Trans>
                                 </Link>
                             </div>
                         )}
                     </div>
+
+                    {/* Language selector */}
+                    <select
+                        value={currentLang}
+                        onChange={(e) => changeLanguage(e.target.value)}
+                        className="select select-secondary select-sm w-auto min-w-0 mt-5 ml-4"
+                    >
+                        <option value="en">EN</option>
+                        <option value="fr">FR</option>
+                    </select>
                 </div>
             </div>
         </header>

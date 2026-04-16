@@ -1,4 +1,5 @@
 import { redirect, data } from "react-router";
+import { getInstance } from "~/middlewares/i18next";
 
 import { getSupabase } from "~/db/client";
 
@@ -11,7 +12,7 @@ import { authMiddleware } from "~/middlewares/authMiddleware";
 
 export const middleware: Route.MiddlewareFunction[] = [authMiddleware];
 
-export async function action({ params, request }: Route.ActionArgs) {
+export async function action({ params, request, context }: Route.ActionArgs) {
     const { supabase } = getSupabase(request);
     const session = await getSession(request.headers.get("Cookie"));
 
@@ -26,14 +27,18 @@ export async function action({ params, request }: Route.ActionArgs) {
         });
     }
 
+    //translation
+    const i18n = getInstance(context);
+    const t = i18n.t;
+
     try {
         //delete genre
         await deleteGenre(supabase, { genreId: id });
         //success message
-        session.flash("success", "Genre supprimé avec succès!");
+        session.flash("success", t("deleteGenre.successMessage"));
     } catch (error) {
         console.error(error);
-        return data({ errors: { form: "Erreur lors de la suppression du genre" } }, { status: 500 });
+        return data({ errors: { form: t("deleteGenre.errorMessage") } }, { status: 500 });
     }
 
     return redirect(`/genres`, {

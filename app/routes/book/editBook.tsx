@@ -1,5 +1,7 @@
 import { data, redirect, useLoaderData } from "react-router";
 import { parseWithZod } from "@conform-to/zod/v4";
+import { getInstance } from "~/middlewares/i18next";
+import { Trans, useTranslation } from "react-i18next";
 
 import { getSupabase } from "~/db/client";
 
@@ -12,7 +14,7 @@ import { getAllGenres } from "~/db/genre";
 import { commitSession, getSession } from "~/services/sessions.server";
 
 import EditBookForm from "~/components/book/editBookForm";
-import { schema } from "~/components/book/editBookForm";
+import { createSchema } from "~/components/book/editBookForm";
 
 import { authMiddleware, getCurrentUser } from "~/middlewares/authMiddleware";
 
@@ -41,7 +43,7 @@ export async function loader({ params, request, context }: Route.LoaderArgs) {
 }
 
 // update book
-export async function action({ request, params }: Route.ActionArgs) {
+export async function action({ request, params, context }: Route.ActionArgs) {
     const { supabase } = getSupabase(request);
     const session = await getSession(request.headers.get("Cookie"));
 
@@ -59,6 +61,8 @@ export async function action({ request, params }: Route.ActionArgs) {
     const formData = await request.formData();
 
     // Parse object
+    const i18n = getInstance(context);
+    const schema = createSchema(i18n.t);
     const submission = parseWithZod(formData, { schema });
 
     // Report the submission to client if it is not successful
@@ -68,6 +72,8 @@ export async function action({ request, params }: Route.ActionArgs) {
 
     // updating book in database
     const { title, genre_id, list_id, author, editor, library_code, comment, ISBN } = submission.value;
+
+    const t = i18n.t;
 
     try {
         // update book in database
@@ -89,7 +95,7 @@ export async function action({ request, params }: Route.ActionArgs) {
         });
 
         //success message
-        session.flash("success", "Livre modifié avec succès!");
+        session.flash("success", t("editBook.successMessage"));
 
         // Redirect after success
         return redirect(`/list/${list_id}`, {
@@ -98,22 +104,27 @@ export async function action({ request, params }: Route.ActionArgs) {
             },
         });
     } catch {
-        return data({ errors: { form: "Erreur lors de la modification du livre" } }, { status: 500 });
+        return data({ errors: { form: t("editBook.errorMessage") } }, { status: 500 });
     }
 }
 
 export default function editBook() {
+    const { t } = useTranslation();
     const { book, genres, lists, currentListId } = useLoaderData();
     return (
         <div className="m-auto w-4/5 md:w-2/5 mt-4">
             {/* Meta*/}
-            <title>BookLover - Modifier un livre</title>
-            <meta name="description" content="Modifier un livre de votre liste de lecture BookLover" />
-            <meta property="og:title" content="BookLover - Modifier un livre" />
-            <meta property="og:description" content="L'application qui facilite vos lectures" />
+            <title>{t("meta.editBook.description")}</title>
+            <meta name="description" content={t("meta.editBook.description")} />
+            <meta property="og:title" content={t("meta.editBook.title")} />
+            <meta property="og:description" content={t("meta.editBook.description")} />
 
             {/* Content */}
-            <h1 className="h1">Modifier le livre {book.title}</h1>
+            <h1 className="h1">
+                <Trans i18nKey="editBook.title" values={{ title: book.book.title }}>
+                    Edit "{book.book.title}" book
+                </Trans>
+            </h1>
             <EditBookForm genres={genres} book={book.book} lists={lists} currentListId={currentListId} />
         </div>
     );

@@ -1,5 +1,7 @@
 import { data, redirect } from "react-router";
 import { parseWithZod } from "@conform-to/zod/v4";
+import { getInstance } from "~/middlewares/i18next";
+import { Trans, useTranslation } from "react-i18next";
 
 import { getSupabase } from "~/db/client";
 
@@ -9,7 +11,7 @@ import { getAllGenres } from "~/db/genre";
 import { commitSession, getSession } from "~/services/sessions.server";
 
 import AddBookForm from "~/components/book/addBookForm";
-import { schema } from "~/components/book/addBookForm";
+import { createSchema } from "~/components/book/addBookForm";
 
 import { authMiddleware, getCurrentUser } from "~/middlewares/authMiddleware";
 
@@ -30,7 +32,7 @@ export async function loader(params: Route.LoaderArgs) {
 }
 
 // add new book in database
-export async function action({ params, request }: Route.ActionArgs) {
+export async function action({ params, request, context }: Route.ActionArgs) {
     const { supabase } = getSupabase(request);
     const session = await getSession(request.headers.get("Cookie"));
 
@@ -47,7 +49,10 @@ export async function action({ params, request }: Route.ActionArgs) {
     const formData = await request.formData();
 
     // Parse object
+    const i18n = getInstance(context);
+    const schema = createSchema(i18n.t);
     const submission = parseWithZod(formData, { schema });
+    const t = i18n.t;
 
     // Report the submission to client if it is not successful
     if (submission.status !== "success") {
@@ -66,11 +71,11 @@ export async function action({ params, request }: Route.ActionArgs) {
     });
 
     //success message
-    session.flash("success", "Livre ajouté avec succès!");
+    session.flash("success", t("addBook.successMessage"));
 
     if (error) {
         console.error("Erreur RPC create_book:", error);
-        return data({ errors: { form: "Erreur lors de la création du livre" } }, { status: 500 });
+        return data({ errors: { form: t("addBook.errorMessage") } }, { status: 500 });
     }
 
     // Redirect after success
@@ -82,18 +87,21 @@ export async function action({ params, request }: Route.ActionArgs) {
 }
 
 export default function addBook(props: Route.ComponentProps) {
+    const { t } = useTranslation();
     const { genres } = props.loaderData;
 
     return (
         <div className="m-auto w-4/5 md:w-2/5 mt-4">
             {/* Meta*/}
-            <title>BookLover - Ajouter un livre</title>
-            <meta name="description" content="Ajouter un nouveau livre à votre liste de lecture BookLover" />
-            <meta property="og:title" content="BookLover - Ajouter un livre" />
-            <meta property="og:description" content="L'application qui facilite vos lectures" />
+            <title>{t("meta.addBook.title")}</title>
+            <meta name="description" content={t("meta.addBook.description")} />
+            <meta property="og:title" content={t("meta.addBook.title")} />
+            <meta property="og:description" content={t("meta.addBook.description")} />
 
             {/* Content */}
-            <h1 className="h1">Ajouter un livre</h1>
+            <h1 className="h1">
+                <Trans i18nKey="addBook.title">Add a book</Trans>
+            </h1>
 
             <AddBookForm genres={genres} />
         </div>

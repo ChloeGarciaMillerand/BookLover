@@ -1,4 +1,6 @@
 import { Link, useFetcher } from "react-router";
+import { Trans, useTranslation } from "react-i18next";
+
 import { Pen, Trash } from "lucide-react";
 
 import type { Book, List } from "~/types";
@@ -11,6 +13,7 @@ type BookProps = {
 };
 
 export default function BookCard({ book, list }: BookProps) {
+    const { t } = useTranslation();
     let fetcher = useFetcher();
 
     return (
@@ -23,12 +26,14 @@ export default function BookCard({ book, list }: BookProps) {
                         {/* EDIT BOOK */}
                         <Link
                             to={`edit-book/${book.id}`}
-                            aria-label="Modifier le livre"
-                            title="Modifier le livre"
+                            aria-label={t("list.editBookButtonAria")}
+                            title={t("list.editBookButtonAria")}
                             className="hover:text-info flex flex-row gap-1"
                         >
                             <Pen size={18} aria-hidden="true" />
-                            <p>Modifier</p>
+                            <p>
+                                <Trans i18nKey="list.editBookButton">Edit</Trans>
+                            </p>
                         </Link>
 
                         {/* DELETE BOOK */}
@@ -36,19 +41,21 @@ export default function BookCard({ book, list }: BookProps) {
                             method="post"
                             action={`/list/${list.id}/delete-book/${book.id}`}
                             onSubmit={(e) => {
-                                if (!confirm(`Supprimer le livre "${book.title}" ?`)) {
+                                if (!confirm(t("list.deleteBookConfirm", { name: book.title }))) {
                                     e.preventDefault();
                                 }
                             }}
                         >
                             <button
                                 type="submit"
-                                title="Supprimer le livre"
+                                title={t("list.deleteBookButtonAria")}
                                 className="cursor-pointer hover:text-error flex flex-row gap-1"
-                                aria-label="supprimer le livre"
+                                aria-label={t("list.deleteBookButtonAria")}
                             >
                                 <Trash size={18} aria-hidden="true" />
-                                <p>Supprimer</p>
+                                <p>
+                                    <Trans i18nKey="list.deleteBookButton">Delete</Trans>
+                                </p>
                             </button>
                         </fetcher.Form>
                     </div>
@@ -56,15 +63,45 @@ export default function BookCard({ book, list }: BookProps) {
 
                 {book.genre && <Genre book={book} />}
 
-                {book.author && <span className="font-semibold">Auteur: {book.author}</span>}
+                {book.author && (
+                    <span className="font-semibold">
+                        <Trans i18nKey="list.bookAuthor" values={{ author: book.author }}>
+                            Author: {book.author}
+                        </Trans>
+                    </span>
+                )}
 
-                {book.editor && <span>Editeur: {book.editor}</span>}
+                {book.editor && (
+                    <span>
+                        <Trans i18nKey="list.bookEditor" values={{ editor: book.editor }}>
+                            Editor: {book.editor}
+                        </Trans>
+                    </span>
+                )}
 
-                {book.library_code && <span>Cote bibliothèque: {book.library_code}</span>}
+                {book.library_code && (
+                    <span>
+                        <Trans i18nKey="list.libraryCode" values={{ code: book.library_code }}>
+                            Library code: {book.library_code}
+                        </Trans>
+                    </span>
+                )}
 
-                {book.comment && <span>Commentaire: {book.comment}</span>}
+                {book.comment && (
+                    <span>
+                        <Trans i18nKey="list.comment" values={{ comment: book.comment }}>
+                            Comment: {book.comment}
+                        </Trans>
+                    </span>
+                )}
 
-                {book.ISBN && <span>ISBN: {book.ISBN}</span>}
+                {book.ISBN && (
+                    <span>
+                        <Trans i18nKey="list.ISBN" values={{ ISBN: book.ISBN }}>
+                            ISBN: {book.ISBN}
+                        </Trans>
+                    </span>
+                )}
             </div>
         </div>
     );

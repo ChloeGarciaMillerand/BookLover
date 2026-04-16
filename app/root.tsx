@@ -1,18 +1,25 @@
-import { data, isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
+import { data, isRouteErrorResponse, Links, Outlet, Scripts, ScrollRestoration } from "react-router";
 
 import { getSupabase } from "~/db/client";
 import { commitSession, getSession } from "./services/sessions.server";
 
 import type { Route } from "./+types/root";
+import { getLocale, i18nextMiddleware, localeCookie } from "~/middlewares/i18next";
+import { useTranslation } from "react-i18next";
+
 import "./app.css";
 
 import Footer from "./components/shared/footer";
 import Header from "./components/shared/header";
 import { useEffect, useState } from "react";
 
-export async function loader({ request }: Route.LoaderArgs) {
+export const middleware = [i18nextMiddleware];
+
+export async function loader({ request, context }: Route.LoaderArgs) {
     const { supabase } = getSupabase(request);
     const session = await getSession(request.headers.get("Cookie"));
+
+    let locale = getLocale(context);
 
     // user
     const {
@@ -20,7 +27,7 @@ export async function loader({ request }: Route.LoaderArgs) {
     } = await supabase.auth.getUser();
 
     if (user == null) {
-        return { user: null, flash: null };
+        return { user: null, flash: null, locale };
     }
 
     //flash messages
@@ -31,10 +38,11 @@ export async function loader({ request }: Route.LoaderArgs) {
         {
             user: { id: user.id, email: user.email },
             flash: { success, error },
+            locale, // locale is needed in the root loader to be set in the cookie and used in the i18next middleware
         },
         {
             headers: {
-                "Set-Cookie": await commitSession(session),
+                "Set-Cookie": [await commitSession(session), await localeCookie.serialize(locale)].join("; "),
             },
         },
     );
@@ -54,13 +62,13 @@ export const links: Route.LinksFunction = () => [
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
+    let { i18n } = useTranslation();
     return (
-        <html lang="fr">
+        <html lang={i18n.language} dir={i18n.dir(i18n.language)}>
             <head>
                 <meta charSet="utf-8" />
                 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <Meta />
                 <Links />
             </head>
             <body className="min-h-screen flex flex-col  min-w-[320px]">
@@ -73,7 +81,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App(props: Route.ComponentProps) {
-    const { user, flash } = props.loaderData;
+    const { user, flash, locale } = props.loaderData;
+    let { i18n } = useTranslation();
+
+    useEffect(() => {
+        if (i18n.language !== locale) i18n.changeLanguage(locale);
+    }, [locale, i18n]);
     return (
         <>
             <Header user={user} />

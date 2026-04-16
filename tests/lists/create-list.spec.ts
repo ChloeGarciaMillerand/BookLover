@@ -7,11 +7,11 @@ test("Authenticated users can create lists", async ({ page, testUser }) => {
     await signin(page, testUser.email, testUser.password);
 
     // check heading
-    const heading = page.getByRole("heading", { level: 1, name: /Mes listes/i });
+    const heading = page.getByRole("heading", { level: 1, name: /My Lists/i });
     await expect(heading).toBeVisible();
 
     // check button
-    const button = page.getByRole("button", { name: /Créer une liste/i });
+    const button = page.getByRole("button", { name: /Create a list/i });
     await expect(button).toBeVisible();
 
     // create a list

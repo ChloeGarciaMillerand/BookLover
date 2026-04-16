@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Form, Link, useActionData } from "react-router";
+import type { TFunction } from "i18next";
+import { Trans, useTranslation } from "react-i18next";
 import { getFormProps, getInputProps, getSelectProps, getTextareaProps, useForm } from "@conform-to/react";
 import { getZodConstraint, parseWithZod } from "@conform-to/zod/v4";
 import * as z from "zod";
@@ -16,18 +18,24 @@ type BookProps = {
     currentListId: string | null;
 };
 
-export const schema = z.object({
-    title: z.string({ message: "Le nom du livre est requis" }).min(1),
-    list_id: z.string({ message: "Veuillez sélectionner une liste" }),
-    genre_id: z.optional(z.string()),
-    author: z.optional(z.string()),
-    editor: z.optional(z.string()),
-    library_code: z.optional(z.string()),
-    comment: z.optional(z.string()),
-    ISBN: z.optional(z.string()),
-});
+export const createSchema = (t: TFunction) =>
+    z.object({
+        title: z.string({ message: t("editBookForm.titleErrorMessage") }).min(1),
+        list_id: z.string({ message: t("editBookForm.listErrorMessage") }),
+        genre_id: z.optional(z.string()),
+        author: z.optional(z.string()),
+        editor: z.optional(z.string()),
+        library_code: z.optional(z.string()),
+        comment: z.optional(z.string()),
+        ISBN: z.optional(z.string()),
+    });
 
 export default function EditBookForm({ book, genres, lists, currentListId }: BookProps) {
+    //translation
+    const { t } = useTranslation();
+    const schema = createSchema(t);
+
+    // validation data from last submit (server or client side)
     const lastResult = useActionData();
 
     // build HTML constraints from Zod schema
@@ -67,7 +75,7 @@ export default function EditBookForm({ book, genres, lists, currentListId }: Boo
                     {/* Title */}
                     <div className="fieldset">
                         <label className="fieldset-legend" htmlFor={fields.title.id}>
-                            Titre*
+                            <Trans i18nKey="editBookForm.titleLabel">Title</Trans>
                         </label>
                         <input className="input" {...getInputProps(fields.title, { type: "text" })} />
                         <div id={fields.title.errorId} className="label">
@@ -78,10 +86,12 @@ export default function EditBookForm({ book, genres, lists, currentListId }: Boo
                     {/* Select list */}
                     <div className="fieldset">
                         <label className="fieldset-legend" htmlFor={fields.list_id.id}>
-                            Liste
+                            <Trans i18nKey="editBookForm.listLabel">List</Trans>
                         </label>
                         <select className="select" {...getSelectProps(fields.list_id)}>
-                            <option disabled={true}>Choisir une liste</option>
+                            <option disabled={true}>
+                                <Trans i18nKey="editBookForm.chooseListOption">Choose a list</Trans>
+                            </option>
                             {lists.map((list: List) => (
                                 <option key={list.id} value={list.id}>
                                     {list.name}
@@ -93,10 +103,12 @@ export default function EditBookForm({ book, genres, lists, currentListId }: Boo
                     {/* Select genre */}
                     <div className="fieldset">
                         <label className="fieldset-legend" htmlFor={fields.genre_id.id}>
-                            Genre
+                            <Trans i18nKey="editBookForm.genreLabel">Genre</Trans>
                         </label>
                         <select className="select" {...getSelectProps(fields.genre_id)}>
-                            <option disabled={true}>Choisir un genre</option>
+                            <option disabled={true}>
+                                <Trans i18nKey="editBookForm.genreOption">Choose a genre</Trans>
+                            </option>
                             {genres.map((genre) =>
                                 genre ? (
                                     <option key={genre.id} value={genre.id}>
@@ -109,7 +121,7 @@ export default function EditBookForm({ book, genres, lists, currentListId }: Boo
                         {/* Add a genre */}
                         <div className="mt-1 flex justify-start">
                             <Button type="button" className="btn-secondary" onClick={() => setShowModal(true)}>
-                                Ajouter un genre
+                                <Trans i18nKey="editBookForm.addGenreButton">Add a genre</Trans>
                             </Button>
                         </div>
                     </div>
@@ -117,7 +129,7 @@ export default function EditBookForm({ book, genres, lists, currentListId }: Boo
                     {/* Author */}
                     <div className="fieldset">
                         <label className="fieldset-legend" htmlFor={fields.author.id}>
-                            Auteur
+                            <Trans i18nKey="editBookForm.authorLabel">Author</Trans>
                         </label>
                         <input className="input" {...getInputProps(fields.author, { type: "text" })} />
                         <div id={fields.author.errorId} className="label">
@@ -127,8 +139,8 @@ export default function EditBookForm({ book, genres, lists, currentListId }: Boo
 
                     {/* Editor */}
                     <div className="fieldset">
-                        <label className="fieldset" htmlFor={fields.editor.id}>
-                            Editeur
+                        <label className="fieldset-legend" htmlFor={fields.editor.id}>
+                            <Trans i18nKey="editBookForm.editorLabel">Editor</Trans>
                         </label>
                         <input className="input" {...getInputProps(fields.editor, { type: "text" })} />
                         <div id={fields.editor.errorId} className="label">
@@ -139,7 +151,7 @@ export default function EditBookForm({ book, genres, lists, currentListId }: Boo
                     {/* Library code */}
                     <div className="fieldset">
                         <label className="fieldset-legend" htmlFor={fields.library_code.id}>
-                            Cote bibliothèque
+                            <Trans i18nKey="editBookForm.libraryCodeLabel">Library Code</Trans>
                         </label>
                         <input className="input" {...getInputProps(fields.library_code, { type: "text" })} />
                         <div id={fields.library_code.errorId} className="label">
@@ -149,16 +161,16 @@ export default function EditBookForm({ book, genres, lists, currentListId }: Boo
 
                     {/* Comment */}
                     <div className="fieldset">
-                        <label className="fieldset" htmlFor={fields.comment.id}>
-                            Commentaire
+                        <label className="fieldset-legend" htmlFor={fields.comment.id}>
+                            <Trans i18nKey="editBookForm.commentLabel">Comment</Trans>
                         </label>
                         <textarea className="input" {...getTextareaProps(fields.comment)} />
                     </div>
 
                     {/* ISBN */}
                     <div className="fieldset">
-                        <label className="fieldset" htmlFor={fields.ISBN.id}>
-                            ISBN
+                        <label className="fieldset-legend" htmlFor={fields.ISBN.id}>
+                            <Trans i18nKey="editBookForm.ISBNLabel">ISBN</Trans>
                         </label>
                         <input className="input" {...getInputProps(fields.ISBN, { type: "text" })} />
                         <div id={fields.ISBN.errorId} className="label">
@@ -169,11 +181,13 @@ export default function EditBookForm({ book, genres, lists, currentListId }: Boo
                     {/* submit and cancel buttons */}
                     <div className="mt-5 mb-5 flex justify-end gap-4 md:justify-start">
                         <Button type="submit" className="btn-primary">
-                            Modifier le livre
+                            <Trans i18nKey="editBookForm.submitButton">Update the book</Trans>
                         </Button>
 
                         <Link to={`/list/${currentListId}`}>
-                            <Button className="btn-outline btn-secondary">Annuler</Button>
+                            <Button className="btn-outline btn-secondary">
+                                <Trans i18nKey="editBookForm.cancelButton">Cancel</Trans>
+                            </Button>
                         </Link>
                     </div>
                 </div>

@@ -15,7 +15,7 @@ test("Authenticated users can delete lists", async ({ page, testUser }) => {
     });
 
     // delete list
-    await page.getByRole("button", { name: /Supprimer la liste/i }).click();
+    await page.getByRole("button", { name: /Delete/i }).click();
 
     //Expects the list doesn't exist anymore
     await expect(page.getByRole("heading", { name: /Playwright List/i })).toHaveCount(0);
