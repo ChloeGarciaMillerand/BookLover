@@ -1,4 +1,4 @@
-import { NavLink, Form, Link, useFetcher } from "react-router";
+import { NavLink, Link, useFetcher } from "react-router";
 import { Trans, useTranslation } from "react-i18next";
 
 import logoLight from "~/assets/icons/logo-light.svg";
@@ -11,7 +11,7 @@ type HeaderProps = {
 
 export default function Header({ user }: HeaderProps) {
     const { i18n } = useTranslation();
-    const fetcher = useFetcher();
+    const langFetcher = useFetcher();
 
     const currentLang = i18n.language?.split("-")[0] || "en";
 
@@ -19,11 +19,13 @@ export default function Header({ user }: HeaderProps) {
         i18n.changeLanguage(lng);
 
         // Update the cookie on the server
-        fetcher.submit(
+        langFetcher.submit(
             { lng },
             { method: "post", action: "/set-locale" }, // update this to your route that sets the locale cookie
         );
     };
+
+    const logoutFetcher = useFetcher();
 
     return (
         <header className="m-auto w-90/100 md:w-85/100 lg:w-75/100 ">
@@ -71,14 +73,14 @@ export default function Header({ user }: HeaderProps) {
                                             </NavLink>
                                         </li>
                                         <li>
-                                            <Form method="post" action="/signout">
-                                                <button
-                                                    type="submit"
-                                                    className="nav-links block truncate w-full text-right cursor-pointer"
-                                                >
-                                                    <Trans i18nKey="header.logoutButton">Logout</Trans>
-                                                </button>
-                                            </Form>
+                                            <button
+                                                onClick={() =>
+                                                    logoutFetcher.submit(null, { method: "post", action: "/signout" })
+                                                }
+                                                className="nav-links block truncate w-full text-right cursor-pointer"
+                                            >
+                                                <Trans i18nKey="header.logoutButton">Logout</Trans>
+                                            </button>
                                         </li>
                                     </>
                                 </ul>
