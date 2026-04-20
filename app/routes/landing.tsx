@@ -1,8 +1,6 @@
 import { useEffect } from "react";
-import { Link, useLoaderData } from "react-router";
-import { Trans } from "react-i18next";
-
-import type { Route } from "./+types/landing";
+import { Link } from "react-router";
+import { Trans, useTranslation } from "react-i18next";
 
 import landingBooks from "~/assets/images/landing_books.svg";
 import landingTablet from "~/assets/images/landing_tablet.webp";
@@ -10,15 +8,9 @@ import landingGenres from "~/assets/images/landing_genres.svg";
 import landingLine from "~/assets/images/landing_line.svg";
 import landingLibrary from "~/assets/images/landing_library.webp";
 
-import { getInstance } from "~/middlewares/i18next";
-
-export async function loader({ context }: Route.LoaderArgs) {
-    let i18next = getInstance(context);
-    return { title: i18next.t("meta.landing.title"), description: i18next.t("meta.landing.description") };
-}
-
 export default function landing() {
-    const { title, description } = useLoaderData();
+    const { t } = useTranslation();
+
     // set theme to light on landing page
     useEffect(() => {
         const root = document.documentElement;
@@ -34,10 +26,10 @@ export default function landing() {
     return (
         <div className="mx-auto w-90/100 md:w-85/100 lg:w-75/100">
             {/* Meta*/}
-            <title>{title}</title>
-            <meta name="description" content={description} />
-            <meta property="og:title" content={title} />
-            <meta property="og:description" content={description} />
+            <title>{t("meta.landing.title")}</title>
+            <meta name="description" content={t("meta.landing.description")} />
+            <meta property="og:title" content={t("meta.landing.title")} />
+            <meta property="og:description" content={t("meta.landing.description")} />
 
             {/* Content */}
             {/* Home */}
