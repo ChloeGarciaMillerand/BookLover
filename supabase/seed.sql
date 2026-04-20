@@ -8,20 +8,29 @@ SET search_path = public;
 -- GENRES --
 insert into genre_templates (name, color)
 VALUES
-('Thriller', '#1e1e1e'),
-('Cosy crime', '#1e1e1e'),
+('Thriller', '#51515c'),
+('Cosy crime', '#51515c'),
 ('Fantasy', '#8817ae'),
-('Roman', '#69fec3'),
-('Roman jeunesse', '#69fec3');
+('Novel', '#5fcfdd'),
+('Children''s', '#69fec3'),
+('Manga', '#59168b'),
+('Comics', '#ff8904'),
+('Theatre', '#ffa1ad'),
+('Poetry', '#5fcfdd'),
+('Essay', '#c4b3ff'),
+('Biography', '#5fcfdd'),
+('Science fiction', '#8817ae'),
+('Historical', '#5fcfdd'),
+('Romance', '#ff627d');
 
 -- BOOKS --
 -- insert into book (title, author, editor, library_code, comment, "ISBN", genre_id)
 -- VALUES
 -- ('Tante Dimity', 'Nancy Atherton', NULL, NULL, 'recommandé par Mathilde', NULL, (SELECT id FROM public.genre WHERE name='Cosy crime')),
 -- ('Keleana', 'Sarah J. Maas', NULL, NULL, 'recommandé par Sophie', NULL, (SELECT id FROM public.genre WHERE name='Fantasy')),
--- ('Le Soleil des Scorta', 'Laurent Gaudé', NULL, NULL, NULL, NULL, (SELECT id FROM public.genre WHERE name='Roman')),
+-- ('Le Soleil des Scorta', 'Laurent Gaudé', NULL, NULL, NULL, NULL, (SELECT id FROM public.genre WHERE name='Novel')),
 -- ('Les Royaumes de Feu', 'Thui-T Sutherton', NULL, NULL, NULL, NULL, (SELECT id FROM public.genre WHERE name='Fantasy')),
--- ('Geronimo Stilton', 'Elisabetta Dami', NULL, NULL, NULL, NULL, (SELECT id FROM public.genre WHERE name='Roman jeunesse'));
+-- ('Geronimo Stilton', 'Elisabetta Dami', NULL, NULL, NULL, NULL, (SELECT id FROM public.genre WHERE name='Children''s'));
 
 -- ORGANIZATIONS --
 -- insert into organization (name)
