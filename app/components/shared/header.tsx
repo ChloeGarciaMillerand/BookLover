@@ -46,7 +46,7 @@ export default function Header({ user }: HeaderProps) {
                                 <button type="button" className="btn btn-ghost btn-circle">
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
-                                        className="h-5 w-5"
+                                        className="h-8 w-8"
                                         fill="none"
                                         viewBox="0 0 24 24"
                                         stroke="currentColor"
@@ -60,15 +60,18 @@ export default function Header({ user }: HeaderProps) {
                                         />{" "}
                                     </svg>
                                 </button>
-                                <ul className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow text-right">
+                                <ul className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
                                     <>
-                                        <li className="text-right">
-                                            <NavLink to="/" className="nav-links block truncate">
+                                        <li>
+                                            <NavLink to="/" className="nav-links block truncate text-right text-sm">
                                                 <Trans i18nKey="header.listsLink">My Lists</Trans>
                                             </NavLink>
                                         </li>
-                                        <li className="text-right">
-                                            <NavLink to="/genres" className="nav-links block truncate">
+                                        <li>
+                                            <NavLink
+                                                to="/genres"
+                                                className="nav-links block truncate text-right text-sm"
+                                            >
                                                 <Trans i18nKey="header.genresLink">Genres</Trans>
                                             </NavLink>
                                         </li>
@@ -77,7 +80,7 @@ export default function Header({ user }: HeaderProps) {
                                                 onClick={() =>
                                                     logoutFetcher.submit(null, { method: "post", action: "/signout" })
                                                 }
-                                                className="nav-links block truncate w-full text-right cursor-pointer"
+                                                className="nav-links block truncate w-full text-right cursor-pointer text-sm"
                                             >
                                                 <Trans i18nKey="header.logoutButton">Logout</Trans>
                                             </button>
@@ -87,10 +90,10 @@ export default function Header({ user }: HeaderProps) {
                             </>
                         ) : (
                             <div className="hidden md:flex flex-row gap-4">
-                                <Link to="/signin" className="btn btn-outline btn-secondary mt-5">
+                                <Link to="/signin" className="btn btn-outline btn-secondary">
                                     <Trans i18nKey="buttons.signinButton">Sign In</Trans>
                                 </Link>
-                                <Link to="/signup" className="btn btn-primary mt-5">
+                                <Link to="/signup" className="btn btn-primary">
                                     <Trans i18nKey="buttons.signupButton">Sign Up</Trans>
                                 </Link>
                             </div>
@@ -101,7 +104,7 @@ export default function Header({ user }: HeaderProps) {
                     <select
                         value={currentLang}
                         onChange={(e) => changeLanguage(e.target.value)}
-                        className="select select-secondary select-sm w-auto min-w-0 mt-5 ml-4"
+                        className="select select-secondary w-auto min-w-0 ml-4"
                     >
                         <option value="en">EN</option>
                         <option value="fr">FR</option>
