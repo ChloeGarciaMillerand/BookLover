@@ -23,13 +23,13 @@ export default function HomePageListCard({ list }: HomePageListCardProps) {
                         <h2 className="card-title hover:text-info">{list.name}</h2>
                     </Link>
 
-                    <div className="flex gap-4">
+                    <div className="flex gap-4 my-2 md:my-0">
                         {/* EDIT LIST */}
                         <Link
                             to={`edit-list/${list.id}`}
                             aria-label={t("home.editListButtonAria")}
                             title={t("home.editListButtonAria")}
-                            className="hover:text-info flex flex-row gap-1"
+                            className="btn btn-sm btn-outline btn-secondary flex items-center gap-2"
                         >
                             <Pen size={18} aria-hidden="true" />
                             <p>
@@ -50,7 +50,7 @@ export default function HomePageListCard({ list }: HomePageListCardProps) {
                             <button
                                 type="submit"
                                 title={t("home.deleteListButtonAria")}
-                                className="cursor-pointer hover:text-error flex flex-row gap-1"
+                                className="btn btn-sm btn-outline btn-accent flex items-center gap-2"
                                 aria-label={t("home.deleteListButtonAria")}
                             >
                                 <Trash size={18} aria-hidden="true" />
@@ -80,7 +80,7 @@ export default function HomePageListCard({ list }: HomePageListCardProps) {
                 <ul>
                     {/* BOOK INFO */}
                     {list.books?.map((book: HomePageBook) => (
-                        <li key={book.id}>
+                        <li key={book.id} className="my-2">
                             <span className="font-semibold">{book.title}</span>
                             {book.genre && (
                                 <span>
