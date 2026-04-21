@@ -71,7 +71,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <Links />
             </head>
-            <body className="min-h-screen flex flex-col  min-w-[320px]">
+            <body className="min-h-[100dvh] flex flex-col  min-w-[320px]">
                 {children}
                 <ScrollRestoration />
                 <Scripts />
