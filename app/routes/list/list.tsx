@@ -73,7 +73,7 @@ export default function ListPage(props: Route.ComponentProps) {
                         to={`/edit-list/${list.id}`}
                         aria-label={t("list.editListAria")}
                         title={t("list.editListAria")}
-                        className="hover:text-info flex flex-row gap-1"
+                        className="btn btn-sm btn-outline btn-ghost flex items-center gap-2 hover:bg-info hover:text-info-content"
                     >
                         <Pen size={18} aria-hidden="true" />
                         <p>
@@ -94,7 +94,7 @@ export default function ListPage(props: Route.ComponentProps) {
                         <button
                             type="submit"
                             title={t("list.deleteListAria")}
-                            className="cursor-pointer hover:text-error flex flex-row gap-1"
+                            className="btn btn-sm btn-outline btn-ghost flex items-center gap-2 hover:bg-accent hover:text-accent-content"
                             aria-label={t("list.deleteListAria")}
                         >
                             <Trash size={18} aria-hidden="true" />

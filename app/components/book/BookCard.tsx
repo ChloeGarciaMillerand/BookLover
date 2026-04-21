@@ -22,13 +22,13 @@ export default function BookCard({ book, list }: BookProps) {
                 <div className="flex flex-col sm:flex-row justify-between">
                     <h2 className="card-title">{book.title}</h2>
 
-                    <div className="flex gap-4">
+                    <div className="flex gap-4 my-2 md:my-0">
                         {/* EDIT BOOK */}
                         <Link
                             to={`edit-book/${book.id}`}
                             aria-label={t("list.editBookButtonAria")}
                             title={t("list.editBookButtonAria")}
-                            className="hover:text-info flex flex-row gap-1"
+                            className="btn btn-sm btn-outline btn-secondary flex items-center gap-2"
                         >
                             <Pen size={18} aria-hidden="true" />
                             <p>
@@ -49,7 +49,7 @@ export default function BookCard({ book, list }: BookProps) {
                             <button
                                 type="submit"
                                 title={t("list.deleteBookButtonAria")}
-                                className="cursor-pointer hover:text-error flex flex-row gap-1"
+                                className="btn btn-sm btn-outline btn-accent flex items-center gap-2"
                                 aria-label={t("list.deleteBookButtonAria")}
                             >
                                 <Trash size={18} aria-hidden="true" />
