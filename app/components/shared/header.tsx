@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { NavLink, Link, useFetcher } from "react-router";
 import { Trans, useTranslation } from "react-i18next";
 
@@ -10,6 +11,7 @@ type HeaderProps = {
 };
 
 export default function Header({ user }: HeaderProps) {
+    // Language selector
     const { i18n } = useTranslation();
     const langFetcher = useFetcher();
 
@@ -25,7 +27,14 @@ export default function Header({ user }: HeaderProps) {
         );
     };
 
+    // Logout
     const logoutFetcher = useFetcher();
+
+    // Close the dropdown
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggleMenu = () => setIsOpen((prev: any) => !prev);
+    const closeMenu = () => setIsOpen(false);
 
     return (
         <header className="m-auto w-90/100 md:w-85/100 lg:w-75/100 ">
@@ -43,7 +52,7 @@ export default function Header({ user }: HeaderProps) {
                     <div className="dropdown dropdown-end">
                         {user ? (
                             <>
-                                <button type="button" className="btn btn-ghost btn-circle">
+                                <button type="button" className="btn btn-ghost btn-circle" onClick={toggleMenu}>
                                     <svg
                                         xmlns="http://www.w3.org/2000/svg"
                                         className="h-8 w-8"
@@ -60,33 +69,44 @@ export default function Header({ user }: HeaderProps) {
                                         />{" "}
                                     </svg>
                                 </button>
-                                <ul className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                                    <>
-                                        <li>
-                                            <NavLink to="/" className="nav-links block truncate text-right text-sm">
-                                                <Trans i18nKey="header.listsLink">My Lists</Trans>
-                                            </NavLink>
-                                        </li>
-                                        <li>
-                                            <NavLink
-                                                to="/genres"
-                                                className="nav-links block truncate text-right text-sm"
-                                            >
-                                                <Trans i18nKey="header.genresLink">Genres</Trans>
-                                            </NavLink>
-                                        </li>
-                                        <li>
-                                            <button
-                                                onClick={() =>
-                                                    logoutFetcher.submit(null, { method: "post", action: "/signout" })
-                                                }
-                                                className="nav-links block truncate w-full text-right cursor-pointer text-sm"
-                                            >
-                                                <Trans i18nKey="header.logoutButton">Logout</Trans>
-                                            </button>
-                                        </li>
-                                    </>
-                                </ul>
+
+                                {isOpen && (
+                                    <ul className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                                        <>
+                                            <li>
+                                                <NavLink
+                                                    to="/"
+                                                    className="nav-links block truncate text-right text-sm"
+                                                    onClick={closeMenu}
+                                                >
+                                                    <Trans i18nKey="header.listsLink">My Lists</Trans>
+                                                </NavLink>
+                                            </li>
+                                            <li>
+                                                <NavLink
+                                                    to="/genres"
+                                                    className="nav-links block truncate text-right text-sm"
+                                                    onClick={closeMenu}
+                                                >
+                                                    <Trans i18nKey="header.genresLink">Genres</Trans>
+                                                </NavLink>
+                                            </li>
+                                            <li>
+                                                <button
+                                                    onClick={() =>
+                                                        logoutFetcher.submit(null, {
+                                                            method: "post",
+                                                            action: "/signout",
+                                                        })
+                                                    }
+                                                    className="nav-links block truncate w-full text-right cursor-pointer text-sm"
+                                                >
+                                                    <Trans i18nKey="header.logoutButton">Logout</Trans>
+                                                </button>
+                                            </li>
+                                        </>
+                                    </ul>
+                                )}
                             </>
                         ) : (
                             <div className="hidden md:flex flex-row gap-4">
