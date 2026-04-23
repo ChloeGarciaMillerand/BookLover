@@ -1,7 +1,7 @@
 import { Link, useFetcher } from "react-router";
 import { Trans, useTranslation } from "react-i18next";
 
-import { Pen, Trash } from "lucide-react";
+import { Pen, Trash, EllipsisVertical } from "lucide-react";
 
 import type { HomePageBook, HomePageList } from "~/types";
 
@@ -18,48 +18,44 @@ export default function HomePageListCard({ list }: HomePageListCardProps) {
     return (
         <div className="card bg-base-300 text-base-content w-x1 mx-auto my-5">
             <div className="card-body">
-                <div className="flex flex-col sm:flex-row justify-between">
+                <div className="flex flex-row justify-between">
                     <Link to={`list/${list.id}`}>
                         <h2 className="card-title hover:text-info">{list.name}</h2>
                     </Link>
 
-                    <div className="flex gap-4 my-2 md:my-0">
-                        {/* EDIT LIST */}
-                        <Link
-                            to={`edit-list/${list.id}`}
-                            aria-label={t("home.editListButtonAria")}
-                            title={t("home.editListButtonAria")}
-                            className="hover:text-info flex flex-row gap-1"
+                    <details className="dropdown dropdown-end">
+                        <summary className="btn btn-neutral btn-sm btn-circle">
+                            <EllipsisVertical size={18} />
+                        </summary>
+                        <ul
+                            tabIndex={0}
+                            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-2 w-40 p-2 shadow"
                         >
-                            <Pen size={18} aria-hidden="true" />
-                            <p>
-                                <Trans i18nKey="home.editListButton">Edit</Trans>
-                            </p>
-                        </Link>
+                            {/* EDIT LIST */}
+                            <li>
+                                <Link to={`edit-list/${list.id}`} className="flex items-center gap-2">
+                                    <Pen size={16} />
+                                    <Trans i18nKey="home.editListButton">Edit</Trans>
+                                </Link>
+                            </li>
 
-                        {/* DELETE LIST */}
-                        <fetcher.Form
-                            method="post"
-                            action={`/delete-list/${list.id}`}
-                            onSubmit={(e) => {
-                                if (!confirm(t("home.deleteListConfirm", { name: list.name }))) {
-                                    e.preventDefault();
-                                }
-                            }}
-                        >
-                            <button
-                                type="submit"
-                                title={t("home.deleteListButtonAria")}
-                                className="cursor-pointer hover:text-error flex flex-row gap-1"
-                                aria-label={t("home.deleteListButtonAria")}
-                            >
-                                <Trash size={18} aria-hidden="true" />
-                                <p>
+                            {/* DELETE LIST */}
+                            <li>
+                                <button
+                                    type="button"
+                                    className="cursor-pointer flex items-center gap-2 hover:text-error"
+                                    onClick={() => {
+                                        if (confirm(t("home.deleteListConfirm", { name: list.name }))) {
+                                            fetcher.submit(null, { method: "post", action: `/delete-list/${list.id}` });
+                                        }
+                                    }}
+                                >
+                                    <Trash size={16} />
                                     <Trans i18nKey="home.deleteListButton">Delete</Trans>
-                                </p>
-                            </button>
-                        </fetcher.Form>
-                    </div>
+                                </button>
+                            </li>
+                        </ul>
+                    </details>
                 </div>
 
                 {/* TODO: add after creating tags
