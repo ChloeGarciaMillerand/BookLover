@@ -124,7 +124,7 @@ export default function Header({ user }: HeaderProps) {
                     <select
                         value={currentLang}
                         onChange={(e) => changeLanguage(e.target.value)}
-                        className="select select-secondary w-auto min-w-0 ml-4"
+                        className="select select-default w-auto min-w-0 ml-4"
                     >
                         <option value="en">EN</option>
                         <option value="fr">FR</option>
