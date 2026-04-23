@@ -24,6 +24,9 @@ test("Authenticated users can delete books", async ({ page, testUser }) => {
         await dialog.accept();
     });
 
+    //open dropdown menu
+    await page.getByRole("button", { name: /Open menu/i }).click();
+
     // delete book
     await page.getByRole("button", { name: /Delete the book/i }).click();
 

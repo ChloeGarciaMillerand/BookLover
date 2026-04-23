@@ -84,11 +84,12 @@ export default function SigninForm() {
                                 type="button"
                                 className="btn join-item"
                                 onClick={() => setShowPassword((prev) => !prev)}
+                                aria-label={showPassword ? t("signin.hidePassword") : t("signin.showPassword")}
                             >
                                 {showPassword ? (
-                                    <EyeClosed size={18} aria-label={t("signin.hidePassword")} />
+                                    <EyeClosed size={18} aria-hidden="true" />
                                 ) : (
-                                    <Eye size={18} aria-label={t("signin.showPassword")} />
+                                    <Eye size={18} aria-hidden="true" />
                                 )}
                             </button>
                         </div>

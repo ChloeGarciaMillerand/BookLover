@@ -164,6 +164,7 @@ const messages = {
         title: "My Lists",
         emptyMessage: "You have no lists yet. <br /> Start by creating one.",
         createListButton: "Create a list",
+        openMenu: "Open menu",
         editListButton: "Edit",
         editListButtonAria: "Edit the list",
         deleteListConfirm: 'Delete the list "{{name}}" and the books it contains?',
@@ -196,6 +197,7 @@ const messages = {
     },
     list: {
         returnLink: "Back to lists",
+        openMenu: "Open menu",
         editList: "Edit",
         editListAria: "Edit the list",
         deleteList: "Delete",

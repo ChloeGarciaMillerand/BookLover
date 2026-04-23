@@ -29,8 +29,15 @@ export default function BookCard({ book, list }: BookProps) {
                     <h2 className="card-title">{book.title}</h2>
 
                     <div className="dropdown dropdown-end">
-                        <button className="btn btn-neutral btn-sm btn-circle" onClick={toggleMenu}>
+                        <button
+                            className="btn btn-neutral btn-sm btn-circle"
+                            onClick={toggleMenu}
+                            aria-expanded={isOpen}
+                        >
                             <EllipsisVertical size={18} />
+                            <span className="sr-only">
+                                <Trans i18nKey="list.openMenu">Open menu</Trans>
+                            </span>
                         </button>
                         {isOpen && (
                             <ul className="menu menu-base dropdown-content bg-base-100 rounded-box z-10 mt-2 w-40 p-2 shadow">
@@ -52,6 +59,8 @@ export default function BookCard({ book, list }: BookProps) {
                                 <li>
                                     <button
                                         type="button"
+                                        title={t("list.deleteBookButtonAria")}
+                                        aria-label={t("list.deleteBookButtonAria")}
                                         className="cursor-pointer flex items-center gap-2 hover:text-error justify-end"
                                         onClick={() => {
                                             if (confirm(t("list.deleteBookConfirm", { name: book.title }))) {

@@ -32,6 +32,9 @@ export default function HomePageListCard({ list }: HomePageListCardProps) {
                     <div className="dropdown dropdown-end">
                         <button className="btn btn-neutral btn-sm btn-circle" onClick={toggleMenu}>
                             <EllipsisVertical size={18} />
+                            <span className="sr-only">
+                                <Trans i18nKey="home.openMenu">Open menu</Trans>
+                            </span>
                         </button>
                         {isOpen && (
                             <ul className="menu menu-base dropdown-content bg-base-100 rounded-box z-10 mt-2 w-40 p-2 shadow">
@@ -39,6 +42,8 @@ export default function HomePageListCard({ list }: HomePageListCardProps) {
                                 <li>
                                     <Link
                                         to={`edit-list/${list.id}`}
+                                        aria-label={t("home.editListButtonAria")}
+                                        title={t("home.editListButtonAria")}
                                         className="flex items-center gap-2 justify-end"
                                         onClick={closeMenu}
                                     >
@@ -51,6 +56,8 @@ export default function HomePageListCard({ list }: HomePageListCardProps) {
                                 <li>
                                     <button
                                         type="button"
+                                        aria-label={t("home.deleteListButtonAria")}
+                                        title={t("home.deleteListButtonAria")}
                                         className="cursor-pointer flex items-center gap-2 hover:text-error justify-end"
                                         onClick={() => {
                                             if (confirm(t("home.deleteListConfirm", { name: list.name }))) {

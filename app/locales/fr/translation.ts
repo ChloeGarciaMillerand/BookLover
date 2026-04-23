@@ -167,6 +167,7 @@ export default {
         title: "Mes listes",
         emptyMessage: "Vous n'avez pas encore de listes. <br /> Commencez par en créer une.",
         createListButton: "Créer une liste",
+        openMenu: "Ouvrir le menu",
         editListButton: "Modifier",
         editListButtonAria: "Modifier la liste",
         deleteListConfirm: 'Supprimer la liste "{{name}}" et les livres qu\'elle contient?',
@@ -199,6 +200,7 @@ export default {
     },
     list: {
         returnLink: "Retour aux listes",
+        openMenu: "Ouvrir le menu",
         editList: "Modifier",
         editListAria: "Modifier la liste",
         deleteList: "Supprimer",
