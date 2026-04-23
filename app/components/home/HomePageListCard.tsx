@@ -81,7 +81,7 @@ export default function HomePageListCard({ list }: HomePageListCardProps) {
                     {/* BOOK INFO */}
                     {list.books?.map((book: HomePageBook) => (
                         <li key={book.id} className="my-2">
-                            <span className="font-semibold">{book.title}</span>
+                            <span className="text-base font-bold">{book.title}</span>
                             {book.genre && (
                                 <span>
                                     <span> - </span>
