@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link, useFetcher } from "react-router";
 import { Trans, useTranslation } from "react-i18next";
 
@@ -15,6 +16,11 @@ export default function HomePageListCard({ list }: HomePageListCardProps) {
     const { t } = useTranslation();
     let fetcher = useFetcher();
 
+    // Close the dropdown
+    const [isOpen, setIsOpen] = useState(false);
+    const toggleMenu = () => setIsOpen((prev: any) => !prev);
+    const closeMenu = () => setIsOpen(false);
+
     return (
         <div className="card bg-base-300 text-base-content w-x1 mx-auto my-5">
             <div className="card-body">
@@ -23,39 +29,45 @@ export default function HomePageListCard({ list }: HomePageListCardProps) {
                         <h2 className="card-title hover:text-info">{list.name}</h2>
                     </Link>
 
-                    <details className="dropdown dropdown-end">
-                        <summary className="btn btn-neutral btn-sm btn-circle">
+                    <div className="dropdown dropdown-end">
+                        <button className="btn btn-neutral btn-sm btn-circle" onClick={toggleMenu}>
                             <EllipsisVertical size={18} />
-                        </summary>
-                        <ul
-                            tabIndex={0}
-                            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-2 w-40 p-2 shadow"
-                        >
-                            {/* EDIT LIST */}
-                            <li>
-                                <Link to={`edit-list/${list.id}`} className="flex items-center gap-2">
-                                    <Pen size={16} />
-                                    <Trans i18nKey="home.editListButton">Edit</Trans>
-                                </Link>
-                            </li>
+                        </button>
+                        {isOpen && (
+                            <ul className="menu menu-base dropdown-content bg-base-100 rounded-box z-10 mt-2 w-40 p-2 shadow">
+                                {/* EDIT LIST */}
+                                <li>
+                                    <Link
+                                        to={`edit-list/${list.id}`}
+                                        className="flex items-center gap-2 justify-end"
+                                        onClick={closeMenu}
+                                    >
+                                        <Pen size={16} />
+                                        <Trans i18nKey="home.editListButton">Edit</Trans>
+                                    </Link>
+                                </li>
 
-                            {/* DELETE LIST */}
-                            <li>
-                                <button
-                                    type="button"
-                                    className="cursor-pointer flex items-center gap-2 hover:text-error"
-                                    onClick={() => {
-                                        if (confirm(t("home.deleteListConfirm", { name: list.name }))) {
-                                            fetcher.submit(null, { method: "post", action: `/delete-list/${list.id}` });
-                                        }
-                                    }}
-                                >
-                                    <Trash size={16} />
-                                    <Trans i18nKey="home.deleteListButton">Delete</Trans>
-                                </button>
-                            </li>
-                        </ul>
-                    </details>
+                                {/* DELETE LIST */}
+                                <li>
+                                    <button
+                                        type="button"
+                                        className="cursor-pointer flex items-center gap-2 hover:text-error justify-end"
+                                        onClick={() => {
+                                            if (confirm(t("home.deleteListConfirm", { name: list.name }))) {
+                                                fetcher.submit(null, {
+                                                    method: "post",
+                                                    action: `/delete-list/${list.id}`,
+                                                });
+                                            }
+                                        }}
+                                    >
+                                        <Trash size={16} />
+                                        <Trans i18nKey="home.deleteListButton">Delete</Trans>
+                                    </button>
+                                </li>
+                            </ul>
+                        )}
+                    </div>
                 </div>
 
                 {/* TODO: add after creating tags
