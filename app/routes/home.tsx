@@ -69,7 +69,7 @@ export default function HomePage(props: Route.ComponentProps) {
     }
 
     return (
-        <div className="m-auto w-4/5 mt-4 mb-5 md:w-3/5">
+        <div className="m-auto w-85/100 mt-4 mb-5 md:w-3/5">
             {/* Meta*/}
             <title>{t("meta.home.title")}</title>
             <meta name="description" content={t("meta.home.description")} />

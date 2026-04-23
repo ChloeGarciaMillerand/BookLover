@@ -1,7 +1,8 @@
+import { useState } from "react";
 import { Link, useFetcher } from "react-router";
 import { Trans, useTranslation } from "react-i18next";
 
-import { Pen, Trash } from "lucide-react";
+import { Pen, Trash, EllipsisVertical } from "lucide-react";
 
 import type { Book, List } from "~/types";
 
@@ -16,48 +17,57 @@ export default function BookCard({ book, list }: BookProps) {
     const { t } = useTranslation();
     let fetcher = useFetcher();
 
+    // Close the dropdown
+    const [isOpen, setIsOpen] = useState(false);
+    const toggleMenu = () => setIsOpen((prev: any) => !prev);
+    const closeMenu = () => setIsOpen(false);
+
     return (
         <div className="card bg-base-300 text-base-content w-x1 mx-auto my-5">
             <div className="card-body">
-                <div className="flex flex-col sm:flex-row justify-between">
+                <div className="flex flex-row justify-between">
                     <h2 className="card-title">{book.title}</h2>
 
-                    <div className="flex gap-4 my-2 md:my-0">
-                        {/* EDIT BOOK */}
-                        <Link
-                            to={`edit-book/${book.id}`}
-                            aria-label={t("list.editBookButtonAria")}
-                            title={t("list.editBookButtonAria")}
-                            className="hover:text-info flex flex-row gap-1"
-                        >
-                            <Pen size={18} aria-hidden="true" />
-                            <p>
-                                <Trans i18nKey="list.editBookButton">Edit</Trans>
-                            </p>
-                        </Link>
+                    <div className="dropdown dropdown-end">
+                        <button className="btn btn-neutral btn-sm btn-circle" onClick={toggleMenu}>
+                            <EllipsisVertical size={18} />
+                        </button>
+                        {isOpen && (
+                            <ul className="menu menu-base dropdown-content bg-base-100 rounded-box z-10 mt-2 w-40 p-2 shadow">
+                                {/* EDIT BOOK */}
+                                <li>
+                                    <Link
+                                        to={`edit-book/${book.id}`}
+                                        aria-label={t("list.editBookButtonAria")}
+                                        title={t("list.editBookButtonAria")}
+                                        className="flex items-center gap-2 justify-end"
+                                        onClick={closeMenu}
+                                    >
+                                        <Pen size={16} />
+                                        <Trans i18nKey="home.editListButton">Edit</Trans>
+                                    </Link>
+                                </li>
 
-                        {/* DELETE BOOK */}
-                        <fetcher.Form
-                            method="post"
-                            action={`/list/${list.id}/delete-book/${book.id}`}
-                            onSubmit={(e) => {
-                                if (!confirm(t("list.deleteBookConfirm", { name: book.title }))) {
-                                    e.preventDefault();
-                                }
-                            }}
-                        >
-                            <button
-                                type="submit"
-                                title={t("list.deleteBookButtonAria")}
-                                className="cursor-pointer hover:text-error flex flex-row gap-1"
-                                aria-label={t("list.deleteBookButtonAria")}
-                            >
-                                <Trash size={18} aria-hidden="true" />
-                                <p>
-                                    <Trans i18nKey="list.deleteBookButton">Delete</Trans>
-                                </p>
-                            </button>
-                        </fetcher.Form>
+                                {/* DELETE BOOK */}
+                                <li>
+                                    <button
+                                        type="button"
+                                        className="cursor-pointer flex items-center gap-2 hover:text-error justify-end"
+                                        onClick={() => {
+                                            if (confirm(t("list.deleteBookConfirm", { name: book.title }))) {
+                                                fetcher.submit(null, {
+                                                    method: "post",
+                                                    action: `/list/${list.id}/delete-book/${book.id}`,
+                                                });
+                                            }
+                                        }}
+                                    >
+                                        <Trash size={16} />
+                                        <Trans i18nKey="home.deleteListButton">Delete</Trans>
+                                    </button>
+                                </li>
+                            </ul>
+                        )}
                     </div>
                 </div>
 

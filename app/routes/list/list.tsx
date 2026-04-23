@@ -63,7 +63,7 @@ export default function ListPage(props: Route.ComponentProps) {
                 </Link>
             </div>
 
-            <div className="flex flex-col items-baseline md:flex-row md:gap-4">
+            <div className="flex flex-col justify-between items-baseline md:flex-row md:gap-4">
                 <h1 className="h1">{list.name}</h1>
 
                 {/* MANAGE LIST*/}
