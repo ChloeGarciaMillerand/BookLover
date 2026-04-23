@@ -96,6 +96,8 @@ const messages = {
         emailPlaceholder: "john.doe@mail.com",
         passwordLabel: "Password <1>*</1>",
         passwordPlaceholder: "Your password",
+        hidePassword: "Hide password",
+        showPassword: "Show password",
         submitButton: "Sign In",
         errorMessage: "Invalid email or password",
         signinTitle: "Sign In",

@@ -98,6 +98,8 @@ export default {
         emailPlaceholder: "john.doe@mail.com",
         passwordLabel: "Mot de passe <1>*</1>",
         passwordPlaceholder: "Votre mot de passe",
+        hidePassword: "Masquer le mot de passe",
+        showPassword: "Afficher le mot de passe",
         submitButton: "Se connecter",
         errorMessage: "Email ou mot de passe incorrect",
         signinTitle: "Se connecter",
