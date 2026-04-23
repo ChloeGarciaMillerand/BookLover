@@ -28,7 +28,7 @@ export default function BookCard({ book, list }: BookProps) {
                             to={`edit-book/${book.id}`}
                             aria-label={t("list.editBookButtonAria")}
                             title={t("list.editBookButtonAria")}
-                            className="btn btn-sm btn-outline btn-secondary flex items-center gap-2"
+                            className="hover:text-info flex flex-row gap-1"
                         >
                             <Pen size={18} aria-hidden="true" />
                             <p>
@@ -49,7 +49,7 @@ export default function BookCard({ book, list }: BookProps) {
                             <button
                                 type="submit"
                                 title={t("list.deleteBookButtonAria")}
-                                className="btn btn-sm btn-outline btn-accent flex items-center gap-2"
+                                className="cursor-pointer hover:text-error flex flex-row gap-1"
                                 aria-label={t("list.deleteBookButtonAria")}
                             >
                                 <Trash size={18} aria-hidden="true" />

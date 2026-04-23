@@ -29,7 +29,7 @@ export default function HomePageListCard({ list }: HomePageListCardProps) {
                             to={`edit-list/${list.id}`}
                             aria-label={t("home.editListButtonAria")}
                             title={t("home.editListButtonAria")}
-                            className="btn btn-sm btn-outline btn-secondary flex items-center gap-2"
+                            className="hover:text-info flex flex-row gap-1"
                         >
                             <Pen size={18} aria-hidden="true" />
                             <p>
@@ -50,7 +50,7 @@ export default function HomePageListCard({ list }: HomePageListCardProps) {
                             <button
                                 type="submit"
                                 title={t("home.deleteListButtonAria")}
-                                className="btn btn-sm btn-outline btn-accent flex items-center gap-2"
+                                className="cursor-pointer hover:text-error flex flex-row gap-1"
                                 aria-label={t("home.deleteListButtonAria")}
                             >
                                 <Trash size={18} aria-hidden="true" />
