@@ -273,6 +273,7 @@ const messages = {
     },
     genre: {
         addGenreButton: "Add a genre",
+        openMenu: "Open menu",
         editGenreButton: "Edit",
         editGenreButtonAria: "Edit the genre",
         deleteGenreConfirm: 'Delete the genre "{{name}}" ?',

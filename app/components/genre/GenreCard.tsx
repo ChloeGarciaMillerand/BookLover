@@ -33,7 +33,7 @@ export default function GenreCard({ genre }: GenreProps) {
                         <button className="btn btn-neutral btn-sm btn-circle" onClick={toggleMenu}>
                             <EllipsisVertical size={18} />
                             <span className="sr-only">
-                                <Trans i18nKey="home.openMenu">Open menu</Trans>
+                                <Trans i18nKey="genre.openMenu">Open menu</Trans>
                             </span>
                         </button>
                         {isOpen && (

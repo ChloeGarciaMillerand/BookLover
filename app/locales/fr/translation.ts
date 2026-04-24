@@ -276,6 +276,7 @@ export default {
     },
     genre: {
         addGenreButton: "Ajouter un genre",
+        openMenu: "Ouvrir le menu",
         editGenreButton: "Modifier",
         editGenreButtonAria: "Modifier le genre",
         deleteGenreConfirm: 'Supprimer le genre "{{name}}" ?',
