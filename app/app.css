@@ -104,6 +104,10 @@
     @apply text-xl text-primary font-bold;
 }
 
+.card-title {
+    @apply text-xl font-black;
+}
+
 /*
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,

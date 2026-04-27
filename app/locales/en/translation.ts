@@ -96,6 +96,8 @@ const messages = {
         emailPlaceholder: "john.doe@mail.com",
         passwordLabel: "Password <1>*</1>",
         passwordPlaceholder: "Your password",
+        hidePassword: "Hide password",
+        showPassword: "Show password",
         submitButton: "Sign In",
         errorMessage: "Invalid email or password",
         signinTitle: "Sign In",
@@ -162,6 +164,7 @@ const messages = {
         title: "My Lists",
         emptyMessage: "You have no lists yet. <br /> Start by creating one.",
         createListButton: "Create a list",
+        openMenu: "Open menu",
         editListButton: "Edit",
         editListButtonAria: "Edit the list",
         deleteListConfirm: 'Delete the list "{{name}}" and the books it contains?',
@@ -194,6 +197,7 @@ const messages = {
     },
     list: {
         returnLink: "Back to lists",
+        openMenu: "Open menu",
         editList: "Edit",
         editListAria: "Edit the list",
         deleteList: "Delete",
@@ -269,6 +273,7 @@ const messages = {
     },
     genre: {
         addGenreButton: "Add a genre",
+        openMenu: "Open menu",
         editGenreButton: "Edit",
         editGenreButtonAria: "Edit the genre",
         deleteGenreConfirm: 'Delete the genre "{{name}}" ?',

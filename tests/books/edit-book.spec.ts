@@ -20,6 +20,9 @@ test("Authenticated users can update books", async ({ page, testUser }) => {
     // create a book
     await createBook(page, listId);
 
+    // open dropdown menu
+    await page.getByRole("button", { name: /open menu/i }).click();
+
     // navigate to edit book
     await page.getByRole("link", { name: /Edit the book/i }).click();
     await page.waitForURL(/\/edit-book\/.+/);

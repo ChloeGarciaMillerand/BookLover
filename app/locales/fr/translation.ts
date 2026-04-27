@@ -98,6 +98,8 @@ export default {
         emailPlaceholder: "john.doe@mail.com",
         passwordLabel: "Mot de passe <1>*</1>",
         passwordPlaceholder: "Votre mot de passe",
+        hidePassword: "Masquer le mot de passe",
+        showPassword: "Afficher le mot de passe",
         submitButton: "Se connecter",
         errorMessage: "Email ou mot de passe incorrect",
         signinTitle: "Se connecter",
@@ -165,6 +167,7 @@ export default {
         title: "Mes listes",
         emptyMessage: "Vous n'avez pas encore de listes. <br /> Commencez par en créer une.",
         createListButton: "Créer une liste",
+        openMenu: "Ouvrir le menu",
         editListButton: "Modifier",
         editListButtonAria: "Modifier la liste",
         deleteListConfirm: 'Supprimer la liste "{{name}}" et les livres qu\'elle contient?',
@@ -197,6 +200,7 @@ export default {
     },
     list: {
         returnLink: "Retour aux listes",
+        openMenu: "Ouvrir le menu",
         editList: "Modifier",
         editListAria: "Modifier la liste",
         deleteList: "Supprimer",
@@ -272,6 +276,7 @@ export default {
     },
     genre: {
         addGenreButton: "Ajouter un genre",
+        openMenu: "Ouvrir le menu",
         editGenreButton: "Modifier",
         editGenreButtonAria: "Modifier le genre",
         deleteGenreConfirm: 'Supprimer le genre "{{name}}" ?',

@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { Form, useActionData } from "react-router";
 import type { TFunction } from "i18next";
 import { Trans, useTranslation } from "react-i18next";
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { getZodConstraint, parseWithZod } from "@conform-to/zod/v4";
 import * as z from "zod";
+
+import { Eye, EyeClosed } from "lucide-react";
 
 import { Button } from "../shared/Button";
 
@@ -34,6 +37,9 @@ export default function SigninForm() {
             return parseWithZod(formData, { schema });
         },
     });
+
+    //show/hide password state
+    const [showPassword, setShowPassword] = useState(false);
 
     return (
         <>
@@ -68,11 +74,25 @@ export default function SigninForm() {
                                 Password <span aria-hidden="true">*</span>
                             </Trans>
                         </label>
-                        <input
-                            className="input w-full"
-                            {...getInputProps(fields.password, { type: "password" })}
-                            placeholder={t("signin.passwordPlaceholder")}
-                        />
+                        <div className="join w-full">
+                            <input
+                                className="input w-full"
+                                {...getInputProps(fields.password, { type: showPassword ? "text" : "password" })}
+                                placeholder={t("signin.passwordPlaceholder")}
+                            />
+                            <button
+                                type="button"
+                                className="btn join-item"
+                                onClick={() => setShowPassword((prev) => !prev)}
+                                aria-label={showPassword ? t("signin.hidePassword") : t("signin.showPassword")}
+                            >
+                                {showPassword ? (
+                                    <EyeClosed size={18} aria-hidden="true" />
+                                ) : (
+                                    <Eye size={18} aria-hidden="true" />
+                                )}
+                            </button>
+                        </div>
                         <div id={fields.password.errorId} className="label text-error">
                             {fields.password.errors}
                         </div>

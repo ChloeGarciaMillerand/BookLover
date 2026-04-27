@@ -10,6 +10,9 @@ test("Authenticated users can update lists", async ({ page, testUser }) => {
     //create a list
     await createList(page);
 
+    //open dropdown menu
+    await page.getByRole("button", { name: /open menu/i }).click();
+
     // navigate to edit list
     await page.getByRole("link", { name: /Edit/i }).click();
     await page.waitForURL(/\/edit-list\/.+/);

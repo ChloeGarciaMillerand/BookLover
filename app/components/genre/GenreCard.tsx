@@ -1,6 +1,7 @@
+import { useState } from "react";
 import { Link, useFetcher } from "react-router";
 import { Trans, useTranslation } from "react-i18next";
-import { Pen, Trash } from "lucide-react";
+import { Pen, Trash, EllipsisVertical } from "lucide-react";
 
 import type { Genre } from "~/types";
 
@@ -11,51 +12,72 @@ type GenreProps = {
 export default function GenreCard({ genre }: GenreProps) {
     const { t } = useTranslation();
     let fetcher = useFetcher();
+
+    // Close the dropdown
+    const [isOpen, setIsOpen] = useState(false);
+    const toggleMenu = () => setIsOpen((prev: any) => !prev);
+    const closeMenu = () => setIsOpen(false);
     return (
         <div className="card bg-base-300 text-base-content w-x1 mx-auto my-5">
             <div className="card-body">
-                <div className="flex flex-col sm:flex-row justify-between">
+                <div className="flex flex-row justify-between">
                     {/* GENRE */}
-                    <span className="px-2 border rounded-md mr-auto" style={{ borderColor: genre.color }}>
+                    <span
+                        className="flex px-2 border rounded-md mr-auto items-center"
+                        style={{ borderColor: genre.color }}
+                    >
                         {genre.name}
                     </span>
 
-                    <div className="flex gap-4">
-                        {/* EDIT GENRE */}
-                        <Link
-                            to={`edit-genre/${genre.id}`}
-                            aria-label={t("genre.editGenreButtonAria")}
-                            title={t("genre.editGenreButton")}
-                            className="hover:text-info flex flex-row gap-1"
-                        >
-                            <Pen size={18} aria-hidden="true" />
-                            <p>
-                                <Trans i18nKey="genre.editGenreButton">Edit</Trans>
-                            </p>
-                        </Link>
+                    <div className="dropdown dropdown-end">
+                        <button className="btn btn-neutral btn-sm btn-circle" onClick={toggleMenu}>
+                            <EllipsisVertical size={18} />
+                            <span className="sr-only">
+                                <Trans i18nKey="genre.openMenu">Open menu</Trans>
+                            </span>
+                        </button>
+                        {isOpen && (
+                            <ul className="menu menu-base dropdown-content bg-base-100 rounded-box z-10 mt-2 w-40 p-2 shadow">
+                                <li>
+                                    {/* EDIT GENRE */}
+                                    <Link
+                                        to={`edit-genre/${genre.id}`}
+                                        aria-label={t("genre.editGenreButtonAria")}
+                                        title={t("genre.editGenreButton")}
+                                        className="flex w-full items-center gap-2 justify-end text-right"
+                                        onClick={closeMenu}
+                                    >
+                                        <Pen size={18} aria-hidden="true" />
+                                        <span>
+                                            <Trans i18nKey="genre.editGenreButton">Edit</Trans>
+                                        </span>
+                                    </Link>
+                                </li>
 
-                        {/* DELETE GENRE */}
-                        <fetcher.Form
-                            method="post"
-                            action={`/delete-genre/${genre.id}`}
-                            onSubmit={(e) => {
-                                if (!confirm(t("genre.deleteGenreConfirm", { name: genre.name }))) {
-                                    e.preventDefault();
-                                }
-                            }}
-                        >
-                            <button
-                                type="submit"
-                                title={t("genre.deleteGenreButton")}
-                                className="cursor-pointer hover:text-error flex flex-row gap-1"
-                                aria-label={t("genre.deleteGenreButtonAria")}
-                            >
-                                <Trash size={18} aria-hidden="true" />
-                                <p>
-                                    <Trans i18nKey="genre.deleteGenreButton">Delete</Trans>
-                                </p>
-                            </button>
-                        </fetcher.Form>
+                                {/* DELETE GENRE */}
+                                <li>
+                                    <button
+                                        type="button"
+                                        title={t("genre.deleteGenreButton")}
+                                        className="cursor-pointer flex items-center gap-2 hover:text-error justify-end"
+                                        aria-label={t("genre.deleteGenreButtonAria")}
+                                        onClick={() => {
+                                            if (confirm(t("genre.deleteGenreConfirm", { name: genre.name }))) {
+                                                fetcher.submit(
+                                                    {},
+                                                    { method: "post", action: `/delete-genre/${genre.id}` },
+                                                );
+                                            }
+                                        }}
+                                    >
+                                        <Trash size={18} aria-hidden="true" />
+                                        <span>
+                                            <Trans i18nKey="genre.deleteGenreButton">Delete</Trans>
+                                        </span>
+                                    </button>
+                                </li>
+                            </ul>
+                        )}
                     </div>
                 </div>
             </div>

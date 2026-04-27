@@ -47,7 +47,7 @@ export default function ListPage(props: Route.ComponentProps) {
     }
 
     return (
-        <div className="m-auto w-4/5 mt-4 mb-5 md:w-3/5">
+        <div className="m-auto w-85/100 mt-4 mb-5 md:w-3/5">
             {/* Meta*/}
             <title>{t("meta.list.title")}</title>
             <meta name="description" content={t("meta.list.description")} />
@@ -63,7 +63,7 @@ export default function ListPage(props: Route.ComponentProps) {
                 </Link>
             </div>
 
-            <div className="flex flex-col items-baseline md:flex-row md:gap-4">
+            <div className="flex flex-col justify-between items-baseline md:flex-row md:gap-4">
                 <h1 className="h1">{list.name}</h1>
 
                 {/* MANAGE LIST*/}
@@ -73,7 +73,7 @@ export default function ListPage(props: Route.ComponentProps) {
                         to={`/edit-list/${list.id}`}
                         aria-label={t("list.editListAria")}
                         title={t("list.editListAria")}
-                        className="hover:text-info flex flex-row gap-1"
+                        className="btn btn-soft hover:text-info flex flex-row gap-1"
                     >
                         <Pen size={18} aria-hidden="true" />
                         <p>
@@ -94,7 +94,7 @@ export default function ListPage(props: Route.ComponentProps) {
                         <button
                             type="submit"
                             title={t("list.deleteListAria")}
-                            className="cursor-pointer hover:text-error flex flex-row gap-1"
+                            className="btn btn-soft hover:text-error flex flex-row gap-1"
                             aria-label={t("list.deleteListAria")}
                         >
                             <Trash size={18} aria-hidden="true" />

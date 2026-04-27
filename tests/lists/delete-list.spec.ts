@@ -14,8 +14,11 @@ test("Authenticated users can delete lists", async ({ page, testUser }) => {
         await dialog.accept();
     });
 
+    //open dropdown menu
+    await page.getByRole("button", { name: /open menu/i }).click();
+
     // delete list
-    await page.getByRole("button", { name: /Delete/i }).click();
+    await page.getByRole("button", { name: /Delete the list/i }).click();
 
     //Expects the list doesn't exist anymore
     await expect(page.getByRole("heading", { name: /Playwright List/i })).toHaveCount(0);
