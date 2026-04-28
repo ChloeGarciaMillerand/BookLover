@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "react-router build",
+    "preview": "react-router-serve ./build/server/index.js",
     "dev": "react-router dev",
     "start": "PORT=4173 react-router-serve ./build/server/index.js",
     "db:reset": "pnpx supabase db reset",
@@ -15,7 +16,8 @@
     "test:run": "pnpm exec playwright test --reporter=list",
     "test:dev": "pnpm exec playwright test --ui",
     "test:dev:local": "APP_URL=http://localhost:5173 pnpm exec playwright test --ui",
-    "test": "pnpm run test:supabase && pnpm run test:run"
+    "test": "pnpm run test:supabase && pnpm run test:run",
+    "generate-pwa-assets": "pwa-assets-generator"
   },
   "lint-staged": {
     "*.{js,mjs,cjs,jsx,ts,mts,cts,tsx}": [
@@ -51,6 +53,7 @@
     "@types/node": "^22.19.11",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "@vite-pwa/assets-generator": "^1.0.2",
     "daisyui": "^5.5.18",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
@@ -61,6 +64,7 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
     "vite": "^7.3.1",
+    "vite-plugin-pwa": "^1.2.0",
     "vite-tsconfig-paths": "^5.1.4"
   },
   "packageManager": "pnpm@10.13.1+sha512.37ebf1a5c7a30d5fabe0c5df44ee8da4c965ca0c5af3dbab28c3a1681b70a256218d05c81c9c0dcf767ef6b8551eb5b960042b9ed4300c59242336377e01cfad"

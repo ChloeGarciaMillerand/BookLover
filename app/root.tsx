@@ -69,6 +69,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
                 <meta charSet="utf-8" />
                 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+                {/* PWA */}
+                <link rel="manifest" href="/manifest.webmanifest" />
+                <meta name="theme-color" content="#ffffff" />
+                <link rel="apple-touch-icon" href="/apple-touch-icon-180x180.png" />
                 <Links />
             </head>
             <body className="min-h-[100dvh] flex flex-col  min-w-[320px]">
