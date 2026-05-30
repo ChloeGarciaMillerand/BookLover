@@ -80,7 +80,7 @@ export async function action({ request, params, context }: Route.ActionArgs) {
         await updateBook(supabase, {
             bookId,
             title,
-            genre_id,
+            genre_id: genre_id || null,
             author,
             editor,
             library_code,
