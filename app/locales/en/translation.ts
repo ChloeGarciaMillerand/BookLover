@@ -118,6 +118,10 @@ const messages = {
         errorMessage: "Invalid email",
         forgotPasswordTitle: "Forgot Password",
         forgotPasswordText: "Enter your email to receive a password reset link",
+        errorEmailRateLimit:
+            "This demo application uses Supabase's free email service. The email sending limit has been reached, so please try again in about an hour.",
+        errorSecurityRateLimit:
+            "Too many requests have been made. For security reasons, please wait {{seconds}} seconds before trying again.",
     },
     resetPassword: {
         successMessage: "Password reset successfully! You can now sign in with your new password.",

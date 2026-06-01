@@ -35,7 +35,7 @@ export async function action(params: Route.ActionArgs) {
         // email rate limit
         if (err?.message?.includes("email rate limit exceeded")) {
             return submission.reply({
-                formErrors: [t("signup.errorEmailRateLimit")],
+                formErrors: [t("forgotPassword.errorEmailRateLimit")],
             });
         }
 
@@ -46,7 +46,7 @@ export async function action(params: Route.ActionArgs) {
             const seconds = securityRateLimitMatch[1];
 
             return submission.reply({
-                formErrors: [t("signup.errorSecurityRateLimit", { seconds })],
+                formErrors: [t("forgotPassword.errorSecurityRateLimit", { seconds })],
             });
         }
 
