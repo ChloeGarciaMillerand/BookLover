@@ -33,11 +33,30 @@ export async function action(params: Route.ActionArgs) {
     try {
         await signup({ supabase, credentials: { email, password } });
     } catch (err: any) {
+        // user already registered
         if (err?.message?.includes("already registered") || err?.message?.includes("User already registered")) {
             return submission.reply({
                 fieldErrors: {
                     email: [t("signup.errorMailMessage")],
                 },
+            });
+        }
+
+        // email rate limit
+        if (err?.message?.includes("email rate limit exceeded")) {
+            return submission.reply({
+                formErrors: [t("signup.errorEmailRateLimit")],
+            });
+        }
+
+        //security rate limit
+        const securityRateLimitMatch = err.message.match(/after (\d+) seconds/i);
+
+        if (securityRateLimitMatch) {
+            const seconds = securityRateLimitMatch[1];
+
+            return submission.reply({
+                formErrors: [t("signup.errorSecurityRateLimit", { seconds })],
             });
         }
 

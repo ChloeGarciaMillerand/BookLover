@@ -82,6 +82,10 @@ export default {
         signupTitle: "Inscription",
         haveAccount: "Vous avez déjà un compte?",
         signinButton: "Se connecter",
+        errorEmailRateLimit:
+            "Cette application est une démo et utilise les services gratuits d'emails de Supabase, dont la limite a été atteinte. Veuillez réessayer dans environ une heure.",
+        errorSecurityRateLimit:
+            "Un nombre trop important de requêtes à été fait. Pour des raisons de sécurité, merci de patienter {{seconds}} secondes avant de réessayer.",
     },
     signupSuccess: {
         title: "Bienvenue dans BookLover!",

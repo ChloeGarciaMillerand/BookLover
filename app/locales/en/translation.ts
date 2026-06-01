@@ -80,6 +80,10 @@ const messages = {
         signupTitle: "Sign Up",
         haveAccount: "Already have an account?",
         signinButton: "Sign In",
+        errorEmailRateLimit:
+            "This demo application uses Supabase's free email service. The email sending limit has been reached, so please try again in about an hour.",
+        errorSecurityRateLimit:
+            "Too many requests have been made. For security reasons, please wait {{seconds}} seconds before trying again.",
     },
     signupSuccess: {
         title: "Welcome to BookLover!",
