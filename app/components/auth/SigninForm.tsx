@@ -87,9 +87,9 @@ export default function SigninForm() {
                                 aria-label={showPassword ? t("signin.hidePassword") : t("signin.showPassword")}
                             >
                                 {showPassword ? (
-                                    <EyeClosed size={18} aria-hidden="true" />
-                                ) : (
                                     <Eye size={18} aria-hidden="true" />
+                                ) : (
+                                    <EyeClosed size={18} aria-hidden="true" />
                                 )}
                             </button>
                         </div>
