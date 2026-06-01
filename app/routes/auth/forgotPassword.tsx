@@ -31,7 +31,25 @@ export async function action(params: Route.ActionArgs) {
     const { supabase, headers } = getSupabase(params.request);
     try {
         await resetPasswordRequest({ supabase, email });
-    } catch {
+    } catch (err: any) {
+        // email rate limit
+        if (err?.message?.includes("email rate limit exceeded")) {
+            return submission.reply({
+                formErrors: [t("signup.errorEmailRateLimit")],
+            });
+        }
+
+        //security rate limit
+        const securityRateLimitMatch = err.message.match(/after (\d+) seconds/i);
+
+        if (securityRateLimitMatch) {
+            const seconds = securityRateLimitMatch[1];
+
+            return submission.reply({
+                formErrors: [t("signup.errorSecurityRateLimit", { seconds })],
+            });
+        }
+
         return submission.reply({
             formErrors: [t("forgotPassword.errorMessage")],
         });
