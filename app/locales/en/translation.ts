@@ -88,7 +88,7 @@ const messages = {
     signupSuccess: {
         title: "Welcome to BookLover!",
         altHeartBook: "Book with a heart",
-        text1: "Your account has been created successfully and you will receive a confirmation request by email.",
+        text1: "Your account has been created successfully and you will receive a confirmation request by email. If you don't see the message in your inbox, please check your spam or junk folder.",
         text2: "You can then sign in to your account. ",
         signinButton: "Sign In",
     },

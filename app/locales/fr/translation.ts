@@ -90,7 +90,7 @@ export default {
     signupSuccess: {
         title: "Bienvenue dans BookLover!",
         altHeartBook: "Livre avec un coeur",
-        text1: "Votre compte a été créé avec succès et vous allez recevoir une demande de confirmation par email.",
+        text1: "Votre compte a été créé avec succès et vous allez recevoir une demande de confirmation par email. Si vous ne voyez pas l'email dans votre boîte principale, merci de vérifier vos spams.",
         text2: "Vous pourrez ensuite vous connecter à votre compte. ",
         signinButton: "Se connecter",
     },
