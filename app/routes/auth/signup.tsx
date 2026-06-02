@@ -50,7 +50,7 @@ export async function action(params: Route.ActionArgs) {
         }
 
         //security rate limit
-        const securityRateLimitMatch = err.message.match(/after (\d+) seconds/i);
+        const securityRateLimitMatch = err?.message?.match(/after (\d+) seconds/i);
 
         if (securityRateLimitMatch) {
             const seconds = securityRateLimitMatch[1];
