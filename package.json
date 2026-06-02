@@ -59,7 +59,7 @@
     "lint-staged": "^16.2.7",
     "oxfmt": "^0.17.0",
     "oxlint": "^1.48.0",
-    "supabase": "^2.76.10",
+    "supabase": "^2.104.0",
     "tailwindcss": "^4.2.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3",
