@@ -121,9 +121,9 @@ export default {
         forgotPasswordTitle: "Mot de passe oublié?",
         forgotPasswordText: "Rentrez votre email pour recevoir un lien de réinitialisation du mot de passe",
         errorEmailRateLimit:
-            "Cette application est une démonstration et utilise les services d'emails Supabase. La limite d'envoi de mails a été atteinte, merci de réessayer dans une heure environ.",
+            "This demo application uses Supabase's free email service. The email sending limit has been reached, so please try again in about an hour.",
         errorSecurityRateLimit:
-            "Un nombre trop important de requêtes a été effectué. Pour des raisons de sécurite, merci d'attendre {{seconds}} avant de réessayer",
+            "Too many requests have been made. For security reasons, please wait {{seconds}} seconds before trying again.",
     },
     resetPassword: {
         successMessage:
