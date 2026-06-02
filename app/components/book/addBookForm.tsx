@@ -39,7 +39,7 @@ export default function AddBookForm({ genres }: GenreProps) {
     const [form, fields] = useForm({
         lastResult,
         defaultValue: {
-            genre: t("addBookForm.defaultGenreOption"),
+            genre: "",
         },
         constraint: getZodConstraint(schema),
         // Validate field once user leaves the field
@@ -80,7 +80,7 @@ export default function AddBookForm({ genres }: GenreProps) {
                             Genre
                         </label>
                         <select className="select" {...getSelectProps(fields.genre)}>
-                            <option disabled={true}>{t("addBookForm.defaultGenreOption")}</option>
+                            <option value="">{t("addBookForm.defaultGenreOption")}</option>
                             {genres.map((genre) =>
                                 genre ? (
                                     <option key={genre.id} value={genre.id}>

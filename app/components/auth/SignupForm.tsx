@@ -1,9 +1,12 @@
+import { useState } from "react";
 import { Form, useActionData } from "react-router";
 import type { TFunction } from "i18next";
 import { Trans, useTranslation } from "react-i18next";
 import { getFormProps, getInputProps, useForm } from "@conform-to/react";
 import { getZodConstraint, parseWithZod } from "@conform-to/zod/v4";
 import * as z from "zod";
+
+import { Eye, EyeClosed } from "lucide-react";
 
 import { Button } from "../shared/Button";
 
@@ -42,6 +45,10 @@ export default function SignupForm() {
         },
     });
 
+    //show/hide password state
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
     return (
         <>
             {/*returns form-related errors (e.g. user name is required)*/}
@@ -76,12 +83,26 @@ export default function SignupForm() {
                             </Trans>
                         </label>
 
-                        <input
-                            className="input w-full"
-                            {...getInputProps(fields.password, { type: "password" })}
-                            placeholder={t("signup.passwordPlaceholder")}
-                            aria-describedby={fields.password.errorId}
-                        />
+                        <div className="join w-full">
+                            <input
+                                className="input w-full"
+                                {...getInputProps(fields.password, { type: showPassword ? "text" : "password" })}
+                                placeholder={t("signup.passwordPlaceholder")}
+                                aria-describedby={fields.password.errorId}
+                            />
+                            <button
+                                type="button"
+                                className="btn join-item"
+                                onClick={() => setShowPassword((prev) => !prev)}
+                                aria-label={showPassword ? t("signin.hidePassword") : t("signin.showPassword")}
+                            >
+                                {showPassword ? (
+                                    <Eye size={18} aria-hidden="true" />
+                                ) : (
+                                    <EyeClosed size={18} aria-hidden="true" />
+                                )}
+                            </button>
+                        </div>
                         <p className="text-sm text-gray-500 mt-1">
                             <Trans i18nKey="signup.passwordMinLength">Password must be at least 6 characters</Trans>
                         </p>
@@ -97,12 +118,28 @@ export default function SignupForm() {
                                 Confirm Password <span aria-hidden="true">*</span>
                             </Trans>
                         </label>
-                        <input
-                            className="input w-full"
-                            {...getInputProps(fields.confirmPassword, { type: "password" })}
-                            placeholder={t("signup.confirmPasswordPlaceholder")}
-                            aria-describedby={fields.confirmPassword.errorId}
-                        />
+                        <div className="join w-full">
+                            <input
+                                className="input w-full"
+                                {...getInputProps(fields.confirmPassword, {
+                                    type: showConfirmPassword ? "text" : "password",
+                                })}
+                                placeholder={t("signup.confirmPasswordPlaceholder")}
+                                aria-describedby={fields.confirmPassword.errorId}
+                            />
+                            <button
+                                type="button"
+                                className="btn join-item"
+                                onClick={() => setShowConfirmPassword((prev) => !prev)}
+                                aria-label={showConfirmPassword ? t("signin.hidePassword") : t("signin.showPassword")}
+                            >
+                                {showConfirmPassword ? (
+                                    <Eye size={18} aria-hidden="true" />
+                                ) : (
+                                    <EyeClosed size={18} aria-hidden="true" />
+                                )}
+                            </button>
+                        </div>
                         <div id={fields.confirmPassword.errorId} className="label text-error">
                             {fields.confirmPassword.errors}
                         </div>

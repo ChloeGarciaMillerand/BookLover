@@ -80,11 +80,15 @@ const messages = {
         signupTitle: "Sign Up",
         haveAccount: "Already have an account?",
         signinButton: "Sign In",
+        errorEmailRateLimit:
+            "This demo application uses Supabase's free email service. The email sending limit has been reached, so please try again in about an hour.",
+        errorSecurityRateLimit:
+            "Too many requests have been made. For security reasons, please wait {{seconds}} seconds before trying again.",
     },
     signupSuccess: {
         title: "Welcome to BookLover!",
         altHeartBook: "Book with a heart",
-        text1: "Your account has been created successfully and you will receive a confirmation request by email.",
+        text1: "Your account has been created successfully and you will receive a confirmation request by email. If you don't see the message in your inbox, please check your spam or junk folder.",
         text2: "You can then sign in to your account. ",
         signinButton: "Sign In",
     },
@@ -114,6 +118,10 @@ const messages = {
         errorMessage: "Invalid email",
         forgotPasswordTitle: "Forgot Password",
         forgotPasswordText: "Enter your email to receive a password reset link",
+        errorEmailRateLimit:
+            "This demo application uses Supabase's free email service. The email sending limit has been reached, so please try again in about an hour.",
+        errorSecurityRateLimit:
+            "Too many requests have been made. For security reasons, please wait {{seconds}} seconds before trying again.",
     },
     resetPassword: {
         successMessage: "Password reset successfully! You can now sign in with your new password.",

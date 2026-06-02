@@ -106,7 +106,7 @@ export default function EditBookForm({ book, genres, lists, currentListId }: Boo
                             <Trans i18nKey="editBookForm.genreLabel">Genre</Trans>
                         </label>
                         <select className="select" {...getSelectProps(fields.genre_id)}>
-                            <option disabled={true}>
+                            <option value="">
                                 <Trans i18nKey="editBookForm.genreOption">Choose a genre</Trans>
                             </option>
                             {genres.map((genre) =>

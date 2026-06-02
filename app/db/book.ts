@@ -57,7 +57,7 @@ export async function updateBook(
     }: {
         bookId: string;
         title: string;
-        genre_id?: string;
+        genre_id?: string | null;
         author?: string;
         editor?: string;
         library_code?: string;
@@ -71,6 +71,7 @@ export async function updateBook(
         .eq("id", bookId);
 
     if (error) {
+        console.error(error);
         throw new Error(error.message);
     }
 }

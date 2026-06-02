@@ -82,11 +82,15 @@ export default {
         signupTitle: "Inscription",
         haveAccount: "Vous avez déjà un compte?",
         signinButton: "Se connecter",
+        errorEmailRateLimit:
+            "Cette application est une démo et utilise les services gratuits d'emails de Supabase, dont la limite a été atteinte. Veuillez réessayer dans environ une heure.",
+        errorSecurityRateLimit:
+            "Un nombre trop important de requêtes à été fait. Pour des raisons de sécurité, merci de patienter {{seconds}} secondes avant de réessayer.",
     },
     signupSuccess: {
         title: "Bienvenue dans BookLover!",
         altHeartBook: "Livre avec un coeur",
-        text1: "Votre compte a été créé avec succès et vous allez recevoir une demande de confirmation par email.",
+        text1: "Votre compte a été créé avec succès et vous allez recevoir une demande de confirmation par email. Si vous ne voyez pas l'email dans votre boîte principale, merci de vérifier vos spams.",
         text2: "Vous pourrez ensuite vous connecter à votre compte. ",
         signinButton: "Se connecter",
     },
@@ -116,6 +120,10 @@ export default {
         errorMessage: "Une erreur est survenue lors de la demande de réinitialisation du mot de passe",
         forgotPasswordTitle: "Mot de passe oublié?",
         forgotPasswordText: "Rentrez votre email pour recevoir un lien de réinitialisation du mot de passe",
+        errorEmailRateLimit:
+            "This demo application uses Supabase's free email service. The email sending limit has been reached, so please try again in about an hour.",
+        errorSecurityRateLimit:
+            "Too many requests have been made. For security reasons, please wait {{seconds}} seconds before trying again.",
     },
     resetPassword: {
         successMessage:
